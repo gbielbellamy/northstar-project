@@ -3,13 +3,14 @@ import {
   CalendarDays,
   LayoutDashboard,
   Palette,
+  GitPullRequest,
   Route,
   Send,
-  Sparkles,
   Users,
   BookOpen,
 } from 'lucide-react';
 import type { PageKey } from '../../App';
+import NorthstarMark from '../ui/NorthstarMark';
 
 type Props = {
   page: PageKey;
@@ -25,6 +26,7 @@ const NAV: { key: PageKey; label: string; icon: typeof LayoutDashboard }[] = [
   { key: 'applications', label: 'Applications', icon: Send },
   { key: 'networking', label: 'Networking', icon: Users },
   { key: 'companies', label: 'Companies', icon: Building2 },
+  { key: 'contributions', label: 'Contributions', icon: GitPullRequest },
   { key: 'resources', label: 'Resources', icon: BookOpen },
   { key: 'components', label: 'Components', icon: Palette },
 ];
@@ -33,13 +35,14 @@ function Sidebar({ page, setPage, open, followupsDue }: Props) {
   return (
     <aside className={`sidebar ${open ? 'sidebar--open' : ''}`.trim()}>
       <div className="sidebar__brand">
-        <span className="sidebar__mark">
-          <Sparkles size={17} />
-        </span>
-        <span>
-          <span className="sidebar__name">Career Transition OS</span>
-          <br />
-          <span className="sidebar__tag">Build. Apply. Repeat.</span>
+        <div className="sidebar__brand-row">
+          <span className="sidebar__mark">
+            <NorthstarMark size={22} />
+          </span>
+          <span className="sidebar__name">Northstar</span>
+        </div>
+        <span className="sidebar__tag">
+          It’s your path, and yours alone. Others may walk it with you, but no one can walk it for you.
         </span>
       </div>
 

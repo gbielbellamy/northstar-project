@@ -1,9 +1,21 @@
 import { useMemo, useState } from 'react';
-import { AlarmClock, Check, ExternalLink, Pencil, Plus, Search, Send, Trash2 } from 'lucide-react';
+import {
+  AlarmClock,
+  Check,
+  ExternalLink,
+  LayoutList,
+  MessageCircleReply,
+  MessagesSquare,
+  Pencil,
+  Plus,
+  Search,
+  Send,
+  Trash2,
+} from 'lucide-react';
 import { useStore } from '../store/useStore';
 import { currentWeekNumber, fmtShort, todayISO } from '../lib/dates';
 import { daysSinceApplied, funnel } from '../lib/selectors';
-import { applicationVariant } from '../lib/ui';
+import { applicationIcon, applicationVariant } from '../lib/ui';
 import {
   APPLICATION_STATUSES,
   ROLE_FAMILIES,
@@ -11,9 +23,10 @@ import {
   type ApplicationStatus,
   type RoleFamily,
 } from '../types';
-import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
+import StatCard from '../components/ui/StatCard';
 import Badge from '../components/ui/Badge';
+import StatusSelect from '../components/ui/StatusSelect';
 import Modal from '../components/ui/Modal';
 import Field from '../components/ui/Field';
 import EmptyState from '../components/ui/EmptyState';
@@ -125,57 +138,66 @@ function ApplicationsPage() {
           <div>
             <h1>Applications</h1>
             <p className="page__sub">
-              Five tailored applications a week, not fifteen generic ones. Log every one the moment it goes
-              out — the response rate below is only honest if this log is.
+              Ten applications a week, split deliberately: five direct — Software Engineer and Full-Stack
+              Engineer roles, properly tailored — and five bridge roles in support, solutions, implementation
+              or QA, which get you into the industry and pay while you keep building. Log every one the
+              moment it goes out; the response rate below is only honest if this log is.
             </p>
           </div>
-          <Button variant="primary" onClick={openNew}>
-            <Plus size={14} /> Log application
-          </Button>
         </div>
       </div>
 
       <div className="stat-grid" style={{ marginBottom: 18 }}>
-        <Card className="stat">
-          <div className="stat__label">Sent</div>
-          <div className="stat__value">{f.sent}</div>
-          <div className="stat__desc">{f.total} tracked in total</div>
-        </Card>
-        <Card className="stat">
-          <div className="stat__label">Response rate</div>
-          <div className="stat__value">{f.responseRate === null ? '—' : `${f.responseRate}%`}</div>
-          <div className="stat__desc">
-            {f.sent === 0 ? 'Nothing sent yet' : `${f.responded} of ${f.sent} came back`}
-          </div>
-        </Card>
-        <Card className="stat">
-          <div className="stat__label">Live</div>
-          <div className="stat__value">{f.active}</div>
-          <div className="stat__desc">
-            {f.interviewing} interviewing · {f.offers} offer{f.offers === 1 ? '' : 's'}
-          </div>
-        </Card>
-        <Card className="stat">
-          <div className="stat__label">Follow-ups due</div>
-          <div className="stat__value" style={{ color: f.followupsDue > 0 ? 'var(--danger)' : undefined }}>
-            {f.followupsDue}
-          </div>
-          <div className="stat__desc">{f.ghosted} ghosted · {f.rejected} rejected</div>
-        </Card>
+        <StatCard
+          label="Sent"
+          value={f.sent}
+          desc={`${f.total} tracked in total`}
+          icon={<Send size={16} />}
+          color="var(--area-jobsearch)"
+        />
+        <StatCard
+          label="Response rate"
+          value={f.responseRate === null ? '—' : `${f.responseRate}%`}
+          desc={f.sent === 0 ? 'Nothing sent yet' : `${f.responded} of ${f.sent} came back`}
+          icon={<MessageCircleReply size={16} />}
+          color="var(--area-project)"
+          index={1}
+        />
+        <StatCard
+          label="Live"
+          value={f.active}
+          desc={`${f.interviewing} interviewing · ${f.offers} offer${f.offers === 1 ? '' : 's'}`}
+          icon={<MessagesSquare size={16} />}
+          color="var(--area-interview)"
+          index={2}
+        />
+        <StatCard
+          label="Follow-ups due"
+          value={f.followupsDue}
+          desc={`${f.ghosted} ghosted · ${f.rejected} rejected`}
+          icon={<AlarmClock size={16} />}
+          color={f.followupsDue > 0 ? 'var(--danger)' : 'var(--muted-dot)'}
+          index={3}
+        />
       </div>
 
       <div className="toolbar">
         <div className="filters">
-          {(['All', ...APPLICATION_STATUSES] as const).map((s) => (
-            <Button
-              key={s}
-              size="sm"
-              variant={filter === s ? 'primary' : 'secondary'}
-              onClick={() => setFilter(s)}
-            >
-              {s} {counts[s] ? `(${counts[s]})` : ''}
-            </Button>
-          ))}
+          {(['All', ...APPLICATION_STATUSES] as const).map((s) => {
+            // Same icon here as on the row's status control, so the two read as one thing.
+            const Icon = s === 'All' ? LayoutList : applicationIcon[s];
+            return (
+              <Button
+                key={s}
+                size="sm"
+                variant={filter === s ? 'primary' : 'secondary'}
+                onClick={() => setFilter(s)}
+              >
+                <Icon size={13} />
+                {s} {counts[s] ? `(${counts[s]})` : ''}
+              </Button>
+            );
+          })}
         </div>
       </div>
 
@@ -197,7 +219,12 @@ function ApplicationsPage() {
             <option value="followup">Follow-up due</option>
           </select>
         </div>
-        <span className="muted">{rows.length} shown</span>
+        <div className="row" style={{ gap: 12 }}>
+          <span className="muted">{rows.length} shown</span>
+          <Button variant="primary" onClick={openNew}>
+            <Plus size={14} /> Log application
+          </Button>
+        </div>
       </div>
 
       {rows.length === 0 ? (
@@ -208,13 +235,6 @@ function ApplicationsPage() {
             applications.length === 0
               ? 'Start with a Tier A company from the Companies tab. Tailor the opening line to the product, then log it here.'
               : 'Try a different status or clear the search.'
-          }
-          action={
-            applications.length === 0 ? (
-              <Button variant="primary" onClick={openNew}>
-                <Plus size={14} /> Log the first one
-              </Button>
-            ) : undefined
           }
         />
       ) : (
@@ -263,25 +283,18 @@ function ApplicationsPage() {
                         </div>
                       </td>
                       <td className="tight">
-                        <select
-                          className="select select--inline"
+                        <StatusSelect
                           value={a.status}
-                          onChange={(e) => {
-                            const next = e.target.value as ApplicationStatus;
+                          options={APPLICATION_STATUSES}
+                          onChange={(next) => {
                             const patch: Partial<Application> = { status: next };
                             if (next === 'Applied' && !a.dateApplied) patch.dateApplied = today;
                             update('applications', a.id, patch);
                           }}
-                        >
-                          {APPLICATION_STATUSES.map((s) => (
-                            <option key={s}>{s}</option>
-                          ))}
-                        </select>
-                        <div style={{ marginTop: 4 }}>
-                          <Badge variant={applicationVariant[a.status]} dot>
-                            {a.status}
-                          </Badge>
-                        </div>
+                          variant={applicationVariant[a.status]}
+                          icon={applicationIcon[a.status]}
+                          ariaLabel={`Status for ${a.company}`}
+                        />
                       </td>
                       <td className="tight">{a.dateApplied ? fmtShort(a.dateApplied) : '—'}</td>
                       <td className="tight">{age === null ? '—' : `${age}d`}</td>
@@ -400,15 +413,14 @@ function ApplicationsPage() {
               </select>
             </Field>
             <Field label="Status">
-              <select
-                className="select"
+              <StatusSelect
+                block
                 value={draft.status}
-                onChange={(e) => setDraft({ ...draft, status: e.target.value as ApplicationStatus })}
-              >
-                {APPLICATION_STATUSES.map((s) => (
-                  <option key={s}>{s}</option>
-                ))}
-              </select>
+                options={APPLICATION_STATUSES}
+                onChange={(v) => setDraft({ ...draft, status: v })}
+                variant={applicationVariant[draft.status]}
+                icon={applicationIcon[draft.status]}
+              />
             </Field>
             <Field label="Job URL" full>
               <input

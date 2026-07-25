@@ -6,41 +6,30 @@ export const seedState: AppState = {
     {
       "id": "rw-001",
       "week": 1,
-      "start": "2026-07-13",
-      "end": "2026-07-19",
-      "theme": "Foundation and a typed data model",
-      "projectDirection": "Port the app onto React, TypeScript and Vite, and merge the old Job Tracker and Dashboard data into one typed store.",
-      "definitionOfDone": "The app starts with npm run dev, the build passes with no TypeScript errors, and both old projects' data lives in one model.",
+      "start": "2026-07-27",
+      "end": "2026-08-02",
+      "theme": "PostgreSQL and the CRUD API",
+      "projectDirection": "Design the schema, wire up Prisma, write a reproducible seed, and expose CRUD routes for applications, contacts and companies.",
+      "definitionOfDone": "A clean database can be created, seeded and driven entirely through the API — nothing important lives in localStorage any more.",
       "status": "Not started",
       "notes": ""
     },
     {
       "id": "rw-002",
       "week": 2,
-      "start": "2026-07-20",
-      "end": "2026-07-26",
-      "theme": "PostgreSQL and the CRUD API",
-      "projectDirection": "Design the schema, wire up Prisma, write a reproducible seed, and expose CRUD routes for applications, contacts and companies.",
-      "definitionOfDone": "A clean database can be created, seeded and driven entirely through the API.",
+      "start": "2026-08-03",
+      "end": "2026-08-09",
+      "theme": "Authentication",
+      "projectDirection": "Registration, login, logout and /auth/me, with hashed passwords and a secure httpOnly cookie session.",
+      "definitionOfDone": "You can register, log in, survive a refresh, and reach protected routes with no token in localStorage.",
       "status": "Not started",
       "notes": ""
     },
     {
       "id": "rw-003",
       "week": 3,
-      "start": "2026-07-27",
-      "end": "2026-08-02",
-      "theme": "Authentication",
-      "projectDirection": "Registration, login, logout and /auth/me, with hashed passwords and a secure httpOnly cookie session.",
-      "definitionOfDone": "A user can register, log in, stay logged in and reach protected routes without a token in localStorage.",
-      "status": "Not started",
-      "notes": ""
-    },
-    {
-      "id": "rw-004",
-      "week": 4,
-      "start": "2026-08-03",
-      "end": "2026-08-09",
+      "start": "2026-08-10",
+      "end": "2026-08-16",
       "theme": "Authorization and security",
       "projectDirection": "Scope every query to the signed-in user, then add Helmet, rate limiting and request-size limits.",
       "definitionOfDone": "User A cannot read or change User B's data, and there is a test that proves it.",
@@ -48,236 +37,572 @@ export const seedState: AppState = {
       "notes": ""
     },
     {
+      "id": "rw-004",
+      "week": 4,
+      "start": "2026-08-17",
+      "end": "2026-08-23",
+      "theme": "Validation you can trust",
+      "projectDirection": "Zod schemas shared by client and server, React Hook Form on every form, and field errors a human can act on.",
+      "definitionOfDone": "Invalid input is rejected the same way on both sides, and the message says what to fix.",
+      "status": "Not started",
+      "notes": ""
+    },
+    {
       "id": "rw-005",
       "week": 5,
-      "start": "2026-08-10",
-      "end": "2026-08-16",
-      "theme": "Validation and forms",
-      "projectDirection": "Zod schemas shared by client and server, React Hook Form on every form, and field errors a human can act on.",
-      "definitionOfDone": "Invalid input is rejected the same way on both sides and the message says what to fix.",
+      "start": "2026-08-24",
+      "end": "2026-08-30",
+      "theme": "Errors that behave predictably",
+      "projectDirection": "Typed error classes, one global error middleware, structured logging with request ids, and error boundaries on the client.",
+      "definitionOfDone": "Every failure has one place it is handled, production hides stack traces, and you can find a single request in the logs.",
       "status": "Not started",
       "notes": ""
     },
     {
       "id": "rw-006",
       "week": 6,
-      "start": "2026-08-17",
-      "end": "2026-08-23",
-      "theme": "Errors that behave predictably",
-      "projectDirection": "Typed application errors, one global error handler, real logging, and sensible retry behaviour in the UI.",
-      "definitionOfDone": "Every failure produces a consistent code, HTTP status and user-facing message.",
+      "start": "2026-08-31",
+      "end": "2026-09-06",
+      "theme": "Metrics, filters and search",
+      "projectDirection": "Response and interview rates computed on the server, plus filtering, search, sorting and pagination across the tables.",
+      "definitionOfDone": "You can answer 'which companies haven't I followed up with' in one screen, and the answer survives a reload.",
       "status": "Not started",
       "notes": ""
     },
     {
       "id": "rw-007",
       "week": 7,
-      "start": "2026-08-24",
-      "end": "2026-08-30",
-      "theme": "Metrics that tell you something",
-      "projectDirection": "Build the funnel: response rate, time-to-reply, stage breakdown, plus filters, search and sorting.",
-      "definitionOfDone": "You can answer 'is my targeting working?' from the dashboard alone, in under a minute.",
+      "start": "2026-09-07",
+      "end": "2026-09-13",
+      "theme": "Testing",
+      "projectDirection": "Unit tests for the helpers, integration tests for the API and auth, and one Playwright happy path.",
+      "definitionOfDone": "The suite catches a bug you introduce on purpose, and the whole thing runs with one command.",
       "status": "Not started",
       "notes": ""
     },
     {
       "id": "rw-008",
       "week": 8,
-      "start": "2026-08-31",
-      "end": "2026-09-06",
-      "theme": "Testing",
-      "projectDirection": "Unit tests with Vitest, API tests with Supertest, and Playwright end-to-end coverage of the critical flows.",
-      "definitionOfDone": "Register, log in, add an application and see it in the funnel — all pass automatically.",
+      "start": "2026-09-14",
+      "end": "2026-09-20",
+      "theme": "Docker and CI/CD",
+      "projectDirection": "A backend Dockerfile, a Compose environment with PostgreSQL, and GitHub Actions running lint, typecheck and tests.",
+      "definitionOfDone": "A clean clone comes up with one command, and every pull request runs the checks by itself.",
       "status": "Not started",
       "notes": ""
     },
     {
       "id": "rw-009",
       "week": 9,
-      "start": "2026-09-07",
-      "end": "2026-09-13",
-      "theme": "Docker, CI/CD and deployment",
-      "projectDirection": "Containerise the app, add GitHub Actions, provision a managed Postgres and deploy with a health check.",
-      "definitionOfDone": "A public URL, a green pipeline, and a deploy you can repeat from scratch.",
+      "start": "2026-09-21",
+      "end": "2026-09-27",
+      "theme": "Production deployment",
+      "projectDirection": "Deploy the database, the API and the frontend, with production configuration, migrations, health checks and a demo account.",
+      "definitionOfDone": "A stranger can open the URL, log into the demo account, and use the app without you explaining anything.",
       "status": "Not started",
       "notes": ""
     },
     {
       "id": "rw-010",
       "week": 10,
-      "start": "2026-09-14",
-      "end": "2026-09-20",
+      "start": "2026-09-28",
+      "end": "2026-10-04",
       "theme": "Documentation and portfolio launch",
-      "projectDirection": "README, architecture diagram, ERD, security and testing notes, a demo account, and an honest trade-offs section.",
-      "definitionOfDone": "A hiring manager can understand the project in two minutes without you in the room.",
+      "projectDirection": "README, architecture diagram, ERD, trade-offs and lessons learned, then the portfolio case study and the launch post.",
+      "definitionOfDone": "The repository answers what, why, how, security, testing and deployment without you in the room.",
       "status": "Not started",
-      "notes": "Next up after Week 10: an assistant/chatbot over your own data — 'which companies owe me a follow-up?'. Add Week 11 when you get here."
+      "notes": ""
     }
   ],
   "goals": [
     {
-      "id": "g-001",
+      "id": "g-01-1",
       "week": 1,
       "area": "Project",
-      "title": "Move the app onto React, TypeScript and Vite",
-      "detail": "Port the current app to the React + TypeScript + Vite stack. Fold the old Job Tracker and Dashboard into this one project: one data model, one design system, one repo. Nothing new gets built this week — this is the foundation everything else sits on.",
-      "definitionOfDone": "The app starts with npm run dev, the build passes with no TypeScript errors, and both old projects' data lives in one model.",
+      "title": "Stand up the database and the CRUD API",
+      "detail": "Model the domain in schema.prisma, run the first migration, write a seed script, then build routes for applications, contacts and companies behind a service layer.",
+      "definitionOfDone": "You can drop the database, rebuild it from migrations, seed it, and drive every list over HTTP.",
       "status": "Not started",
       "priority": "Critical",
-      "plannedHours": 20.0,
+      "plannedHours": 18.75,
       "evidenceUrl": "",
       "notes": ""
     },
     {
-      "id": "g-002",
+      "id": "g-01-2",
       "week": 1,
       "area": "Learning",
-      "title": "TypeScript, applied to your own data",
-      "detail": "Not a tutorial series. Type the entities this app actually has — an application, a contact, a week — and let the compiler tell you where your assumptions were wrong.",
-      "definitionOfDone": "Notes or code in the repo that show the idea applied to this project, not just read.",
+      "title": "PostgreSQL and Prisma",
+      "detail": "Three sessions from Resources: the PostgreSQL path in psql, the joins set on PG Exercises, then how schema.prisma becomes the SQL in your migration.",
+      "definitionOfDone": "You can explain every foreign key in your own schema and write a three-table join without looking it up.",
       "status": "Not started",
       "priority": "High",
-      "plannedHours": 7.0,
+      "plannedHours": 4.5,
       "evidenceUrl": "",
       "notes": ""
     },
     {
-      "id": "g-003",
+      "id": "g-01-algo",
+      "week": 1,
+      "area": "Algorithms",
+      "title": "Chapter VI — Big O",
+      "detail": "The foundation everything else is measured against. Work the chapter's examples, then analyse five functions you already wrote in this repo.",
+      "definitionOfDone": "You can state the time and space complexity of your own code without hesitating.",
+      "status": "Not started",
+      "priority": "High",
+      "plannedHours": 1.25,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-01-3",
       "week": 1,
       "area": "Job Search",
-      "title": "Send five tailored applications",
-      "detail": "Four hours, five applications — about forty-five minutes each. That is deliberate: five tailored beats fifteen generic, because the generic ones never get read. Rewrite the resume bullets and the opening line for the specific product, using the 'Why it fits' note on the company. Log every one the moment you send it.",
-      "definitionOfDone": "Five applications logged, each with a job URL and the resume version used.",
+      "title": "Nine applications: four direct, five bridge",
+      "detail": "Three sessions — Monday, Tuesday and Thursday — three applications each. Start every session by searching: half an hour on the boards and company careers pages, adding what you find to Companies. Then shortlist from both tracks together and apply to the best three that came up, whichever track they belong to. Direct means Software Engineer and Full-Stack Engineer, properly tailored — CV adjusted and an opening line only you could have written. Bridge means support, solutions, implementation and QA, lighter touch, using the 'why it fits' line each company already has.",
+      "definitionOfDone": "Nine logged as Applied — four direct, five bridge — each with a follow-up date set.",
       "status": "Not started",
       "priority": "Critical",
-      "plannedHours": 4.0,
+      "plannedHours": 5.75,
       "evidenceUrl": "",
       "notes": ""
     },
     {
-      "id": "g-004",
+      "id": "g-01-4",
       "week": 1,
       "area": "Networking",
-      "title": "Reach six people, follow up with two",
-      "detail": "Peer first, manager or recruiter second. Start from the templates in Resources, then change at least one sentence to something only you could have written — mention the actual product, the actual problem. Ask for advice in a first message, never a referral.",
-      "definitionOfDone": "Six messages and two follow-ups logged, and at least one informational call on the calendar.",
+      "title": "Six real messages",
+      "detail": "Three on Monday, three on Thursday. Peers and hiring influencers from the Networking tab. Rewrite the template every time — one you haven't changed reads like one.",
+      "definitionOfDone": "Six messages sent and logged, and every follow-up due this week actioned.",
       "status": "Not started",
       "priority": "High",
-      "plannedHours": 3.0,
+      "plannedHours": 2.5,
       "evidenceUrl": "",
       "notes": ""
     },
     {
-      "id": "g-005",
+      "id": "g-01-5",
       "week": 1,
       "area": "Interview Prep",
-      "title": "Explain your work out loud, in English",
-      "detail": "Thirty minutes, Monday to Thursday. Record yourself explaining what you built that day — out loud, in English, no script. Play it back. Note the one word you reached for and could not find. That list is your real curriculum; fluency comes from the replay, not the recording.",
-      "definitionOfDone": "Four recordings, and a running list of the words and phrases you got stuck on.",
+      "title": "Tell me about yourself — and why this move",
+      "detail": "Deliver a 90-second answer that ends on why you're moving into engineering, without hesitating. Record it, listen back, note every filler, record again.",
+      "definitionOfDone": "One take you'd send to a recruiter, delivered without reading.",
       "status": "Not started",
-      "priority": "Medium",
-      "plannedHours": 2.0,
+      "priority": "Critical",
+      "plannedHours": 3.75,
       "evidenceUrl": "",
       "notes": ""
     },
     {
-      "id": "g-006",
+      "id": "g-01-6",
       "week": 1,
       "area": "Portfolio",
-      "title": "Leave a public trace of the week",
-      "detail": "Friday, one hour. Update the README, close the issues you genuinely finished, push. Then one public thing: a progress note, or a small open-source contribution. Documentation and tests count.",
-      "definitionOfDone": "Commits pushed, and the repo reads like somebody maintains it.",
+      "title": "First public post",
+      "detail": "Friday: write what you built — the schema and the API — with a screenshot. Then check README, links and profiles.",
+      "definitionOfDone": "One post published and the README reflecting the new backend.",
       "status": "Not started",
       "priority": "Medium",
-      "plannedHours": 1.0,
+      "plannedHours": 2.25,
       "evidenceUrl": "",
       "notes": ""
     },
     {
-      "id": "g-007",
+      "id": "g-01-7",
       "week": 1,
       "area": "Review",
-      "title": "Close the week honestly",
-      "detail": "Thirty minutes. The numbers come from the app; the lesson has to come from you. A blank 'main blocker' on a hard week is the one thing that makes this whole system useless.",
-      "definitionOfDone": "Weekly review saved with a real lesson and a real blocker — not blanks.",
+      "title": "Close week 1 honestly",
+      "detail": "Ninety minutes on Friday: what shipped, the counts for both application tracks, the technical lesson, the blocker, and what changes next week. Then set up next week's issues.",
+      "definitionOfDone": "The review is saved with a real blocker written down, and next week's GitHub issues exist.",
       "status": "Not started",
       "priority": "High",
-      "plannedHours": 0.5,
+      "plannedHours": 1.25,
       "evidenceUrl": "",
       "notes": ""
     },
     {
-      "id": "g-008",
+      "id": "g-02-1",
       "week": 2,
       "area": "Project",
-      "title": "Give the app a real database",
-      "detail": "Design the schema on paper first, then wire up PostgreSQL with Prisma. Write a seed script you can re-run from zero. Replace the browser-only storage with actual API calls.",
-      "definitionOfDone": "A clean database can be created, seeded and driven entirely through the API.",
+      "title": "Make the app know who you are",
+      "detail": "Registration with argon2 or bcrypt, login and logout, /auth/me, and a session in a secure httpOnly cookie. Wire the client to it.",
+      "definitionOfDone": "You register, close the tab, come back and you are still signed in — with nothing sensitive in localStorage.",
       "status": "Not started",
       "priority": "Critical",
-      "plannedHours": 20.0,
+      "plannedHours": 18.75,
       "evidenceUrl": "",
       "notes": ""
     },
     {
-      "id": "g-009",
+      "id": "g-02-2",
       "week": 2,
       "area": "Learning",
-      "title": "Schema design and Prisma",
-      "detail": "Relations, migrations, indexes. Write ten queries you would genuinely ask of your own job search and make them work.",
-      "definitionOfDone": "Notes or code in the repo that show the idea applied to this project, not just read.",
+      "title": "Node, Express and how auth works",
+      "detail": "The Node.js and Express paths, plus the theory of salts, hashing cost and session versus token auth.",
+      "definitionOfDone": "You can explain why you hash rather than encrypt, and why the cookie is httpOnly, in your own words.",
       "status": "Not started",
       "priority": "High",
-      "plannedHours": 7.0,
+      "plannedHours": 4.5,
       "evidenceUrl": "",
       "notes": ""
     },
     {
-      "id": "g-010",
+      "id": "g-02-algo",
+      "week": 2,
+      "area": "Algorithms",
+      "title": "Technical Questions — the method",
+      "detail": "The seven-step approach and BUD (bottlenecks, unnecessary work, duplicated work). A procedure beats staring at the screen.",
+      "definitionOfDone": "You can talk through an unfamiliar problem using the seven steps, out loud, without freezing.",
+      "status": "Not started",
+      "priority": "High",
+      "plannedHours": 1.25,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-02-3",
       "week": 2,
       "area": "Job Search",
-      "title": "Send five tailored applications",
-      "detail": "Four hours, five applications — about forty-five minutes each. That is deliberate: five tailored beats fifteen generic, because the generic ones never get read. Rewrite the resume bullets and the opening line for the specific product, using the 'Why it fits' note on the company. Log every one the moment you send it.",
-      "definitionOfDone": "Five applications logged, each with a job URL and the resume version used.",
+      "title": "Nine, with sharper opening lines",
+      "detail": "Three sessions — Monday, Tuesday and Thursday — three applications each. Start every session by searching: half an hour on the boards and company careers pages, adding what you find to Companies. Then shortlist from both tracks together and apply to the best three that came up, whichever track they belong to. Rewrite the direct-track opening line based on which of last week's got no reply at all.",
+      "definitionOfDone": "Nine logged, and every application from week one has a follow-up done or scheduled.",
       "status": "Not started",
       "priority": "Critical",
-      "plannedHours": 4.0,
+      "plannedHours": 5.75,
       "evidenceUrl": "",
       "notes": ""
     },
     {
-      "id": "g-011",
+      "id": "g-02-4",
       "week": 2,
       "area": "Networking",
-      "title": "Reach six people, follow up with two",
-      "detail": "Peer first, manager or recruiter second. Start from the templates in Resources, then change at least one sentence to something only you could have written — mention the actual product, the actual problem. Ask for advice in a first message, never a referral.",
-      "definitionOfDone": "Six messages and two follow-ups logged, and at least one informational call on the calendar.",
+      "title": "Six, and follow up on week one",
+      "detail": "Six new messages, plus one follow-up to anyone from week one who has not replied. One follow-up, not three.",
+      "definitionOfDone": "Six sent, and week one's silent contacts followed up exactly once.",
       "status": "Not started",
       "priority": "High",
-      "plannedHours": 3.0,
+      "plannedHours": 2.5,
       "evidenceUrl": "",
       "notes": ""
     },
     {
-      "id": "g-012",
+      "id": "g-02-5",
       "week": 2,
       "area": "Interview Prep",
-      "title": "Explain your work out loud, in English",
-      "detail": "Thirty minutes, Monday to Thursday. Record yourself explaining what you built that day — out loud, in English, no script. Play it back. Note the one word you reached for and could not find. That list is your real curriculum; fluency comes from the replay, not the recording.",
-      "definitionOfDone": "Four recordings, and a running list of the words and phrases you got stuck on.",
+      "title": "Connectors: making an answer sound structured",
+      "detail": "Use however, as a result, that said and on top of that inside a real answer, not as isolated phrases. Rewrite yesterday's answer inserting five of them.",
+      "definitionOfDone": "A rewritten answer with five connectors used naturally, recorded.",
       "status": "Not started",
-      "priority": "Medium",
-      "plannedHours": 2.0,
+      "priority": "Critical",
+      "plannedHours": 3.75,
       "evidenceUrl": "",
       "notes": ""
     },
     {
-      "id": "g-013",
+      "id": "g-02-6",
       "week": 2,
       "area": "Portfolio",
-      "title": "Leave a public trace of the week",
-      "detail": "Friday, one hour. Update the README, close the issues you genuinely finished, push. Then one public thing: a progress note, or a small open-source contribution. Documentation and tests count.",
-      "definitionOfDone": "Commits pushed, and the repo reads like somebody maintains it.",
+      "title": "Post: how auth actually works",
+      "detail": "Write the week's post about sessions and hashing. Explaining it publicly is how you find out whether you understand it.",
+      "definitionOfDone": "Post published, and the auth flow documented in the repo.",
+      "status": "Not started",
+      "priority": "Medium",
+      "plannedHours": 2.25,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-02-7",
+      "week": 2,
+      "area": "Review",
+      "title": "Close week 2",
+      "detail": "Same shape. Compare this week's counts against last week's rather than against your intentions.",
+      "definitionOfDone": "Review saved, and last week's 'what changes' either done or consciously dropped.",
+      "status": "Not started",
+      "priority": "High",
+      "plannedHours": 1.25,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-03-1",
+      "week": 3,
+      "area": "Project",
+      "title": "Lock the doors",
+      "detail": "Scope every Prisma query to the authenticated user id, then add Helmet, rate limiting and a request-size limit. Harden CORS and cookie flags.",
+      "definitionOfDone": "A second account cannot see the first account's rows, and a test asserts it.",
+      "status": "Not started",
+      "priority": "Critical",
+      "plannedHours": 18.75,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-03-2",
+      "week": 3,
+      "area": "Learning",
+      "title": "Git, GitHub and security basics",
+      "detail": "The Git/GitHub path — branches, rebase, resolving conflicts — plus insecure direct object references and 403 versus 404 as an information leak.",
+      "definitionOfDone": "You can rebase a branch without fear and name three ways an API leaks other users' data.",
+      "status": "Not started",
+      "priority": "High",
+      "plannedHours": 4.5,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-03-algo",
+      "week": 3,
+      "area": "Algorithms",
+      "title": "Chapter 1 — Arrays and Strings",
+      "detail": "Problems 1.1 to 1.6 in TypeScript. Write your own solution before reading Gayle's, then note the gap.",
+      "definitionOfDone": "Six problems logged, each with your attempt, the book's, and what you missed.",
+      "status": "Not started",
+      "priority": "High",
+      "plannedHours": 1.25,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-03-3",
+      "week": 3,
+      "area": "Job Search",
+      "title": "Nine, and start reading the data",
+      "detail": "Three sessions — Monday, Tuesday and Thursday — three applications each. Start every session by searching: half an hour on the boards and company careers pages, adding what you find to Companies. Then shortlist from both tracks together and apply to the best three that came up, whichever track they belong to. Compare the two tracks: if the bridge roles answer and the direct ones don't, that is information, not failure.",
+      "definitionOfDone": "Nine logged, and you can say which track has the better response rate so far.",
+      "status": "Not started",
+      "priority": "Critical",
+      "plannedHours": 5.75,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-03-4",
+      "week": 3,
+      "area": "Networking",
+      "title": "Six, and convert a reply into a call",
+      "detail": "Six new messages. If anyone replied, ask for fifteen minutes rather than continuing over text.",
+      "definitionOfDone": "Six sent and at least one call requested.",
+      "status": "Not started",
+      "priority": "High",
+      "plannedHours": 2.5,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-03-5",
+      "week": 3,
+      "area": "Interview Prep",
+      "title": "Behavioural: teamwork and conflict",
+      "detail": "Answer 'tell me about a conflict with a teammate' and 'working with someone difficult' using STAR, delivered from memory on camera.",
+      "definitionOfDone": "Both answers delivered from memory, each under two minutes.",
+      "status": "Not started",
+      "priority": "Critical",
+      "plannedHours": 3.75,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-03-6",
+      "week": 3,
+      "area": "Portfolio",
+      "title": "Post: the security pass",
+      "detail": "Write about scoping queries to a user and the holes you closed. Add a security section to the README.",
+      "definitionOfDone": "Post published and a security section in the README.",
+      "status": "Not started",
+      "priority": "Medium",
+      "plannedHours": 2.25,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-03-7",
+      "week": 3,
+      "area": "Review",
+      "title": "Close week 3",
+      "detail": "Review, and check the response rate for the first time with enough data to mean something.",
+      "definitionOfDone": "Review saved with the current response rate for both tracks written into it.",
+      "status": "Not started",
+      "priority": "High",
+      "plannedHours": 1.25,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-04-1",
+      "week": 4,
+      "area": "Project",
+      "title": "One schema, both sides",
+      "detail": "Write Zod schemas in a shared module, use them in the API and in React Hook Form, and surface field-level errors next to the field.",
+      "definitionOfDone": "The same bad input is rejected identically by the form and by the API, with a message that names the fix.",
+      "status": "Not started",
+      "priority": "Critical",
+      "plannedHours": 18.75,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-04-2",
+      "week": 4,
+      "area": "Learning",
+      "title": "TypeScript and Zod",
+      "detail": "The TypeScript sessions on narrowing, generics and utility types, then Zod: coercion, refinements and deriving types from schemas.",
+      "definitionOfDone": "You can explain why a type derived from a schema is safer than one you wrote by hand.",
+      "status": "Not started",
+      "priority": "High",
+      "plannedHours": 4.5,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-04-algo",
+      "week": 4,
+      "area": "Algorithms",
+      "title": "Chapter 2 — Linked Lists",
+      "detail": "Problems 2.1 to 2.5. Implement the list yourself rather than using an array — pointer handling is the point.",
+      "definitionOfDone": "Five problems logged, and you can explain the runner technique from memory.",
+      "status": "Not started",
+      "priority": "High",
+      "plannedHours": 1.25,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-04-3",
+      "week": 4,
+      "area": "Job Search",
+      "title": "Nine, plus the first real follow-ups",
+      "detail": "Three sessions — Monday, Tuesday and Thursday — three applications each. Start every session by searching: half an hour on the boards and company careers pages, adding what you find to Companies. Then shortlist from both tracks together and apply to the best three that came up, whichever track they belong to. Then follow up on week one's — short and specific, referencing something concrete, not a nudge.",
+      "definitionOfDone": "Nine logged, and everything older than ten days followed up or marked Ghosted.",
+      "status": "Not started",
+      "priority": "Critical",
+      "plannedHours": 5.75,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-04-4",
+      "week": 4,
+      "area": "Networking",
+      "title": "Six, each with a specific question",
+      "detail": "Six messages, each carrying one specific technical question about their team. Specific questions get answered; generic ones do not.",
+      "definitionOfDone": "Six sent, each with a question a stranger could actually answer.",
+      "status": "Not started",
+      "priority": "High",
+      "plannedHours": 2.5,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-04-5",
+      "week": 4,
+      "area": "Interview Prep",
+      "title": "Behavioural: failure and feedback",
+      "detail": "Answer 'tell me about a time you failed' and 'difficult feedback you received' without sounding rehearsed or defensive.",
+      "definitionOfDone": "Both answers recorded once flat, then again with connectors from week 2.",
+      "status": "Not started",
+      "priority": "Critical",
+      "plannedHours": 3.75,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-04-6",
+      "week": 4,
+      "area": "Portfolio",
+      "title": "Post, and polish the GitHub profile",
+      "detail": "The week's post on shared validation. Then tidy the profile README, pinned repositories and bio.",
+      "definitionOfDone": "Post published and the GitHub profile presentable to a stranger.",
+      "status": "Not started",
+      "priority": "Medium",
+      "plannedHours": 2.25,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-04-7",
+      "week": 4,
+      "area": "Review",
+      "title": "Close week 4",
+      "detail": "Quarter of the way. Look at the trend across four weeks, not just this week's feeling.",
+      "definitionOfDone": "Review saved and a four-week trend noted.",
+      "status": "Not started",
+      "priority": "High",
+      "plannedHours": 1.25,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-05-1",
+      "week": 5,
+      "area": "Project",
+      "title": "Fail in one place",
+      "detail": "Typed error classes mapped to status codes, a single Express error middleware, request-id logging, and React error boundaries with retry.",
+      "definitionOfDone": "You can trace one failing request end to end from a log line, and no stack trace reaches the browser.",
+      "status": "Not started",
+      "priority": "Critical",
+      "plannedHours": 18.75,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-05-2",
+      "week": 5,
+      "area": "Learning",
+      "title": "JavaScript deep dive",
+      "detail": "The JavaScript path: closures, the event loop, promises and error handling. This is the week the language stops being magic.",
+      "definitionOfDone": "You can predict the output order of any mix of setTimeout, promises and synchronous code.",
+      "status": "Not started",
+      "priority": "High",
+      "plannedHours": 4.5,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-05-algo",
+      "week": 5,
+      "area": "Algorithms",
+      "title": "Chapter 3 — Stacks and Queues",
+      "detail": "Problems 3.1 to 3.4, then build a queue from two stacks and explain the amortised cost aloud.",
+      "definitionOfDone": "Four problems logged and the two-stack queue working and explained.",
+      "status": "Not started",
+      "priority": "High",
+      "plannedHours": 1.25,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-05-3",
+      "week": 5,
+      "area": "Job Search",
+      "title": "Nine, and adjust the targeting",
+      "detail": "Three sessions — Monday, Tuesday and Thursday — three applications each. Start every session by searching: half an hour on the boards and company careers pages, adding what you find to Companies. Then shortlist from both tracks together and apply to the best three that came up, whichever track they belong to. Review the response rate honestly: under 10% and the problem is targeting or the CV, not volume.",
+      "definitionOfDone": "Nine logged, plus one written decision about what changes in your targeting.",
+      "status": "Not started",
+      "priority": "Critical",
+      "plannedHours": 5.75,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-05-4",
+      "week": 5,
+      "area": "Networking",
+      "title": "Six, plus your first informational call",
+      "detail": "Six messages, and hold the call you booked. Prepare five questions and take notes afterwards.",
+      "definitionOfDone": "Six sent, one call held, notes written into the contact record.",
+      "status": "Not started",
+      "priority": "High",
+      "plannedHours": 2.5,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-05-oss",
+      "week": 5,
+      "area": "Contributions",
+      "title": "Find three projects worth your time",
+      "detail": "Shortlist three tools you actually use — Zustand, Vitest, Prisma, whatever is in your stack. Read each CONTRIBUTING.md and note the test and commit conventions.",
+      "definitionOfDone": "Three projects shortlisted, each with its contribution rules read and summarised in a line.",
       "status": "Not started",
       "priority": "Medium",
       "plannedHours": 1.0,
@@ -285,90 +610,116 @@ export const seedState: AppState = {
       "notes": ""
     },
     {
-      "id": "g-014",
-      "week": 2,
-      "area": "Review",
-      "title": "Close the week honestly",
-      "detail": "Thirty minutes. The numbers come from the app; the lesson has to come from you. A blank 'main blocker' on a hard week is the one thing that makes this whole system useless.",
-      "definitionOfDone": "Weekly review saved with a real lesson and a real blocker — not blanks.",
-      "status": "Not started",
-      "priority": "High",
-      "plannedHours": 0.5,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-015",
-      "week": 3,
-      "area": "Project",
-      "title": "Let a real user log in",
-      "detail": "Registration, login, logout. Hash the passwords with bcrypt or argon2 — never store them raw. Keep the session in an httpOnly cookie, not localStorage, and be able to explain why in an interview.",
-      "definitionOfDone": "A user can register, log in, stay logged in and reach protected routes without a token in localStorage.",
-      "status": "Not started",
-      "priority": "Critical",
-      "plannedHours": 20.0,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-016",
-      "week": 3,
-      "area": "Learning",
-      "title": "How sessions actually work",
-      "detail": "Password hashing, cookies vs localStorage, what httpOnly and SameSite buy you. You will be asked this in an interview.",
-      "definitionOfDone": "Notes or code in the repo that show the idea applied to this project, not just read.",
-      "status": "Not started",
-      "priority": "High",
-      "plannedHours": 7.0,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-017",
-      "week": 3,
-      "area": "Job Search",
-      "title": "Send five tailored applications",
-      "detail": "Four hours, five applications — about forty-five minutes each. That is deliberate: five tailored beats fifteen generic, because the generic ones never get read. Rewrite the resume bullets and the opening line for the specific product, using the 'Why it fits' note on the company. Log every one the moment you send it.",
-      "definitionOfDone": "Five applications logged, each with a job URL and the resume version used.",
-      "status": "Not started",
-      "priority": "Critical",
-      "plannedHours": 4.0,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-018",
-      "week": 3,
-      "area": "Networking",
-      "title": "Reach six people, follow up with two",
-      "detail": "Peer first, manager or recruiter second. Start from the templates in Resources, then change at least one sentence to something only you could have written — mention the actual product, the actual problem. Ask for advice in a first message, never a referral.",
-      "definitionOfDone": "Six messages and two follow-ups logged, and at least one informational call on the calendar.",
-      "status": "Not started",
-      "priority": "High",
-      "plannedHours": 3.0,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-019",
-      "week": 3,
+      "id": "g-05-5",
+      "week": 5,
       "area": "Interview Prep",
-      "title": "Explain your work out loud, in English",
-      "detail": "Thirty minutes, Monday to Thursday. Record yourself explaining what you built that day — out loud, in English, no script. Play it back. Note the one word you reached for and could not find. That list is your real curriculum; fluency comes from the replay, not the recording.",
-      "definitionOfDone": "Four recordings, and a running list of the words and phrases you got stuck on.",
+      "title": "Technical: narrating a decision",
+      "detail": "Explain one real decision from Northstar — what you chose, what you rejected, why — as a two-minute answer, as if a technical interviewer just asked for it.",
+      "definitionOfDone": "One ADR-worthy decision explained clearly in under two minutes, recorded.",
+      "status": "Not started",
+      "priority": "Critical",
+      "plannedHours": 3.75,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-05-6",
+      "week": 5,
+      "area": "Portfolio",
+      "title": "Post, and refresh the screenshots",
+      "detail": "Post about error handling and debugging. Retake every screenshot — the app has changed a lot.",
+      "definitionOfDone": "Post published and current screenshots everywhere they appear.",
       "status": "Not started",
       "priority": "Medium",
-      "plannedHours": 2.0,
+      "plannedHours": 1.25,
       "evidenceUrl": "",
       "notes": ""
     },
     {
-      "id": "g-020",
-      "week": 3,
-      "area": "Portfolio",
-      "title": "Leave a public trace of the week",
-      "detail": "Friday, one hour. Update the README, close the issues you genuinely finished, push. Then one public thing: a progress note, or a small open-source contribution. Documentation and tests count.",
-      "definitionOfDone": "Commits pushed, and the repo reads like somebody maintains it.",
+      "id": "g-05-7",
+      "week": 5,
+      "area": "Review",
+      "title": "Close week 5",
+      "detail": "Halfway. The honest question: is the project or the job search the thing that is slipping?",
+      "definitionOfDone": "Review saved with an explicit halfway judgement.",
+      "status": "Not started",
+      "priority": "High",
+      "plannedHours": 1.25,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-06-1",
+      "week": 6,
+      "area": "Project",
+      "title": "Numbers that answer questions",
+      "detail": "Move the funnel and outreach maths to the server, then add filters, search, sorting and pagination to applications, contacts and companies.",
+      "definitionOfDone": "Every table filters and paginates against the database, and the dashboard numbers match what the tables show.",
+      "status": "Not started",
+      "priority": "Critical",
+      "plannedHours": 18.75,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-06-2",
+      "week": 6,
+      "area": "Learning",
+      "title": "React, state and performance",
+      "detail": "The React path plus Zustand and Redux Toolkit: when global state is worth it, and how re-renders actually work.",
+      "definitionOfDone": "You can explain why a component re-rendered, using the profiler rather than guessing.",
+      "status": "Not started",
+      "priority": "High",
+      "plannedHours": 4.5,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-06-algo",
+      "week": 6,
+      "area": "Algorithms",
+      "title": "Chapter 4 — Trees and Graphs, part one",
+      "detail": "Problems 4.1 to 4.3. Draw each tree on paper first — the drawing is what makes the recursion obvious.",
+      "definitionOfDone": "Depth-first and breadth-first traversal written from memory, recursive and iterative.",
+      "status": "Not started",
+      "priority": "High",
+      "plannedHours": 1.25,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-06-3",
+      "week": 6,
+      "area": "Job Search",
+      "title": "Nine, chosen with your own metrics",
+      "detail": "Three sessions — Monday, Tuesday and Thursday — three applications each. Start every session by searching: half an hour on the boards and company careers pages, adding what you find to Companies. Then shortlist from both tracks together and apply to the best three that came up, whichever track they belong to. Use the filters and metrics you built this week to shortlist, rather than picking by feel.",
+      "definitionOfDone": "Nine logged, selected using your own dashboard, and you can explain why those nine.",
+      "status": "Not started",
+      "priority": "Critical",
+      "plannedHours": 5.75,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-06-4",
+      "week": 6,
+      "area": "Networking",
+      "title": "Six, and show your work",
+      "detail": "Six messages. Share the metrics screen you just built with a peer contact and ask what they would add.",
+      "definitionOfDone": "Six sent, and one conversation where you shared something you built.",
+      "status": "Not started",
+      "priority": "High",
+      "plannedHours": 2.5,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-06-oss",
+      "week": 6,
+      "area": "Contributions",
+      "title": "Get someone else's codebase running",
+      "detail": "Pick one of the three. Clone it, follow its setup, and get the full test suite green before changing a single line.",
+      "definitionOfDone": "The project builds and its tests pass on your machine, with the setup gotchas written down.",
       "status": "Not started",
       "priority": "Medium",
       "plannedHours": 1.0,
@@ -376,90 +727,116 @@ export const seedState: AppState = {
       "notes": ""
     },
     {
-      "id": "g-021",
-      "week": 3,
-      "area": "Review",
-      "title": "Close the week honestly",
-      "detail": "Thirty minutes. The numbers come from the app; the lesson has to come from you. A blank 'main blocker' on a hard week is the one thing that makes this whole system useless.",
-      "definitionOfDone": "Weekly review saved with a real lesson and a real blocker — not blanks.",
-      "status": "Not started",
-      "priority": "High",
-      "plannedHours": 0.5,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-022",
-      "week": 4,
-      "area": "Project",
-      "title": "Make sure your data is only yours",
-      "detail": "Every single query gets scoped to the signed-in user. Then write the test that tries to read someone else's data and proves it fails. Add Helmet, rate limiting and body-size limits.",
-      "definitionOfDone": "User A cannot read or change User B's data, and there is a test that proves it.",
-      "status": "Not started",
-      "priority": "Critical",
-      "plannedHours": 20.0,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-023",
-      "week": 4,
-      "area": "Learning",
-      "title": "Authorization, and the OWASP basics",
-      "detail": "The difference between who you are and what you may touch. Read the OWASP Top 10 and find which ones your own app is exposed to.",
-      "definitionOfDone": "Notes or code in the repo that show the idea applied to this project, not just read.",
-      "status": "Not started",
-      "priority": "High",
-      "plannedHours": 7.0,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-024",
-      "week": 4,
-      "area": "Job Search",
-      "title": "Send five tailored applications",
-      "detail": "Four hours, five applications — about forty-five minutes each. That is deliberate: five tailored beats fifteen generic, because the generic ones never get read. Rewrite the resume bullets and the opening line for the specific product, using the 'Why it fits' note on the company. Log every one the moment you send it.",
-      "definitionOfDone": "Five applications logged, each with a job URL and the resume version used.",
-      "status": "Not started",
-      "priority": "Critical",
-      "plannedHours": 4.0,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-025",
-      "week": 4,
-      "area": "Networking",
-      "title": "Reach six people, follow up with two",
-      "detail": "Peer first, manager or recruiter second. Start from the templates in Resources, then change at least one sentence to something only you could have written — mention the actual product, the actual problem. Ask for advice in a first message, never a referral.",
-      "definitionOfDone": "Six messages and two follow-ups logged, and at least one informational call on the calendar.",
-      "status": "Not started",
-      "priority": "High",
-      "plannedHours": 3.0,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-026",
-      "week": 4,
+      "id": "g-06-5",
+      "week": 6,
       "area": "Interview Prep",
-      "title": "Explain your work out loud, in English",
-      "detail": "Thirty minutes, Monday to Thursday. Record yourself explaining what you built that day — out loud, in English, no script. Play it back. Note the one word you reached for and could not find. That list is your real curriculum; fluency comes from the replay, not the recording.",
-      "definitionOfDone": "Four recordings, and a running list of the words and phrases you got stuck on.",
+      "title": "Defending a choice under pushback",
+      "detail": "Hold your position when pushed back on or asked 'why not X instead', without getting flustered or caving instantly.",
+      "definitionOfDone": "Two pushbacks on week 5's decision, each answered in one breath, not three.",
+      "status": "Not started",
+      "priority": "Critical",
+      "plannedHours": 3.75,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-06-6",
+      "week": 6,
+      "area": "Portfolio",
+      "title": "Post, and record a short demo",
+      "detail": "Post about the metrics. Record a two-minute walkthrough of the dashboard and the filters.",
+      "definitionOfDone": "Post published and a two-minute demo recorded.",
       "status": "Not started",
       "priority": "Medium",
-      "plannedHours": 2.0,
+      "plannedHours": 1.25,
       "evidenceUrl": "",
       "notes": ""
     },
     {
-      "id": "g-027",
-      "week": 4,
-      "area": "Portfolio",
-      "title": "Leave a public trace of the week",
-      "detail": "Friday, one hour. Update the README, close the issues you genuinely finished, push. Then one public thing: a progress note, or a small open-source contribution. Documentation and tests count.",
-      "definitionOfDone": "Commits pushed, and the repo reads like somebody maintains it.",
+      "id": "g-06-7",
+      "week": 6,
+      "area": "Review",
+      "title": "Close week 6",
+      "detail": "Review, using your own metrics screen instead of counting by hand.",
+      "definitionOfDone": "Review saved and prefilled from the app's own numbers.",
+      "status": "Not started",
+      "priority": "High",
+      "plannedHours": 1.25,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-07-1",
+      "week": 7,
+      "area": "Project",
+      "title": "Prove it works",
+      "detail": "Vitest for lib/dates and lib/selectors, Supertest for the API and auth flows, one Playwright run through the happy path.",
+      "definitionOfDone": "Break something deliberately and a test goes red. One command runs the lot.",
+      "status": "Not started",
+      "priority": "Critical",
+      "plannedHours": 18.75,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-07-2",
+      "week": 7,
+      "area": "Learning",
+      "title": "Testing: Vitest and Playwright",
+      "detail": "The Vitest and Playwright paths, plus deciding your own policy on what is worth testing.",
+      "definitionOfDone": "You have a one-paragraph testing policy in the repo that you can defend.",
+      "status": "Not started",
+      "priority": "High",
+      "plannedHours": 4.5,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-07-algo",
+      "week": 7,
+      "area": "Algorithms",
+      "title": "Chapter 4 — Trees and Graphs, part two",
+      "detail": "Problems 4.4 to 4.5, plus revisit anything from part one you needed the answer for.",
+      "definitionOfDone": "Five problems logged and you can pick the right traversal for a new problem.",
+      "status": "Not started",
+      "priority": "High",
+      "plannedHours": 1.25,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-07-3",
+      "week": 7,
+      "area": "Job Search",
+      "title": "Nine, with screens in mind",
+      "detail": "Three sessions — Monday, Tuesday and Thursday — three applications each. Start every session by searching: half an hour on the boards and company careers pages, adding what you find to Companies. Then shortlist from both tracks together and apply to the best three that came up, whichever track they belong to. For each, note the likely first-round format so preparation is targeted rather than generic.",
+      "definitionOfDone": "Nine logged, each with the expected interview format in the notes.",
+      "status": "Not started",
+      "priority": "Critical",
+      "plannedHours": 5.75,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-07-4",
+      "week": 7,
+      "area": "Networking",
+      "title": "Six, about how they work",
+      "detail": "Six messages asking how their team handles testing and code review — genuinely useful, and it signals seriousness.",
+      "definitionOfDone": "Six sent, and one answer worth writing down.",
+      "status": "Not started",
+      "priority": "High",
+      "plannedHours": 2.5,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-07-oss",
+      "week": 7,
+      "area": "Contributions",
+      "title": "Claim the smallest useful issue",
+      "detail": "Find a good-first-issue, a broken link, a missing test or an unclear doc. Comment to claim it before you start — that's the etiquette.",
+      "definitionOfDone": "One issue claimed, with a comment from you saying what you intend to do.",
       "status": "Not started",
       "priority": "Medium",
       "plannedHours": 1.0,
@@ -467,454 +844,116 @@ export const seedState: AppState = {
       "notes": ""
     },
     {
-      "id": "g-028",
-      "week": 4,
-      "area": "Review",
-      "title": "Close the week honestly",
-      "detail": "Thirty minutes. The numbers come from the app; the lesson has to come from you. A blank 'main blocker' on a hard week is the one thing that makes this whole system useless.",
-      "definitionOfDone": "Weekly review saved with a real lesson and a real blocker — not blanks.",
-      "status": "Not started",
-      "priority": "High",
-      "plannedHours": 0.5,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-029",
-      "week": 5,
-      "area": "Project",
-      "title": "Stop trusting any input",
-      "detail": "Write Zod schemas once and use them on both the client and the server. Wire React Hook Form into every form. Error messages should say what to fix, not just 'invalid'.",
-      "definitionOfDone": "Invalid input is rejected the same way on both sides and the message says what to fix.",
-      "status": "Not started",
-      "priority": "Critical",
-      "plannedHours": 20.0,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-030",
-      "week": 5,
-      "area": "Learning",
-      "title": "Validation with Zod",
-      "detail": "Schema-first validation, inferring types from schemas, and sharing one definition across client and server.",
-      "definitionOfDone": "Notes or code in the repo that show the idea applied to this project, not just read.",
-      "status": "Not started",
-      "priority": "High",
-      "plannedHours": 7.0,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-031",
-      "week": 5,
-      "area": "Job Search",
-      "title": "Send five tailored applications",
-      "detail": "Four hours, five applications — about forty-five minutes each. That is deliberate: five tailored beats fifteen generic, because the generic ones never get read. Rewrite the resume bullets and the opening line for the specific product, using the 'Why it fits' note on the company. Log every one the moment you send it.",
-      "definitionOfDone": "Five applications logged, each with a job URL and the resume version used.",
-      "status": "Not started",
-      "priority": "Critical",
-      "plannedHours": 4.0,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-032",
-      "week": 5,
-      "area": "Networking",
-      "title": "Reach six people, follow up with two",
-      "detail": "Peer first, manager or recruiter second. Start from the templates in Resources, then change at least one sentence to something only you could have written — mention the actual product, the actual problem. Ask for advice in a first message, never a referral.",
-      "definitionOfDone": "Six messages and two follow-ups logged, and at least one informational call on the calendar.",
-      "status": "Not started",
-      "priority": "High",
-      "plannedHours": 3.0,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-033",
-      "week": 5,
-      "area": "Interview Prep",
-      "title": "Explain your work out loud, in English",
-      "detail": "Thirty minutes, Monday to Thursday. Record yourself explaining what you built that day — out loud, in English, no script. Play it back. Note the one word you reached for and could not find. That list is your real curriculum; fluency comes from the replay, not the recording.",
-      "definitionOfDone": "Four recordings, and a running list of the words and phrases you got stuck on.",
-      "status": "Not started",
-      "priority": "Medium",
-      "plannedHours": 2.0,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-034",
-      "week": 5,
-      "area": "Portfolio",
-      "title": "Leave a public trace of the week",
-      "detail": "Friday, one hour. Update the README, close the issues you genuinely finished, push. Then one public thing: a progress note, or a small open-source contribution. Documentation and tests count.",
-      "definitionOfDone": "Commits pushed, and the repo reads like somebody maintains it.",
-      "status": "Not started",
-      "priority": "Medium",
-      "plannedHours": 1.0,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-035",
-      "week": 5,
-      "area": "Review",
-      "title": "Close the week honestly",
-      "detail": "Thirty minutes. The numbers come from the app; the lesson has to come from you. A blank 'main blocker' on a hard week is the one thing that makes this whole system useless.",
-      "definitionOfDone": "Weekly review saved with a real lesson and a real blocker — not blanks.",
-      "status": "Not started",
-      "priority": "High",
-      "plannedHours": 0.5,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-036",
-      "week": 6,
-      "area": "Project",
-      "title": "Make failure boring",
-      "detail": "Typed error classes, one global error handler, real logging. When the API is down, the UI should say so and offer a retry — not spin forever or show a blank screen.",
-      "definitionOfDone": "Every failure produces a consistent code, HTTP status and user-facing message.",
-      "status": "Not started",
-      "priority": "Critical",
-      "plannedHours": 20.0,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-037",
-      "week": 6,
-      "area": "Learning",
-      "title": "Error handling patterns",
-      "detail": "Error types, boundaries, and what to log versus what to show. Study how a tool you use does it — Sentry's own docs are a good place to start.",
-      "definitionOfDone": "Notes or code in the repo that show the idea applied to this project, not just read.",
-      "status": "Not started",
-      "priority": "High",
-      "plannedHours": 7.0,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-038",
-      "week": 6,
-      "area": "Job Search",
-      "title": "Send five tailored applications",
-      "detail": "Four hours, five applications — about forty-five minutes each. That is deliberate: five tailored beats fifteen generic, because the generic ones never get read. Rewrite the resume bullets and the opening line for the specific product, using the 'Why it fits' note on the company. Log every one the moment you send it.",
-      "definitionOfDone": "Five applications logged, each with a job URL and the resume version used.",
-      "status": "Not started",
-      "priority": "Critical",
-      "plannedHours": 4.0,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-039",
-      "week": 6,
-      "area": "Networking",
-      "title": "Reach six people, follow up with two",
-      "detail": "Peer first, manager or recruiter second. Start from the templates in Resources, then change at least one sentence to something only you could have written — mention the actual product, the actual problem. Ask for advice in a first message, never a referral.",
-      "definitionOfDone": "Six messages and two follow-ups logged, and at least one informational call on the calendar.",
-      "status": "Not started",
-      "priority": "High",
-      "plannedHours": 3.0,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-040",
-      "week": 6,
-      "area": "Interview Prep",
-      "title": "Explain your work out loud, in English",
-      "detail": "Thirty minutes, Monday to Thursday. Record yourself explaining what you built that day — out loud, in English, no script. Play it back. Note the one word you reached for and could not find. That list is your real curriculum; fluency comes from the replay, not the recording.",
-      "definitionOfDone": "Four recordings, and a running list of the words and phrases you got stuck on.",
-      "status": "Not started",
-      "priority": "Medium",
-      "plannedHours": 2.0,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-041",
-      "week": 6,
-      "area": "Portfolio",
-      "title": "Leave a public trace of the week",
-      "detail": "Friday, one hour. Update the README, close the issues you genuinely finished, push. Then one public thing: a progress note, or a small open-source contribution. Documentation and tests count.",
-      "definitionOfDone": "Commits pushed, and the repo reads like somebody maintains it.",
-      "status": "Not started",
-      "priority": "Medium",
-      "plannedHours": 1.0,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-042",
-      "week": 6,
-      "area": "Review",
-      "title": "Close the week honestly",
-      "detail": "Thirty minutes. The numbers come from the app; the lesson has to come from you. A blank 'main blocker' on a hard week is the one thing that makes this whole system useless.",
-      "definitionOfDone": "Weekly review saved with a real lesson and a real blocker — not blanks.",
-      "status": "Not started",
-      "priority": "High",
-      "plannedHours": 0.5,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-043",
-      "week": 7,
-      "area": "Project",
-      "title": "Turn the log into a signal",
-      "detail": "Build the funnel: applications sent, response rate, time to first reply, stage breakdown. Add filters, search and sorting. This is the feature that makes the app worth using.",
-      "definitionOfDone": "You can answer 'is my targeting working?' from the dashboard alone, in under a minute.",
-      "status": "Not started",
-      "priority": "Critical",
-      "plannedHours": 20.0,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-044",
-      "week": 7,
-      "area": "Learning",
-      "title": "Honest metrics and visualisation",
-      "detail": "Which numbers change a decision and which just look busy. Then the Recharts API for the ones that survive.",
-      "definitionOfDone": "Notes or code in the repo that show the idea applied to this project, not just read.",
-      "status": "Not started",
-      "priority": "High",
-      "plannedHours": 7.0,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-045",
-      "week": 7,
-      "area": "Job Search",
-      "title": "Send five tailored applications",
-      "detail": "Four hours, five applications — about forty-five minutes each. That is deliberate: five tailored beats fifteen generic, because the generic ones never get read. Rewrite the resume bullets and the opening line for the specific product, using the 'Why it fits' note on the company. Log every one the moment you send it.",
-      "definitionOfDone": "Five applications logged, each with a job URL and the resume version used.",
-      "status": "Not started",
-      "priority": "Critical",
-      "plannedHours": 4.0,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-046",
-      "week": 7,
-      "area": "Networking",
-      "title": "Reach six people, follow up with two",
-      "detail": "Peer first, manager or recruiter second. Start from the templates in Resources, then change at least one sentence to something only you could have written — mention the actual product, the actual problem. Ask for advice in a first message, never a referral.",
-      "definitionOfDone": "Six messages and two follow-ups logged, and at least one informational call on the calendar.",
-      "status": "Not started",
-      "priority": "High",
-      "plannedHours": 3.0,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-047",
+      "id": "g-07-5",
       "week": 7,
       "area": "Interview Prep",
-      "title": "Explain your work out loud, in English",
-      "detail": "Thirty minutes, Monday to Thursday. Record yourself explaining what you built that day — out loud, in English, no script. Play it back. Note the one word you reached for and could not find. That list is your real curriculum; fluency comes from the replay, not the recording.",
-      "definitionOfDone": "Four recordings, and a running list of the words and phrases you got stuck on.",
+      "title": "The vocabulary of architecture",
+      "detail": "Say middleware, schema, authentication, deploy, trade-off and scale without effort, mid-sentence.",
+      "definitionOfDone": "Ten terms drilled on YouGlish, the hard ones added to Anki.",
       "status": "Not started",
-      "priority": "Medium",
-      "plannedHours": 2.0,
+      "priority": "Critical",
+      "plannedHours": 3.75,
       "evidenceUrl": "",
       "notes": ""
     },
     {
-      "id": "g-048",
+      "id": "g-07-6",
       "week": 7,
       "area": "Portfolio",
-      "title": "Leave a public trace of the week",
-      "detail": "Friday, one hour. Update the README, close the issues you genuinely finished, push. Then one public thing: a progress note, or a small open-source contribution. Documentation and tests count.",
-      "definitionOfDone": "Commits pushed, and the repo reads like somebody maintains it.",
+      "title": "Post about testing",
+      "detail": "Write about what you chose to test and what you deliberately did not. Add the coverage or CI badge.",
+      "definitionOfDone": "Post published and a badge in the README that reflects reality.",
       "status": "Not started",
       "priority": "Medium",
-      "plannedHours": 1.0,
+      "plannedHours": 1.25,
       "evidenceUrl": "",
       "notes": ""
     },
     {
-      "id": "g-049",
+      "id": "g-07-7",
       "week": 7,
       "area": "Review",
-      "title": "Close the week honestly",
-      "detail": "Thirty minutes. The numbers come from the app; the lesson has to come from you. A blank 'main blocker' on a hard week is the one thing that makes this whole system useless.",
-      "definitionOfDone": "Weekly review saved with a real lesson and a real blocker — not blanks.",
+      "title": "Close week 7",
+      "detail": "Review. Three weeks left — decide now what gets cut if time runs short.",
+      "definitionOfDone": "Review saved and a written list of what is expendable.",
       "status": "Not started",
       "priority": "High",
-      "plannedHours": 0.5,
+      "plannedHours": 1.25,
       "evidenceUrl": "",
       "notes": ""
     },
     {
-      "id": "g-050",
+      "id": "g-08-1",
       "week": 8,
       "area": "Project",
-      "title": "Prove the critical paths work",
-      "detail": "Unit tests for the logic, Supertest for the API, Playwright for the flows that matter: register, log in, add an application, see it in the funnel. Aim for confidence, not a coverage number.",
-      "definitionOfDone": "Register, log in, add an application and see it in the funnel — all pass automatically.",
+      "title": "Make it reproducible",
+      "detail": "A multi-stage Dockerfile with a non-root user, a Compose file with PostgreSQL, and a GitHub Actions workflow for lint, typecheck and tests.",
+      "definitionOfDone": "A fresh clone runs with docker compose up, and a pull request shows green checks without you doing anything.",
       "status": "Not started",
       "priority": "Critical",
-      "plannedHours": 20.0,
+      "plannedHours": 18.75,
       "evidenceUrl": "",
       "notes": ""
     },
     {
-      "id": "g-051",
+      "id": "g-08-2",
       "week": 8,
-      "area": "Learning",
-      "title": "Testing, without the dogma",
-      "detail": "Vitest, Supertest, Playwright. What deserves a test, what does not, and why the pyramid is a guideline and not a law.",
-      "definitionOfDone": "Notes or code in the repo that show the idea applied to this project, not just read.",
-      "status": "Not started",
-      "priority": "High",
-      "plannedHours": 7.0,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-052",
-      "week": 8,
-      "area": "Job Search",
-      "title": "Send five tailored applications",
-      "detail": "Four hours, five applications — about forty-five minutes each. That is deliberate: five tailored beats fifteen generic, because the generic ones never get read. Rewrite the resume bullets and the opening line for the specific product, using the 'Why it fits' note on the company. Log every one the moment you send it.",
-      "definitionOfDone": "Five applications logged, each with a job URL and the resume version used.",
-      "status": "Not started",
-      "priority": "Critical",
-      "plannedHours": 4.0,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-053",
-      "week": 8,
-      "area": "Networking",
-      "title": "Reach six people, follow up with two",
-      "detail": "Peer first, manager or recruiter second. Start from the templates in Resources, then change at least one sentence to something only you could have written — mention the actual product, the actual problem. Ask for advice in a first message, never a referral.",
-      "definitionOfDone": "Six messages and two follow-ups logged, and at least one informational call on the calendar.",
-      "status": "Not started",
-      "priority": "High",
-      "plannedHours": 3.0,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-054",
-      "week": 8,
-      "area": "Interview Prep",
-      "title": "Explain your work out loud, in English",
-      "detail": "Thirty minutes, Monday to Thursday. Record yourself explaining what you built that day — out loud, in English, no script. Play it back. Note the one word you reached for and could not find. That list is your real curriculum; fluency comes from the replay, not the recording.",
-      "definitionOfDone": "Four recordings, and a running list of the words and phrases you got stuck on.",
-      "status": "Not started",
-      "priority": "Medium",
-      "plannedHours": 2.0,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-055",
-      "week": 8,
-      "area": "Portfolio",
-      "title": "Leave a public trace of the week",
-      "detail": "Friday, one hour. Update the README, close the issues you genuinely finished, push. Then one public thing: a progress note, or a small open-source contribution. Documentation and tests count.",
-      "definitionOfDone": "Commits pushed, and the repo reads like somebody maintains it.",
-      "status": "Not started",
-      "priority": "Medium",
-      "plannedHours": 1.0,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-056",
-      "week": 8,
-      "area": "Review",
-      "title": "Close the week honestly",
-      "detail": "Thirty minutes. The numbers come from the app; the lesson has to come from you. A blank 'main blocker' on a hard week is the one thing that makes this whole system useless.",
-      "definitionOfDone": "Weekly review saved with a real lesson and a real blocker — not blanks.",
-      "status": "Not started",
-      "priority": "High",
-      "plannedHours": 0.5,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-057",
-      "week": 9,
-      "area": "Project",
-      "title": "Put it on the internet",
-      "detail": "Dockerfile, GitHub Actions pipeline, a managed Postgres, and a health endpoint. The deploy has to be repeatable from a clean checkout — that is the whole point.",
-      "definitionOfDone": "A public URL, a green pipeline, and a deploy you can repeat from scratch.",
-      "status": "Not started",
-      "priority": "Critical",
-      "plannedHours": 20.0,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-058",
-      "week": 9,
       "area": "Learning",
       "title": "Docker and CI/CD",
-      "detail": "Images, layers, environment variables, secrets. What a pipeline should block a merge for.",
-      "definitionOfDone": "Notes or code in the repo that show the idea applied to this project, not just read.",
+      "detail": "The Docker path — layers, caching, non-root users, multi-stage builds — then GitHub Actions caching and fail-fast.",
+      "definitionOfDone": "You can explain why your image is small and why your pipeline is fast.",
       "status": "Not started",
       "priority": "High",
-      "plannedHours": 7.0,
+      "plannedHours": 4.5,
       "evidenceUrl": "",
       "notes": ""
     },
     {
-      "id": "g-059",
-      "week": 9,
+      "id": "g-08-algo",
+      "week": 8,
+      "area": "Algorithms",
+      "title": "Chapter 10 — Sorting and Searching",
+      "detail": "Problems 10.1 to 10.4. Implement binary search from memory and test the off-by-one boundaries deliberately.",
+      "definitionOfDone": "Binary search written correctly first time, boundaries tested.",
+      "status": "Not started",
+      "priority": "High",
+      "plannedHours": 1.25,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-08-3",
+      "week": 8,
       "area": "Job Search",
-      "title": "Send five tailored applications",
-      "detail": "Four hours, five applications — about forty-five minutes each. That is deliberate: five tailored beats fifteen generic, because the generic ones never get read. Rewrite the resume bullets and the opening line for the specific product, using the 'Why it fits' note on the company. Log every one the moment you send it.",
-      "definitionOfDone": "Five applications logged, each with a job URL and the resume version used.",
+      "title": "Nine, and ask for referrals",
+      "detail": "Three sessions — Monday, Tuesday and Thursday — three applications each. Start every session by searching: half an hour on the boards and company careers pages, adding what you find to Companies. Then shortlist from both tracks together and apply to the best three that came up, whichever track they belong to. Ask the contacts who actually replied whether a referral would be appropriate — after a conversation, never cold.",
+      "definitionOfDone": "Nine logged and at least one referral conversation opened.",
       "status": "Not started",
       "priority": "Critical",
-      "plannedHours": 4.0,
+      "plannedHours": 5.75,
       "evidenceUrl": "",
       "notes": ""
     },
     {
-      "id": "g-060",
-      "week": 9,
+      "id": "g-08-4",
+      "week": 8,
       "area": "Networking",
-      "title": "Reach six people, follow up with two",
-      "detail": "Peer first, manager or recruiter second. Start from the templates in Resources, then change at least one sentence to something only you could have written — mention the actual product, the actual problem. Ask for advice in a first message, never a referral.",
-      "definitionOfDone": "Six messages and two follow-ups logged, and at least one informational call on the calendar.",
+      "title": "Six, and revive the dormant ones",
+      "detail": "Six new messages, plus reconnect with contacts who went quiet. A short update on what you shipped is a legitimate reason to write.",
+      "definitionOfDone": "Six sent and three dormant contacts re-approached.",
       "status": "Not started",
       "priority": "High",
-      "plannedHours": 3.0,
+      "plannedHours": 2.5,
       "evidenceUrl": "",
       "notes": ""
     },
     {
-      "id": "g-061",
-      "week": 9,
-      "area": "Interview Prep",
-      "title": "Explain your work out loud, in English",
-      "detail": "Thirty minutes, Monday to Thursday. Record yourself explaining what you built that day — out loud, in English, no script. Play it back. Note the one word you reached for and could not find. That list is your real curriculum; fluency comes from the replay, not the recording.",
-      "definitionOfDone": "Four recordings, and a running list of the words and phrases you got stuck on.",
-      "status": "Not started",
-      "priority": "Medium",
-      "plannedHours": 2.0,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-062",
-      "week": 9,
-      "area": "Portfolio",
-      "title": "Leave a public trace of the week",
-      "detail": "Friday, one hour. Update the README, close the issues you genuinely finished, push. Then one public thing: a progress note, or a small open-source contribution. Documentation and tests count.",
-      "definitionOfDone": "Commits pushed, and the repo reads like somebody maintains it.",
+      "id": "g-08-oss",
+      "week": 8,
+      "area": "Contributions",
+      "title": "Open the pull request",
+      "detail": "Small is the point; the workflow is what you're learning. Follow their commit convention, run their linter, write a description with context and testing.",
+      "definitionOfDone": "One PR open, following the project's own conventions, with a description a maintainer can act on.",
       "status": "Not started",
       "priority": "Medium",
       "plannedHours": 1.0,
@@ -922,90 +961,233 @@ export const seedState: AppState = {
       "notes": ""
     },
     {
-      "id": "g-063",
-      "week": 9,
-      "area": "Review",
-      "title": "Close the week honestly",
-      "detail": "Thirty minutes. The numbers come from the app; the lesson has to come from you. A blank 'main blocker' on a hard week is the one thing that makes this whole system useless.",
-      "definitionOfDone": "Weekly review saved with a real lesson and a real blocker — not blanks.",
+      "id": "g-08-5",
+      "week": 8,
+      "area": "Interview Prep",
+      "title": "Buying time without going silent",
+      "detail": "Have phrases ready for when you need a moment, instead of freezing or saying 'um' for five seconds.",
+      "definitionOfDone": "Both buying-time phrases used naturally on camera, at least once each.",
       "status": "Not started",
-      "priority": "High",
-      "plannedHours": 0.5,
+      "priority": "Critical",
+      "plannedHours": 3.75,
       "evidenceUrl": "",
       "notes": ""
     },
     {
-      "id": "g-064",
+      "id": "g-08-6",
+      "week": 8,
+      "area": "Portfolio",
+      "title": "Post, and document the setup",
+      "detail": "Post about Docker and CI. Rewrite the setup instructions and verify them on a clean clone.",
+      "definitionOfDone": "Post published and setup instructions that work from scratch.",
+      "status": "Not started",
+      "priority": "Medium",
+      "plannedHours": 1.25,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-08-7",
+      "week": 8,
+      "area": "Review",
+      "title": "Close week 8",
+      "detail": "Review. Everything from here should be about finishing, not starting.",
+      "definitionOfDone": "Review saved with nothing new added to the scope.",
+      "status": "Not started",
+      "priority": "High",
+      "plannedHours": 1.25,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-09-1",
+      "week": 9,
+      "area": "Project",
+      "title": "Put it in front of people",
+      "detail": "Deploy PostgreSQL, the API and the frontend. Production environment variables, migrations on release, a health endpoint and a seeded demo account.",
+      "definitionOfDone": "The live URL works from someone else's machine, and the demo account shows a full app rather than empty tables.",
+      "status": "Not started",
+      "priority": "Critical",
+      "plannedHours": 18.75,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-09-2",
+      "week": 9,
+      "area": "Learning",
+      "title": "Deployment and the hosting landscape",
+      "detail": "The Vercel, Netlify and Render sessions: what each is good at, environment configuration, secrets and zero-downtime migrations.",
+      "definitionOfDone": "You can explain what happens on deploy, in order, without notes.",
+      "status": "Not started",
+      "priority": "High",
+      "plannedHours": 4.5,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-09-algo",
+      "week": 9,
+      "area": "Algorithms",
+      "title": "Chapter 8 — Recursion and Dynamic Programming",
+      "detail": "Problems 8.1 to 8.5. Write the naive recursion first, then memoise it and compare the run times.",
+      "definitionOfDone": "You can spot overlapping subproblems and turn a recursion into a memoised solution.",
+      "status": "Not started",
+      "priority": "High",
+      "plannedHours": 1.25,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-09-3",
+      "week": 9,
+      "area": "Job Search",
+      "title": "Nine, now with a live URL",
+      "detail": "Three sessions — Monday, Tuesday and Thursday — three applications each. Start every session by searching: half an hour on the boards and company careers pages, adding what you find to Companies. Then shortlist from both tracks together and apply to the best three that came up, whichever track they belong to. Every application links the deployed app and the demo account. A working link beats any description.",
+      "definitionOfDone": "Nine logged, every one including the live URL.",
+      "status": "Not started",
+      "priority": "Critical",
+      "plannedHours": 5.75,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-09-4",
+      "week": 9,
+      "area": "Networking",
+      "title": "Six, with the demo",
+      "detail": "Six messages including the live URL. You now have something concrete to show rather than describe.",
+      "definitionOfDone": "Six sent, each including the deployed link.",
+      "status": "Not started",
+      "priority": "High",
+      "plannedHours": 2.5,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-09-oss",
+      "week": 9,
+      "area": "Contributions",
+      "title": "Take the review well",
+      "detail": "Address every comment, push the fixes, thank the reviewer. Disagreeing is fine — do it with a reason, not a defence.",
+      "definitionOfDone": "Every review comment addressed, and the lesson from it written into the contribution record.",
+      "status": "Not started",
+      "priority": "Medium",
+      "plannedHours": 1.0,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-09-5",
+      "week": 9,
+      "area": "Interview Prep",
+      "title": "Questions for them, delivered well",
+      "detail": "Ask two prepared questions about a real Tier A company fluently, not read off a note.",
+      "definitionOfDone": "Three company-specific questions written and rehearsed until they don't sound memorised.",
+      "status": "Not started",
+      "priority": "Critical",
+      "plannedHours": 3.75,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-09-6",
+      "week": 9,
+      "area": "Portfolio",
+      "title": "Launch the live URL",
+      "detail": "Post the deployed link publicly, with the demo account. This is the week the project stops being private.",
+      "definitionOfDone": "The live URL published, working from a machine that is not yours.",
+      "status": "Not started",
+      "priority": "Medium",
+      "plannedHours": 1.25,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-09-7",
+      "week": 9,
+      "area": "Review",
+      "title": "Close week 9",
+      "detail": "Review. The app is live — check what a stranger sees, not what you remember building.",
+      "definitionOfDone": "Review saved after actually using the deployed app as a visitor.",
+      "status": "Not started",
+      "priority": "High",
+      "plannedHours": 1.25,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-10-1",
       "week": 10,
       "area": "Project",
-      "title": "Make it readable by a stranger",
-      "detail": "README with setup and architecture, an ERD, a diagram, notes on the security and testing decisions, a demo account, and an honest section on what you would do differently. This is what gets read before you do.",
-      "definitionOfDone": "A hiring manager can understand the project in two minutes without you in the room.",
+      "title": "Finish it properly",
+      "detail": "README with problem, stack, setup, architecture and trade-offs. Mermaid architecture diagram and ERD. Then the portfolio case study.",
+      "definitionOfDone": "Someone who has never seen the repo can run it and explain back what it does and one decision you made.",
       "status": "Not started",
       "priority": "Critical",
-      "plannedHours": 20.0,
+      "plannedHours": 18.75,
       "evidenceUrl": "",
       "notes": ""
     },
     {
-      "id": "g-065",
+      "id": "g-10-2",
       "week": 10,
       "area": "Learning",
-      "title": "Explaining technical work",
-      "detail": "Write the README as if for a stranger who has fifteen minutes. Clear writing is the same skill as a clear interview answer.",
-      "definitionOfDone": "Notes or code in the repo that show the idea applied to this project, not just read.",
+      "title": "CSS polish and technical writing",
+      "detail": "Finish the CSS and accessibility paths, then Google Technical Writing One and three Architecture Decision Records.",
+      "definitionOfDone": "Three ADRs in the repo, each naming the option you rejected and why.",
       "status": "Not started",
       "priority": "High",
-      "plannedHours": 7.0,
+      "plannedHours": 4.5,
       "evidenceUrl": "",
       "notes": ""
     },
     {
-      "id": "g-066",
+      "id": "g-10-algo",
+      "week": 10,
+      "area": "Algorithms",
+      "title": "Chapter 7 — Object-Oriented Design, and solving out loud",
+      "detail": "Problems 7.1 to 7.3, then solve one earlier problem on camera in English. Ties into the English track.",
+      "definitionOfDone": "Three design problems sketched, and one recorded solve narrated end to end in English.",
+      "status": "Not started",
+      "priority": "High",
+      "plannedHours": 1.25,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-10-3",
       "week": 10,
       "area": "Job Search",
-      "title": "Send five tailored applications",
-      "detail": "Four hours, five applications — about forty-five minutes each. That is deliberate: five tailored beats fifteen generic, because the generic ones never get read. Rewrite the resume bullets and the opening line for the specific product, using the 'Why it fits' note on the company. Log every one the moment you send it.",
-      "definitionOfDone": "Five applications logged, each with a job URL and the resume version used.",
+      "title": "Nine, with the case study",
+      "detail": "Three sessions — Monday, Tuesday and Thursday — three applications each. Start every session by searching: half an hour on the boards and company careers pages, adding what you find to Companies. Then shortlist from both tracks together and apply to the best three that came up, whichever track they belong to. Every application links the finished case study. Then a retrospective on ten weeks of applying.",
+      "definitionOfDone": "Nine logged, and the full-period response rate for both tracks written into the final review.",
       "status": "Not started",
       "priority": "Critical",
-      "plannedHours": 4.0,
+      "plannedHours": 5.75,
       "evidenceUrl": "",
       "notes": ""
     },
     {
-      "id": "g-067",
+      "id": "g-10-4",
       "week": 10,
       "area": "Networking",
-      "title": "Reach six people, follow up with two",
-      "detail": "Peer first, manager or recruiter second. Start from the templates in Resources, then change at least one sentence to something only you could have written — mention the actual product, the actual problem. Ask for advice in a first message, never a referral.",
-      "definitionOfDone": "Six messages and two follow-ups logged, and at least one informational call on the calendar.",
+      "title": "Six, and the ask",
+      "detail": "Six messages with the case study. Where you have had a real conversation, ask directly about referrals and openings.",
+      "definitionOfDone": "Six sent, and a retrospective of what worked in ten weeks of outreach.",
       "status": "Not started",
       "priority": "High",
-      "plannedHours": 3.0,
+      "plannedHours": 2.5,
       "evidenceUrl": "",
       "notes": ""
     },
     {
-      "id": "g-068",
+      "id": "g-10-oss",
       "week": 10,
-      "area": "Interview Prep",
-      "title": "Explain your work out loud, in English",
-      "detail": "Thirty minutes, Monday to Thursday. Record yourself explaining what you built that day — out loud, in English, no script. Play it back. Note the one word you reached for and could not find. That list is your real curriculum; fluency comes from the replay, not the recording.",
-      "definitionOfDone": "Four recordings, and a running list of the words and phrases you got stuck on.",
-      "status": "Not started",
-      "priority": "Medium",
-      "plannedHours": 2.0,
-      "evidenceUrl": "",
-      "notes": ""
-    },
-    {
-      "id": "g-069",
-      "week": 10,
-      "area": "Portfolio",
-      "title": "Leave a public trace of the week",
-      "detail": "Friday, one hour. Update the README, close the issues you genuinely finished, push. Then one public thing: a progress note, or a small open-source contribution. Documentation and tests count.",
-      "definitionOfDone": "Commits pushed, and the repo reads like somebody maintains it.",
+      "area": "Contributions",
+      "title": "Get it merged, and write it up",
+      "detail": "Chase politely if it's gone quiet. Once merged, add it to your CV and be ready to describe the codebase and the feedback.",
+      "definitionOfDone": "One contribution merged and linked from your CV, and you can talk through it in an interview.",
       "status": "Not started",
       "priority": "Medium",
       "plannedHours": 1.0,
@@ -1013,15 +1195,41 @@ export const seedState: AppState = {
       "notes": ""
     },
     {
-      "id": "g-070",
+      "id": "g-10-5",
+      "week": 10,
+      "area": "Interview Prep",
+      "title": "A real mock interview, full loop",
+      "detail": "Survive an unscripted 30–45 minute conversation covering intro, technical and behavioural, in English, with a stranger.",
+      "definitionOfDone": "One Pramp or Exponent mock completed, with the three hardest moments written down straight after.",
+      "status": "Not started",
+      "priority": "Critical",
+      "plannedHours": 3.75,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-10-6",
+      "week": 10,
+      "area": "Portfolio",
+      "title": "Launch the case study",
+      "detail": "The full write-up: problem, architecture, trade-offs, lessons, what's next. Publish it and update the CV.",
+      "definitionOfDone": "Case study live, CV updated, and the ten-week story told in one place.",
+      "status": "Not started",
+      "priority": "Medium",
+      "plannedHours": 1.25,
+      "evidenceUrl": "",
+      "notes": ""
+    },
+    {
+      "id": "g-10-7",
       "week": 10,
       "area": "Review",
-      "title": "Close the week honestly",
-      "detail": "Thirty minutes. The numbers come from the app; the lesson has to come from you. A blank 'main blocker' on a hard week is the one thing that makes this whole system useless.",
-      "definitionOfDone": "Weekly review saved with a real lesson and a real blocker — not blanks.",
+      "title": "Ten-week retrospective",
+      "detail": "The full retrospective: what shipped, total applications and response rate by track, what you learned, and what week eleven is.",
+      "definitionOfDone": "Retrospective saved, and the next step written down rather than left vague.",
       "status": "Not started",
       "priority": "High",
-      "plannedHours": 0.5,
+      "plannedHours": 1.25,
       "evidenceUrl": "",
       "notes": ""
     }
@@ -1031,253 +1239,387 @@ export const seedState: AppState = {
       "id": "sb-mon-0900",
       "day": "Mon",
       "start": "09:00",
-      "end": "13:00",
+      "end": "12:45",
       "area": "Project",
-      "label": "Deep work — Career Transition OS",
-      "optional": false
+      "label": "Deep work — Northstar",
+      "optional": false,
+      "fromWeek": null,
+      "toWeek": null,
+      "sessionDone": "Today's work is committed and pushed, and the GitHub issue says where you actually got to — not where you hoped to get."
     },
     {
-      "id": "sb-mon-1300",
+      "id": "sb-mon-1245",
       "day": "Mon",
-      "start": "13:00",
-      "end": "13:30",
+      "start": "12:45",
+      "end": "13:15",
       "area": null,
       "label": "Lunch",
-      "optional": false
+      "optional": false,
+      "fromWeek": null,
+      "toWeek": null
     },
     {
-      "id": "sb-mon-1330",
+      "id": "sb-mon-1315",
       "day": "Mon",
-      "start": "13:30",
-      "end": "15:00",
-      "area": "Learning",
-      "label": "Targeted learning",
-      "optional": false
-    },
-    {
-      "id": "sb-mon-1500",
-      "day": "Mon",
-      "start": "15:00",
-      "end": "16:30",
+      "start": "13:15",
+      "end": "15:30",
       "area": "Job Search",
-      "label": "Applications",
-      "optional": false
+      "label": "Applications — search, shortlist, apply three",
+      "optional": false,
+      "fromWeek": null,
+      "toWeek": null,
+      "sessionDone": "Three applications out, chosen from both tracks — and everything you found today is in Companies."
     },
     {
-      "id": "sb-mon-1630",
+      "id": "sb-mon-1530",
       "day": "Mon",
-      "start": "16:30",
+      "start": "15:30",
+      "end": "15:45",
+      "area": null,
+      "label": "Break",
+      "optional": false,
+      "fromWeek": null,
+      "toWeek": null
+    },
+    {
+      "id": "sb-mon-1545",
+      "day": "Mon",
+      "start": "15:45",
       "end": "17:00",
+      "area": "Networking",
+      "label": "Outreach — three of this week's six",
+      "optional": false,
+      "fromWeek": null,
+      "toWeek": null,
+      "sessionDone": "Three messages sent and logged, each rewritten so it could only have been sent to that person."
+    },
+    {
+      "id": "sb-mon-1700",
+      "day": "Mon",
+      "start": "17:00",
+      "end": "17:45",
       "area": "Interview Prep",
-      "label": "English, out loud",
-      "optional": false
+      "label": "English — Interview Prep",
+      "optional": false,
+      "fromWeek": null,
+      "toWeek": null,
+      "sessionDone": "Forty-five minutes spoken aloud and recorded, and you listened back to one take."
     },
     {
       "id": "sb-tue-0900",
       "day": "Tue",
       "start": "09:00",
-      "end": "13:00",
+      "end": "12:45",
       "area": "Project",
-      "label": "Deep work — Career Transition OS",
-      "optional": false
+      "label": "Deep work — Northstar",
+      "optional": false,
+      "fromWeek": null,
+      "toWeek": null,
+      "sessionDone": "Today's work is committed and pushed, and the GitHub issue says where you actually got to — not where you hoped to get."
     },
     {
-      "id": "sb-tue-1300",
+      "id": "sb-tue-1245",
       "day": "Tue",
-      "start": "13:00",
-      "end": "13:30",
+      "start": "12:45",
+      "end": "13:15",
       "area": null,
       "label": "Lunch",
-      "optional": false
+      "optional": false,
+      "fromWeek": null,
+      "toWeek": null
     },
     {
-      "id": "sb-tue-1330",
+      "id": "sb-tue-1315",
       "day": "Tue",
-      "start": "13:30",
-      "end": "15:00",
+      "start": "13:15",
+      "end": "15:30",
       "area": "Learning",
-      "label": "Targeted learning",
-      "optional": false
+      "label": "Skills roadmap — one session from Resources",
+      "optional": false,
+      "fromWeek": null,
+      "toWeek": null,
+      "sessionDone": "One session from a Resources path finished, with the exercise written — not just read."
     },
     {
-      "id": "sb-tue-1500",
+      "id": "sb-tue-1530",
       "day": "Tue",
-      "start": "15:00",
-      "end": "16:30",
-      "area": "Networking",
-      "label": "Outreach",
-      "optional": false
+      "start": "15:30",
+      "end": "15:45",
+      "area": null,
+      "label": "Break",
+      "optional": false,
+      "fromWeek": null,
+      "toWeek": null
     },
     {
-      "id": "sb-tue-1630",
+      "id": "sb-tue-1545",
       "day": "Tue",
-      "start": "16:30",
+      "start": "15:45",
       "end": "17:00",
+      "area": "Job Search",
+      "label": "Applications — search, shortlist, apply three",
+      "optional": false,
+      "fromWeek": null,
+      "toWeek": null,
+      "sessionDone": "Three applications out, chosen from both tracks — and everything you found today is in Companies."
+    },
+    {
+      "id": "sb-tue-1700",
+      "day": "Tue",
+      "start": "17:00",
+      "end": "17:45",
       "area": "Interview Prep",
-      "label": "English, out loud",
-      "optional": false
+      "label": "English — Interview Prep",
+      "optional": false,
+      "fromWeek": null,
+      "toWeek": null,
+      "sessionDone": "Forty-five minutes spoken aloud and recorded, and you listened back to one take."
     },
     {
       "id": "sb-wed-0900",
       "day": "Wed",
       "start": "09:00",
-      "end": "13:00",
+      "end": "12:45",
       "area": "Project",
-      "label": "Deep work — Career Transition OS",
-      "optional": false
+      "label": "Deep work — Northstar",
+      "optional": false,
+      "fromWeek": null,
+      "toWeek": null,
+      "sessionDone": "Today's work is committed and pushed, and the GitHub issue says where you actually got to — not where you hoped to get."
     },
     {
-      "id": "sb-wed-1300",
+      "id": "sb-wed-1245",
       "day": "Wed",
-      "start": "13:00",
-      "end": "13:30",
+      "start": "12:45",
+      "end": "13:15",
       "area": null,
       "label": "Lunch",
-      "optional": false
+      "optional": false,
+      "fromWeek": null,
+      "toWeek": null
     },
     {
-      "id": "sb-wed-1330",
+      "id": "sb-wed-1315",
       "day": "Wed",
-      "start": "13:30",
-      "end": "15:00",
+      "start": "13:15",
+      "end": "15:30",
       "area": "Learning",
-      "label": "Targeted learning",
-      "optional": false
+      "label": "Skills roadmap — one session from Resources",
+      "optional": false,
+      "fromWeek": null,
+      "toWeek": null,
+      "sessionDone": "One session from a Resources path finished, with the exercise written — not just read."
     },
     {
-      "id": "sb-wed-1500",
+      "id": "sb-wed-1530",
       "day": "Wed",
-      "start": "15:00",
-      "end": "16:30",
-      "area": "Job Search",
-      "label": "Applications",
-      "optional": false
+      "start": "15:30",
+      "end": "15:45",
+      "area": null,
+      "label": "Break",
+      "optional": false,
+      "fromWeek": null,
+      "toWeek": null
     },
     {
-      "id": "sb-wed-1630",
+      "id": "sb-wed-1545",
       "day": "Wed",
-      "start": "16:30",
+      "start": "15:45",
       "end": "17:00",
+      "area": "Algorithms",
+      "label": "Algorithms — Cracking the Coding Interview",
+      "optional": false,
+      "fromWeek": null,
+      "toWeek": null,
+      "sessionDone": "One CTCI session worked: your own attempt written before reading Gayle's, and the gap logged."
+    },
+    {
+      "id": "sb-wed-1700",
+      "day": "Wed",
+      "start": "17:00",
+      "end": "17:45",
       "area": "Interview Prep",
-      "label": "English, out loud",
-      "optional": false
+      "label": "English — Interview Prep",
+      "optional": false,
+      "fromWeek": null,
+      "toWeek": null,
+      "sessionDone": "Forty-five minutes spoken aloud and recorded, and you listened back to one take."
     },
     {
       "id": "sb-thu-0900",
       "day": "Thu",
       "start": "09:00",
-      "end": "13:00",
+      "end": "12:45",
       "area": "Project",
-      "label": "Deep work — Career Transition OS",
-      "optional": false
+      "label": "Deep work — Northstar",
+      "optional": false,
+      "fromWeek": null,
+      "toWeek": null,
+      "sessionDone": "Today's work is committed and pushed, and the GitHub issue says where you actually got to — not where you hoped to get."
     },
     {
-      "id": "sb-thu-1300",
+      "id": "sb-thu-1245",
       "day": "Thu",
-      "start": "13:00",
-      "end": "13:30",
+      "start": "12:45",
+      "end": "13:15",
       "area": null,
       "label": "Lunch",
-      "optional": false
+      "optional": false,
+      "fromWeek": null,
+      "toWeek": null
     },
     {
-      "id": "sb-thu-1330",
+      "id": "sb-thu-1315",
       "day": "Thu",
-      "start": "13:30",
-      "end": "15:00",
-      "area": "Learning",
-      "label": "Targeted learning",
-      "optional": false
+      "start": "13:15",
+      "end": "15:30",
+      "area": "Job Search",
+      "label": "Applications — search, shortlist, apply three",
+      "optional": false,
+      "fromWeek": null,
+      "toWeek": null,
+      "sessionDone": "Three applications out, chosen from both tracks — and everything you found today is in Companies."
     },
     {
-      "id": "sb-thu-1500",
+      "id": "sb-thu-1530",
       "day": "Thu",
-      "start": "15:00",
-      "end": "16:30",
-      "area": "Networking",
-      "label": "Outreach",
-      "optional": false
+      "start": "15:30",
+      "end": "15:45",
+      "area": null,
+      "label": "Break",
+      "optional": false,
+      "fromWeek": null,
+      "toWeek": null
     },
     {
-      "id": "sb-thu-1630",
+      "id": "sb-thu-1545",
       "day": "Thu",
-      "start": "16:30",
+      "start": "15:45",
       "end": "17:00",
+      "area": "Networking",
+      "label": "Outreach — the other three, plus follow-ups",
+      "optional": false,
+      "fromWeek": null,
+      "toWeek": null,
+      "sessionDone": "Three messages sent and logged, plus this week's follow-ups actioned."
+    },
+    {
+      "id": "sb-thu-1700",
+      "day": "Thu",
+      "start": "17:00",
+      "end": "17:45",
       "area": "Interview Prep",
-      "label": "English, out loud",
-      "optional": false
+      "label": "English — Interview Prep",
+      "optional": false,
+      "fromWeek": null,
+      "toWeek": null,
+      "sessionDone": "Forty-five minutes spoken aloud and recorded, and you listened back to one take."
     },
     {
       "id": "sb-fri-0900",
       "day": "Fri",
       "start": "09:00",
-      "end": "13:00",
+      "end": "12:45",
       "area": "Project",
-      "label": "Deep work — Career Transition OS",
-      "optional": false
+      "label": "Deep work — Northstar",
+      "optional": false,
+      "fromWeek": null,
+      "toWeek": null,
+      "sessionDone": "Today's work is committed and pushed, and the GitHub issue says where you actually got to — not where you hoped to get."
     },
     {
-      "id": "sb-fri-1300",
+      "id": "sb-fri-1245",
       "day": "Fri",
-      "start": "13:00",
-      "end": "13:30",
+      "start": "12:45",
+      "end": "13:15",
       "area": null,
       "label": "Lunch",
-      "optional": false
+      "optional": false,
+      "fromWeek": null,
+      "toWeek": null
     },
     {
-      "id": "sb-fri-1330",
+      "id": "sb-fri-1315",
       "day": "Fri",
-      "start": "13:30",
+      "start": "13:15",
       "end": "14:30",
-      "area": "Learning",
-      "label": "Targeted learning",
-      "optional": false
+      "area": "Portfolio",
+      "label": "Portfolio, public post and shop-window upkeep",
+      "optional": false,
+      "fromWeek": null,
+      "toWeek": null,
+      "sessionDone": "This week's post is published, with a screenshot or a link someone can open."
     },
     {
-      "id": "sb-fri-1430",
+      "id": "sb-fri-1315-portfolio-early",
       "day": "Fri",
       "start": "14:30",
       "end": "15:30",
-      "area": "Job Search",
-      "label": "Applications",
-      "optional": false
+      "area": "Portfolio",
+      "label": "Portfolio — keep going while contributions haven't started",
+      "optional": false,
+      "fromWeek": null,
+      "toWeek": 4,
+      "sessionDone": "README, portfolio links, LinkedIn and GitHub checked, and anything stale fixed today."
+    },
+    {
+      "id": "sb-fri-1430-oss",
+      "day": "Fri",
+      "start": "14:30",
+      "end": "15:30",
+      "area": "Contributions",
+      "label": "Open source — one small contribution",
+      "optional": false,
+      "fromWeek": 5,
+      "toWeek": null,
+      "sessionDone": "One step of the contribution path moved forward, recorded in Contributions."
     },
     {
       "id": "sb-fri-1530",
       "day": "Fri",
       "start": "15:30",
-      "end": "16:30",
-      "area": "Portfolio",
-      "label": "Portfolio & GitHub wrap-up",
-      "optional": false
+      "end": "15:45",
+      "area": null,
+      "label": "Break",
+      "optional": false,
+      "fromWeek": null,
+      "toWeek": null
     },
     {
-      "id": "sb-fri-1630",
+      "id": "sb-fri-1545",
       "day": "Fri",
-      "start": "16:30",
+      "start": "15:45",
       "end": "17:00",
       "area": "Review",
-      "label": "Weekly review",
-      "optional": false
+      "label": "Weekly review and next week's setup",
+      "optional": false,
+      "fromWeek": null,
+      "toWeek": null,
+      "sessionDone": "The week's review is saved with a real blocker written down, and next week's GitHub issues exist."
     },
     {
-      "id": "sb-sat-1000",
-      "day": "Sat",
-      "start": "10:00",
-      "end": "12:00",
-      "area": "Project",
-      "label": "Optional catch-up or open source",
-      "optional": true
+      "id": "sb-fri-1700",
+      "day": "Fri",
+      "start": "17:00",
+      "end": "17:45",
+      "area": "Interview Prep",
+      "label": "English — Interview Prep",
+      "optional": false,
+      "fromWeek": null,
+      "toWeek": null,
+      "sessionDone": "Forty-five minutes spoken aloud and recorded, and you listened back to one take."
     },
     {
       "id": "sb-sun-1000",
       "day": "Sun",
       "start": "10:00",
-      "end": "12:00",
-      "area": "Project",
-      "label": "Optional catch-up or open source",
-      "optional": true
+      "end": "11:30",
+      "area": "Portfolio",
+      "label": "Shop-window review — README, links, LinkedIn, GitHub",
+      "optional": true,
+      "fromWeek": null,
+      "toWeek": null,
+      "sessionDone": "The shop window is current: links work, README matches the app, profiles are up to date."
     }
   ],
   "applications": [],
@@ -3027,85 +3369,3085 @@ export const seedState: AppState = {
   ],
   "skills": [
     {
-      "id": "sk-001",
+      "id": "sk-html",
+      "skill": "HTML & accessibility",
+      "category": "Foundations",
+      "badge": "HT",
+      "colour": "#e34f26",
+      "currentLevel": "Can build pages, unsure about semantics",
+      "target": "Writes semantic, keyboard-navigable markup without thinking about it",
+      "priority": "Critical",
+      "evidence": "Northstar passing a keyboard-only walkthrough and an axe scan",
+      "action": "Audit one existing page per session and fix what you find.",
+      "why": "It is the cheapest way to look senior. Most bootcamp portfolios are div soup, and an interviewer who tabs through your site notices in ten seconds. Accessibility questions come up constantly in frontend and support-engineering screens.",
+      "miniProject": "Make the Applications table fully keyboard-operable: real table semantics, visible focus rings, labelled controls, and a skip link in the layout.",
+      "miniProjectDod": "You can reach and operate every control with Tab and Enter alone, axe DevTools reports no critical issues, and the page still looks the same.",
+      "resources": [
+        {
+          "id": "r-html-1",
+          "title": "MDN — HTML elements reference",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Element",
+          "kind": "Reference",
+          "note": "The one tab to keep open. Read the element you are about to use, not the whole thing."
+        },
+        {
+          "id": "r-html-2",
+          "title": "web.dev — Learn HTML",
+          "url": "https://web.dev/learn/html",
+          "kind": "Course",
+          "note": "Short, modern, written by browser engineers. Covers forms and metadata properly."
+        },
+        {
+          "id": "r-html-3",
+          "title": "The A11Y Project checklist",
+          "url": "https://www.a11yproject.com/checklist/",
+          "kind": "Practice",
+          "note": "Run it against a page you already built. Turns 'accessibility' into a to-do list."
+        },
+        {
+          "id": "r-html-4",
+          "title": "MDN — ARIA",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA",
+          "kind": "Docs",
+          "note": "Read this to learn when NOT to use ARIA. Native elements win almost every time."
+        },
+        {
+          "id": "r-html-5",
+          "title": "W3C Markup Validator",
+          "url": "https://validator.w3.org/nu/",
+          "kind": "Practice",
+          "note": "Paste your built page. Every warning is something you can explain in an interview."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-html-1",
+          "order": 1,
+          "title": "Document structure and landmarks",
+          "goal": "Know which element each region of a page should be, and why a screen reader user cares.",
+          "exercise": "Rewrite AppLayout using header, nav, main and footer, and add a skip-to-content link.",
+          "resourceUrl": "https://web.dev/learn/html/document-structure",
+          "minutes": 75,
+          "done": false
+        },
+        {
+          "id": "s-html-2",
+          "order": 2,
+          "title": "Forms that explain themselves",
+          "goal": "Understand label association, fieldset, required, and how errors should be announced.",
+          "exercise": "Audit the Add company modal: every input labelled, errors linked with aria-describedby.",
+          "resourceUrl": "https://web.dev/learn/forms",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-html-3",
+          "order": 3,
+          "title": "Tables that aren't just grids",
+          "goal": "Know scope, caption and when a table is genuinely the right element.",
+          "exercise": "Add captions and column scopes to the Applications and Companies tables.",
+          "resourceUrl": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content/Table_accessibility",
+          "minutes": 60,
+          "done": false
+        },
+        {
+          "id": "s-html-4",
+          "order": 4,
+          "title": "Keyboard navigation end to end",
+          "goal": "Understand focus order, focus traps in modals, and visible focus styles.",
+          "exercise": "Tab through every page. Write down each place you get stuck, then fix two.",
+          "resourceUrl": "https://www.a11yproject.com/checklist/",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-html-5",
+          "order": 5,
+          "title": "Audit and write it up",
+          "goal": "Be able to describe an accessibility problem and its fix in plain English.",
+          "exercise": "Run axe DevTools, fix what it finds, write a short README section about it.",
+          "resourceUrl": "https://www.deque.com/axe/devtools/",
+          "minutes": 75,
+          "done": false
+        }
+      ],
+      "icon": "html5",
+      "optional": false
+    },
+    {
+      "id": "sk-js",
+      "skill": "JavaScript",
+      "category": "Foundations",
+      "badge": "JS",
+      "colour": "#f7df1e",
+      "currentLevel": "Can build with it, shaky on the why",
+      "target": "Can explain async, closures and the event loop under interview pressure",
+      "priority": "Critical",
+      "evidence": "Written explanations plus refactors in this repo's commit history",
+      "action": "One concept per session, each proved by code you wrote yourself.",
+      "why": "This is the language every other skill sits on top of, and it is what junior screens actually test — closures, async and what `this` does, not framework trivia.",
+      "miniProject": "Write a small typed data-fetching layer for this app: retry with exponential backoff, request cancellation, and a debounced search box — no libraries.",
+      "miniProjectDod": "The search debounces, a slow request can be cancelled, a failing request retries three times, and you can explain every line out loud.",
+      "resources": [
+        {
+          "id": "r-js-1",
+          "title": "javascript.info",
+          "url": "https://javascript.info/",
+          "kind": "Course",
+          "note": "The best free deep explanation of the language. Parts 1 and 2 are what matter."
+        },
+        {
+          "id": "r-js-2",
+          "title": "MDN — JavaScript reference",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
+          "kind": "Reference",
+          "note": "Go here for the exact behaviour of a method. The examples are trustworthy."
+        },
+        {
+          "id": "r-js-3",
+          "title": "You Don't Know JS Yet (free online)",
+          "url": "https://github.com/getify/You-Dont-Know-JS",
+          "kind": "Article",
+          "note": "Read 'Scope & Closures'. It makes closures stop being magic."
+        },
+        {
+          "id": "r-js-4",
+          "title": "Loupe — event loop visualiser",
+          "url": "http://latentflip.com/loupe/",
+          "kind": "Practice",
+          "note": "Paste a setTimeout example and watch the call stack. Beats an hour of reading."
+        },
+        {
+          "id": "r-js-5",
+          "title": "JavaScript questions quiz",
+          "url": "https://github.com/lydiahallie/javascript-questions",
+          "kind": "Practice",
+          "note": "Every question has an explanation. Excellent for finding what you half know."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-js-1",
+          "order": 1,
+          "title": "Scope, closures and why they matter",
+          "goal": "Explain a closure with an example you wrote, not a definition you memorised.",
+          "exercise": "Write debounce and once from scratch, without looking at an implementation.",
+          "resourceUrl": "https://javascript.info/closure",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-js-2",
+          "order": 2,
+          "title": "The event loop",
+          "goal": "Predict the output order of any mix of setTimeout, promises and sync code.",
+          "exercise": "Write five snippets, predict the output, run them, investigate every miss.",
+          "resourceUrl": "http://latentflip.com/loupe/",
+          "minutes": 75,
+          "done": false
+        },
+        {
+          "id": "s-js-3",
+          "order": 3,
+          "title": "Promises and async/await properly",
+          "goal": "Know Promise.all, allSettled, race and any, and when each is right.",
+          "exercise": "Write a fetch wrapper with a timeout using AbortController and Promise.race.",
+          "resourceUrl": "https://javascript.info/async",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-js-4",
+          "order": 4,
+          "title": "Arrays and objects without loops",
+          "goal": "Fluent map, filter and reduce — and knowing when reduce is the wrong answer.",
+          "exercise": "Rewrite funnel() in lib/selectors.ts a second way, then keep the clearer one.",
+          "resourceUrl": "https://javascript.info/array-methods",
+          "minutes": 60,
+          "done": false
+        },
+        {
+          "id": "s-js-5",
+          "order": 5,
+          "title": "this, prototypes and classes",
+          "goal": "Explain what `this` refers to in any of the four call patterns.",
+          "exercise": "Do the quiz repo's `this` questions and write down why each answer is what it is.",
+          "resourceUrl": "https://javascript.info/object-methods",
+          "minutes": 75,
+          "done": false
+        },
+        {
+          "id": "s-js-6",
+          "order": 6,
+          "title": "References and immutability",
+          "goal": "Understand value versus reference, shallow versus deep copy, and why state updates break.",
+          "exercise": "Find a place in this app where a mutation could bite, and prove it with a test.",
+          "resourceUrl": "https://javascript.info/object-copy",
+          "minutes": 60,
+          "done": false
+        }
+      ],
+      "icon": "javascript",
+      "optional": false
+    },
+    {
+      "id": "sk-ts",
       "skill": "TypeScript",
+      "category": "Foundations",
+      "badge": "TS",
+      "colour": "#3178c6",
       "currentLevel": "Basic",
       "target": "Comfortable building and debugging a typed full-stack app",
       "priority": "Critical",
-      "evidence": "Refactored dashboard with typed API payloads and models",
-      "action": "3 focused sessions/week; use it in the main project, not tutorials only."
+      "evidence": "Strict mode on with no `any` in src",
+      "action": "Use it in the main project, not in tutorials only.",
+      "why": "Almost every Bay Area posting you are targeting lists it. More practically, it is what lets you refactor this project confidently instead of hoping nothing broke.",
+      "miniProject": "Type the API layer end to end: shared request and response types between server and client, with no `any` and no type assertions.",
+      "miniProjectDod": "tsc --noEmit passes with strict on, there is no `any` in src, and changing a server field surfaces an error in the client.",
+      "resources": [
+        {
+          "id": "r-ts-1",
+          "title": "TypeScript Handbook",
+          "url": "https://www.typescriptlang.org/docs/handbook/intro.html",
+          "kind": "Docs",
+          "note": "Official and readable. 'Everyday Types' and 'Narrowing' are the core."
+        },
+        {
+          "id": "r-ts-2",
+          "title": "Total TypeScript — Essentials (free)",
+          "url": "https://www.totaltypescript.com/books/total-typescript-essentials",
+          "kind": "Course",
+          "note": "Practical and exercise-driven. The best free structured path."
+        },
+        {
+          "id": "r-ts-3",
+          "title": "React TypeScript Cheatsheet",
+          "url": "https://react-typescript-cheatsheet.netlify.app/",
+          "kind": "Reference",
+          "note": "Answers the props/children/events questions without guesswork."
+        },
+        {
+          "id": "r-ts-4",
+          "title": "Type Challenges",
+          "url": "https://github.com/type-challenges/type-challenges",
+          "kind": "Practice",
+          "note": "Do the 'easy' set only. Beyond that it stops being useful for job interviews."
+        },
+        {
+          "id": "r-ts-5",
+          "title": "tsconfig reference",
+          "url": "https://www.typescriptlang.org/tsconfig",
+          "kind": "Reference",
+          "note": "Read what strict actually turns on. A common interview follow-up."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-ts-1",
+          "order": 1,
+          "title": "Narrowing and union types",
+          "goal": "Model 'one of these shapes' properly instead of reaching for optional fields.",
+          "exercise": "Refactor one loose type in src/types to a discriminated union and follow the errors.",
+          "resourceUrl": "https://www.typescriptlang.org/docs/handbook/2/narrowing.html",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-ts-2",
+          "order": 2,
+          "title": "Generics you'd actually write",
+          "goal": "Read and write a generic function without copying a pattern.",
+          "exercise": "Study the generic add/update/remove in useStore.ts, then write your own typed helper.",
+          "resourceUrl": "https://www.typescriptlang.org/docs/handbook/2/generics.html",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-ts-3",
+          "order": 3,
+          "title": "Utility types",
+          "goal": "Use Partial, Pick, Omit, Record and ReturnType to stop repeating yourself.",
+          "exercise": "Find three duplicated type definitions in this repo and derive them instead.",
+          "resourceUrl": "https://www.typescriptlang.org/docs/handbook/utility-types.html",
+          "minutes": 60,
+          "done": false
+        },
+        {
+          "id": "s-ts-4",
+          "order": 4,
+          "title": "Typing React properly",
+          "goal": "Type props, children, events and refs without fighting the compiler.",
+          "exercise": "Remove every remaining type assertion in src/components honestly.",
+          "resourceUrl": "https://react-typescript-cheatsheet.netlify.app/",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-ts-5",
+          "order": 5,
+          "title": "Types at the boundary",
+          "goal": "Understand why network data is not really typed until you validate it.",
+          "exercise": "Parse one API response with Zod and derive the TypeScript type from the schema.",
+          "resourceUrl": "https://zod.dev/",
+          "minutes": 75,
+          "done": false
+        }
+      ],
+      "icon": "typescript",
+      "optional": false
     },
     {
-      "id": "sk-002",
-      "skill": "Express / backend architecture",
+      "id": "sk-css",
+      "skill": "CSS & layout",
+      "category": "Styling",
+      "badge": "CS",
+      "colour": "#663399",
+      "currentLevel": "Can style, layout still feels like guesswork",
+      "target": "Reaches for the right layout tool first and can debug any spacing bug",
+      "priority": "Critical",
+      "evidence": "The Components page, responsive from 375px up, with documented tokens",
+      "action": "One layout concept per session, applied to a real screen the same day.",
+      "why": "Layout confidence separates a portfolio that looks built from one that looks templated. It is also the fastest visible improvement you can make to everything you show a recruiter.",
+      "miniProject": "Make every page work at 375px with no horizontal scrollbar, and document the real spacing and colour tokens on the Components page.",
+      "miniProjectDod": "No page scrolls sideways at 375px, wide tables scroll inside their own container, and the Components page shows the tokens the app actually uses.",
+      "resources": [
+        {
+          "id": "r-css-1",
+          "title": "Josh Comeau — CSS for JS Developers (free articles)",
+          "url": "https://www.joshwcomeau.com/css/",
+          "kind": "Article",
+          "note": "The stacking-context and centring articles alone will fix half your confusion."
+        },
+        {
+          "id": "r-css-2",
+          "title": "web.dev — Learn CSS",
+          "url": "https://web.dev/learn/css",
+          "kind": "Course",
+          "note": "Free and thorough. Do layout, flexbox and grid in order."
+        },
+        {
+          "id": "r-css-3",
+          "title": "CSS-Tricks — Guide to Flexbox",
+          "url": "https://css-tricks.com/snippets/css/a-guide-to-flexbox/",
+          "kind": "Reference",
+          "note": "You will look up align-items versus justify-content for years. Bookmark it."
+        },
+        {
+          "id": "r-css-4",
+          "title": "Flexbox Froggy",
+          "url": "https://flexboxfroggy.com/",
+          "kind": "Practice",
+          "note": "Twenty minutes of play that makes flexbox stick better than reading does."
+        },
+        {
+          "id": "r-css-5",
+          "title": "Grid Garden",
+          "url": "https://cssgridgarden.com/",
+          "kind": "Practice",
+          "note": "Same idea for Grid. Do it right before the grid session."
+        },
+        {
+          "id": "r-css-6",
+          "title": "Every Layout",
+          "url": "https://every-layout.dev/",
+          "kind": "Reference",
+          "note": "Layouts that adapt without media queries. Read Stack and Sidebar."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-css-1",
+          "order": 1,
+          "title": "The box model and why spacing lies",
+          "goal": "Understand box-sizing, margin collapse, and why your padding 'doesn't work'.",
+          "exercise": "Find one spacing bug in this app, explain the cause in a comment, then fix it.",
+          "resourceUrl": "https://web.dev/learn/css/box-model",
+          "minutes": 60,
+          "done": false
+        },
+        {
+          "id": "s-css-2",
+          "order": 2,
+          "title": "Flexbox until it's boring",
+          "goal": "Reach for direction, wrap, grow and gap without looking them up.",
+          "exercise": "Play Flexbox Froggy, then rebuild the toolbar row from scratch.",
+          "resourceUrl": "https://flexboxfroggy.com/",
+          "minutes": 75,
+          "done": false
+        },
+        {
+          "id": "s-css-3",
+          "order": 3,
+          "title": "Grid for two-dimensional problems",
+          "goal": "Know when grid beats flexbox, and how auto-fill with minmax gives free responsiveness.",
+          "exercise": "Rebuild stat-grid and tpl-grid in grid, with no media query.",
+          "resourceUrl": "https://cssgridgarden.com/",
+          "minutes": 75,
+          "done": false
+        },
+        {
+          "id": "s-css-4",
+          "order": 4,
+          "title": "Custom properties and theming",
+          "goal": "Understand how CSS variables cascade and how this app's dark mode works.",
+          "exercise": "Add a third accent theme using only variables, switched with one attribute.",
+          "resourceUrl": "https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties",
+          "minutes": 75,
+          "done": false
+        },
+        {
+          "id": "s-css-5",
+          "order": 5,
+          "title": "Responsive without guessing",
+          "goal": "Use relative units and clamp instead of stacking breakpoints.",
+          "exercise": "Take every page to 375px and fix what breaks.",
+          "resourceUrl": "https://every-layout.dev/",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-css-6",
+          "order": 6,
+          "title": "Hierarchy, contrast, motion",
+          "goal": "Know why a screen feels unfinished and which three changes fix it fastest.",
+          "exercise": "Check every text/background pair for WCAG AA contrast and fix the failures.",
+          "resourceUrl": "https://webaim.org/resources/contrastchecker/",
+          "minutes": 60,
+          "done": false
+        }
+      ],
+      "icon": "css",
+      "optional": false
+    },
+    {
+      "id": "sk-tailwind",
+      "skill": "Tailwind CSS",
+      "category": "Styling",
+      "badge": "TW",
+      "colour": "#06B6D4",
+      "currentLevel": "Not used in anger",
+      "target": "Can build a consistent UI without leaving the markup",
+      "priority": "High",
+      "evidence": "One screen rebuilt in Tailwind, side by side with the hand-written CSS",
+      "action": "Learn it after CSS, never instead of it.",
+      "why": "It is on a large share of job postings, and it is the fastest way to keep spacing and colour consistent across a codebase. Learn it after CSS fundamentals, so you know what the classes are doing rather than copying them.",
+      "miniProject": "Rebuild the Companies page in Tailwind in a branch, then compare it honestly with the hand-written version and write down which you'd ship.",
+      "miniProjectDod": "Both versions render identically, and you can argue for one over the other with specifics rather than taste.",
+      "resources": [
+        {
+          "id": "r-tw-1",
+          "title": "Tailwind — Utility-first fundamentals",
+          "url": "https://tailwindcss.com/docs/styling-with-utility-classes",
+          "kind": "Docs",
+          "note": "Read the reasoning section first. It answers the 'this looks ugly' objection."
+        },
+        {
+          "id": "r-tw-2",
+          "title": "Tailwind — Responsive design",
+          "url": "https://tailwindcss.com/docs/responsive-design",
+          "kind": "Docs",
+          "note": "The breakpoint prefixes are the whole mental model. Ten minutes well spent."
+        },
+        {
+          "id": "r-tw-3",
+          "title": "Tailwind — Theme configuration",
+          "url": "https://tailwindcss.com/docs/theme",
+          "kind": "Reference",
+          "note": "How to make design tokens instead of magic numbers."
+        },
+        {
+          "id": "r-tw-4",
+          "title": "Tailwind Play",
+          "url": "https://play.tailwindcss.com/",
+          "kind": "Practice",
+          "note": "Try a layout in ten seconds without touching your project."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-tw-1",
+          "order": 1,
+          "title": "Utility-first, and why",
+          "goal": "Understand the trade-off it makes and when it pays off.",
+          "exercise": "Rebuild one Card component with utilities only. Note what got easier and what got worse.",
+          "resourceUrl": "https://tailwindcss.com/docs/styling-with-utility-classes",
+          "minutes": 60,
+          "done": false
+        },
+        {
+          "id": "s-tw-2",
+          "order": 2,
+          "title": "Layout and responsiveness",
+          "goal": "Use the breakpoint prefixes rather than writing media queries.",
+          "exercise": "Rebuild the stat grid responsive down to 375px with prefixes alone.",
+          "resourceUrl": "https://tailwindcss.com/docs/responsive-design",
+          "minutes": 75,
+          "done": false
+        },
+        {
+          "id": "s-tw-3",
+          "order": 3,
+          "title": "Design tokens in the config",
+          "goal": "Stop repeating arbitrary values and define them once.",
+          "exercise": "Port this app's colour and spacing tokens into a Tailwind theme config.",
+          "resourceUrl": "https://tailwindcss.com/docs/theme",
+          "minutes": 60,
+          "done": false
+        },
+        {
+          "id": "s-tw-4",
+          "order": 4,
+          "title": "Keeping it readable",
+          "goal": "Know when to extract a component instead of a 30-class string.",
+          "exercise": "Refactor your longest class list into a component and justify the line.",
+          "resourceUrl": "https://tailwindcss.com/docs/styling-with-utility-classes",
+          "minutes": 60,
+          "done": false
+        }
+      ],
+      "icon": "tailwindcss",
+      "optional": false
+    },
+    {
+      "id": "sk-cssmodules",
+      "skill": "CSS Modules",
+      "category": "Styling",
+      "badge": "CM",
+      "colour": "#000000",
+      "icon": "cssmodules",
+      "optional": false,
+      "currentLevel": "Aware of it, never used it seriously",
+      "target": "Can scope styles per component and know what that buys you",
+      "priority": "Medium",
+      "evidence": "One feature of Northstar converted to .module.css",
+      "action": "One session. The concept is small; the judgement is the point.",
+      "why": "Scoped-by-default CSS is what many React codebases use instead of a utility framework. Knowing how the scoping works — and that it is just a build step renaming your classes — means you can join such a codebase without confusion.",
+      "miniProject": "Convert the Schedule page's styles to CSS Modules on a branch, and inspect the generated class names in DevTools.",
+      "miniProjectDod": "The page looks identical, no global class leaks, and you can explain what the build did to your class names.",
+      "resources": [
+        {
+          "id": "r-cm1-1",
+          "title": "CSS Modules — the specification README",
+          "url": "https://github.com/css-modules/css-modules",
+          "kind": "Docs",
+          "note": "One page. The whole idea is local scope by default."
+        },
+        {
+          "id": "r-cm1-2",
+          "title": "Vite — CSS Modules support",
+          "url": "https://vite.dev/guide/features.html",
+          "kind": "Docs",
+          "note": "Your build already supports them; this is the section that shows how."
+        },
+        {
+          "id": "r-cm1-3",
+          "title": "MDN — CSS cascade and specificity",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_cascade/Specificity",
+          "kind": "Reference",
+          "note": "Understand the problem scoping solves before you adopt the solution."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-cm1-1",
+          "order": 1,
+          "title": "Local scope and composition",
+          "goal": "Understand what the build does to your class names, and what `composes` is for.",
+          "exercise": "Convert one component to a .module.css file and read the generated names in DevTools.",
+          "resourceUrl": "https://github.com/css-modules/css-modules",
+          "minutes": 60,
+          "done": false
+        },
+        {
+          "id": "s-cm1-2",
+          "order": 2,
+          "title": "When to reach for it",
+          "goal": "Say when CSS Modules beat utilities and when they don't.",
+          "exercise": "Write the comparison into the repo as a short ADR.",
+          "resourceUrl": "https://vite.dev/guide/features.html",
+          "minutes": 45,
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "sk-bootstrap",
+      "skill": "Bootstrap",
+      "category": "Styling",
+      "badge": "BS",
+      "colour": "#7952B3",
+      "icon": "bootstrap",
+      "optional": true,
+      "currentLevel": "None",
+      "target": "Can build a layout fast and customise it so it doesn't look stock",
+      "priority": "Low",
+      "evidence": "One screen rebuilt with the Bootstrap grid",
+      "action": "Weekend material. Learn the grid and the breakpoints; skip the component gallery.",
+      "why": "You'll meet it in existing codebases and in agency work, and it is still the fastest way to get a rough layout standing. The risk is every Bootstrap site looking identical — so the real skill is customising it.",
+      "miniProject": "Rebuild the Companies table with the Bootstrap grid, then customise the Sass variables so it doesn't look like the default theme.",
+      "miniProjectDod": "The layout works at every breakpoint and a stranger can't tell it's Bootstrap.",
+      "resources": [
+        {
+          "id": "r-bs-1",
+          "title": "Bootstrap — Breakpoints and layout",
+          "url": "https://getbootstrap.com/docs/5.3/layout/breakpoints/",
+          "kind": "Docs",
+          "note": "The grid and the breakpoints are the 20% you'll actually use."
+        },
+        {
+          "id": "r-bs-2",
+          "title": "Bootstrap — Customising with Sass",
+          "url": "https://getbootstrap.com/docs/5.3/customize/sass/",
+          "kind": "Reference",
+          "note": "How teams avoid every Bootstrap site looking the same."
+        },
+        {
+          "id": "r-bs-3",
+          "title": "Bootstrap — Utilities API",
+          "url": "https://getbootstrap.com/docs/5.3/utilities/api/",
+          "kind": "Docs",
+          "note": "Where Bootstrap and utility-first thinking meet."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-bs-1",
+          "order": 1,
+          "title": "The grid and breakpoints",
+          "goal": "Build a responsive layout without writing a media query.",
+          "exercise": "Rebuild the Companies table layout using the grid only.",
+          "resourceUrl": "https://getbootstrap.com/docs/5.3/layout/breakpoints/",
+          "minutes": 60,
+          "done": false
+        },
+        {
+          "id": "s-bs-2",
+          "order": 2,
+          "title": "Customising the theme",
+          "goal": "Override the Sass variables so it stops looking stock.",
+          "exercise": "Change the primary colour, radius and font to match Northstar.",
+          "resourceUrl": "https://getbootstrap.com/docs/5.3/customize/sass/",
+          "minutes": 60,
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "sk-react",
+      "skill": "React",
+      "category": "Frontend framework",
+      "badge": "RE",
+      "colour": "#61dafb",
+      "currentLevel": "Builds components, fuzzy on re-renders and effects",
+      "target": "Can explain rendering, effects and composition without hand-waving",
+      "priority": "Critical",
+      "evidence": "This app, plus a written explanation of one performance fix",
+      "action": "Every Project block is React practice — make the learning deliberate.",
+      "why": "It is the framework behind most of the roles you are applying to, and 'why did this re-render' is one of the most common technical interview questions for a frontend or full-stack junior.",
+      "miniProject": "Profile this app, find one genuinely unnecessary re-render, fix it, and write down how you found it and what the fix cost.",
+      "miniProjectDod": "A before/after profile recording and a paragraph explaining the cause, not just the fix.",
+      "resources": [
+        {
+          "id": "r-re-1",
+          "title": "react.dev — Learn",
+          "url": "https://react.dev/learn",
+          "kind": "Course",
+          "note": "The official tutorial, rewritten and genuinely good. 'Thinking in React' is essential."
+        },
+        {
+          "id": "r-re-2",
+          "title": "react.dev — You Might Not Need an Effect",
+          "url": "https://react.dev/learn/you-might-not-need-an-effect",
+          "kind": "Article",
+          "note": "The single most useful page. Most useEffect bugs are effects that shouldn't exist."
+        },
+        {
+          "id": "r-re-3",
+          "title": "react.dev — Reference",
+          "url": "https://react.dev/reference/react",
+          "kind": "Reference",
+          "note": "Hook semantics, in detail, from the source of truth."
+        },
+        {
+          "id": "r-re-4",
+          "title": "React DevTools Profiler",
+          "url": "https://react.dev/learn/react-developer-tools",
+          "kind": "Practice",
+          "note": "Stop guessing about performance. Record, look, then change one thing."
+        },
+        {
+          "id": "r-re-5",
+          "title": "A Complete Guide to useEffect",
+          "url": "https://overreacted.io/a-complete-guide-to-useeffect/",
+          "kind": "Article",
+          "note": "Long, but it is the article that makes effects click."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-re-1",
+          "order": 1,
+          "title": "Rendering and state",
+          "goal": "Know what triggers a render and what state actually belongs in a component.",
+          "exercise": "List every useState in this app and mark the ones that could be derived instead.",
+          "resourceUrl": "https://react.dev/learn/thinking-in-react",
+          "minutes": 75,
+          "done": false
+        },
+        {
+          "id": "s-re-2",
+          "order": 2,
+          "title": "Effects, and doing without them",
+          "goal": "Recognise when an effect is the wrong tool.",
+          "exercise": "Audit every useEffect here against the official checklist. Delete or justify each.",
+          "resourceUrl": "https://react.dev/learn/you-might-not-need-an-effect",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-re-3",
+          "order": 3,
+          "title": "Composition over configuration",
+          "goal": "Use children and composition instead of boolean prop explosions.",
+          "exercise": "Refactor one component that has more than four boolean props.",
+          "resourceUrl": "https://react.dev/learn/passing-props-to-a-component",
+          "minutes": 75,
+          "done": false
+        },
+        {
+          "id": "s-re-4",
+          "order": 4,
+          "title": "Re-renders and the profiler",
+          "goal": "Read a profile and know whether memo would help or just add noise.",
+          "exercise": "Profile the Roadmap page, find the slowest commit, and fix one cause.",
+          "resourceUrl": "https://react.dev/learn/react-developer-tools",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-re-5",
+          "order": 5,
+          "title": "Forms and controlled inputs",
+          "goal": "Know the trade-off between controlled and uncontrolled, ready for React Hook Form.",
+          "exercise": "Convert one modal to uncontrolled inputs and compare the re-render count.",
+          "resourceUrl": "https://react.dev/reference/react-dom/components/input",
+          "minutes": 60,
+          "done": false
+        }
+      ],
+      "icon": "react",
+      "optional": false
+    },
+    {
+      "id": "sk-vite",
+      "skill": "Vite & the build",
+      "category": "Frontend framework",
+      "badge": "VI",
+      "colour": "#9135FF",
+      "currentLevel": "Uses it, treats it as a black box",
+      "target": "Can configure a build, split bundles and read what shipped",
+      "priority": "High",
+      "evidence": "This app's bundle brought under control with code-splitting",
+      "action": "One session now, one in the deployment week.",
+      "why": "Your bundle is currently 960 kB. Knowing why, and fixing it, is a concrete performance story you can tell in an interview — and 'how do you optimise a frontend build' is a common question.",
+      "miniProject": "Code-split this app by route so the initial bundle drops sharply, and record the before and after numbers.",
+      "miniProjectDod": "The initial JavaScript is meaningfully smaller, every page still works, and you have the two numbers written down.",
+      "resources": [
+        {
+          "id": "r-vi-1",
+          "title": "Vite — Features",
+          "url": "https://vite.dev/guide/features.html",
+          "kind": "Docs",
+          "note": "What the build gives you for free. Worth knowing before you configure anything."
+        },
+        {
+          "id": "r-vi-2",
+          "title": "Vite — Build options",
+          "url": "https://vite.dev/config/build-options.html",
+          "kind": "Reference",
+          "note": "Chunking, source maps and targets. The page you'll return to."
+        },
+        {
+          "id": "r-vi-3",
+          "title": "React — lazy and Suspense",
+          "url": "https://react.dev/reference/react/lazy",
+          "kind": "Docs",
+          "note": "The route-splitting mechanism itself. Short."
+        },
+        {
+          "id": "r-vi-4",
+          "title": "rollup-plugin-visualizer",
+          "url": "https://github.com/btd/rollup-plugin-visualizer",
+          "kind": "Practice",
+          "note": "See what is actually in your bundle before deciding what to cut."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-vi-1",
+          "order": 1,
+          "title": "What the dev server is doing",
+          "goal": "Understand native ESM in dev versus a bundled production build.",
+          "exercise": "Read the network tab in dev and in preview, and note the difference.",
+          "resourceUrl": "https://vite.dev/guide/features.html",
+          "minutes": 60,
+          "done": false
+        },
+        {
+          "id": "s-vi-2",
+          "order": 2,
+          "title": "See inside the bundle",
+          "goal": "Find out what is big before optimising anything.",
+          "exercise": "Add the visualiser and identify the three largest dependencies.",
+          "resourceUrl": "https://github.com/btd/rollup-plugin-visualizer",
+          "minutes": 60,
+          "done": false
+        },
+        {
+          "id": "s-vi-3",
+          "order": 3,
+          "title": "Route-level code splitting",
+          "goal": "Ship only what the first screen needs.",
+          "exercise": "Convert the pages to React.lazy with Suspense and re-measure.",
+          "resourceUrl": "https://react.dev/reference/react/lazy",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-vi-4",
+          "order": 4,
+          "title": "Environment and modes",
+          "goal": "Handle dev, preview and production configuration without leaking secrets.",
+          "exercise": "Move the API base URL to an env var and verify nothing secret ships to the client.",
+          "resourceUrl": "https://vite.dev/guide/env-and-mode.html",
+          "minutes": 60,
+          "done": false
+        }
+      ],
+      "icon": "vite",
+      "optional": false
+    },
+    {
+      "id": "sk-next",
+      "skill": "Next.js",
+      "category": "Frontend framework",
+      "badge": "NX",
+      "colour": "#111827",
+      "currentLevel": "Basic",
+      "target": "Able to build and deploy one credible application",
+      "priority": "Medium",
+      "evidence": "One deployed Next.js app with auth and a database",
+      "action": "Build or migrate one small app; don't collect unfinished projects.",
+      "why": "It appears in a large share of Bay Area frontend and full-stack postings, and server components are what interviewers ask about right now. Worth one solid app — not worth abandoning this project for.",
+      "miniProject": "Deploy one small Next.js app with a database and auth. One. Finished and live, not a fourth half-built repository.",
+      "miniProjectDod": "It is deployed at a URL you can put on your CV, and someone else can sign up and use it.",
+      "resources": [
+        {
+          "id": "r-nx-1",
+          "title": "Next.js — Learn course",
+          "url": "https://nextjs.org/learn",
+          "kind": "Course",
+          "note": "The official interactive course. Builds a real dashboard with a database and auth."
+        },
+        {
+          "id": "r-nx-2",
+          "title": "Next.js — App Router docs",
+          "url": "https://nextjs.org/docs/app",
+          "kind": "Docs",
+          "note": "Read routing and data fetching. Ignore the Pages Router entirely."
+        },
+        {
+          "id": "r-nx-3",
+          "title": "React — Server Components",
+          "url": "https://react.dev/reference/rsc/server-components",
+          "kind": "Docs",
+          "note": "Understand the client/server boundary. This is the interview question."
+        },
+        {
+          "id": "r-nx-4",
+          "title": "Next.js — Server Actions",
+          "url": "https://nextjs.org/docs/app/getting-started/updating-data",
+          "kind": "Reference",
+          "note": "Mutations without hand-rolling an API. The current idiom."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-nx-1",
+          "order": 1,
+          "title": "App Router mental model",
+          "goal": "Understand file-based routing, layouts and where code runs.",
+          "exercise": "Do chapters 1 to 5 of the official course, typing every line yourself.",
+          "resourceUrl": "https://nextjs.org/learn",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-nx-2",
+          "order": 2,
+          "title": "Server versus client components",
+          "goal": "Know exactly when you need 'use client' and what it costs.",
+          "exercise": "Move one component across the boundary. Note what breaks and why.",
+          "resourceUrl": "https://react.dev/reference/rsc/server-components",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-nx-3",
+          "order": 3,
+          "title": "Data fetching and mutations",
+          "goal": "Fetch on the server and mutate with server actions.",
+          "exercise": "Wire one form to a server action with validation and a real database write.",
+          "resourceUrl": "https://nextjs.org/docs/app/getting-started/updating-data",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-nx-4",
+          "order": 4,
+          "title": "Ship it",
+          "goal": "Get it deployed with environment variables and a hosted database.",
+          "exercise": "Deploy to Vercel, connect a database, and send the URL to one person.",
+          "resourceUrl": "https://vercel.com/docs/deployments/overview",
+          "minutes": 75,
+          "done": false
+        }
+      ],
+      "icon": "nextdotjs",
+      "optional": false
+    },
+    {
+      "id": "sk-zustand",
+      "skill": "Zustand",
+      "category": "State management",
+      "badge": "ZU",
+      "colour": "#4b3621",
+      "icon": "zustand",
+      "optional": false,
+      "currentLevel": "Using it in this project without fully understanding it",
+      "target": "Uses selectors deliberately and knows exactly what re-renders",
+      "priority": "High",
+      "evidence": "This app's store, with no component subscribing to more than it needs",
+      "action": "You already use it — the goal is to stop using it by accident.",
+      "why": "It is the store behind this whole app, so understanding it properly makes every Project block easier. It's also the modern answer in interviews when asked what you'd use instead of Redux.",
+      "miniProject": "Audit every component subscribing to the Northstar store and narrow each one to the smallest selector that works.",
+      "miniProjectDod": "No component re-renders because of state it doesn't read, and you can prove it with the React profiler.",
+      "resources": [
+        {
+          "id": "r-zu-1",
+          "title": "Zustand — Documentation",
+          "url": "https://zustand.docs.pmnd.rs/",
+          "kind": "Docs",
+          "note": "Small enough to read end to end in an afternoon."
+        },
+        {
+          "id": "r-zu-2",
+          "title": "Zustand — Updating state",
+          "url": "https://zustand.docs.pmnd.rs/guides/updating-state",
+          "kind": "Docs",
+          "note": "Immutability rules and the traps. Read before touching nested state."
+        },
+        {
+          "id": "r-zu-3",
+          "title": "Zustand — Persist middleware",
+          "url": "https://zustand.docs.pmnd.rs/integrations/persisting-store-data",
+          "kind": "Reference",
+          "note": "Exactly what Northstar's migrate and merge are doing. Read it alongside useStore.ts."
+        },
+        {
+          "id": "r-zu-4",
+          "title": "Zustand — Prevent rerenders with selectors",
+          "url": "https://zustand.docs.pmnd.rs/guides/prevent-rerenders-with-use-shallow",
+          "kind": "Docs",
+          "note": "The performance chapter. This is the interview answer."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-zu-1",
+          "order": 1,
+          "title": "Stores, actions and selectors",
+          "goal": "Know how a store is created and why selectors matter more than the store shape.",
+          "exercise": "Read useStore.ts line by line and write a comment explaining each action.",
+          "resourceUrl": "https://zustand.docs.pmnd.rs/",
+          "minutes": 60,
+          "done": false
+        },
+        {
+          "id": "s-zu-2",
+          "order": 2,
+          "title": "Selectors and re-renders",
+          "goal": "Subscribe to the smallest slice that works.",
+          "exercise": "Find a component reading the whole store and narrow it. Measure the difference.",
+          "resourceUrl": "https://zustand.docs.pmnd.rs/guides/prevent-rerenders-with-use-shallow",
+          "minutes": 75,
+          "done": false
+        },
+        {
+          "id": "s-zu-3",
+          "order": 3,
+          "title": "Persistence, migrate and merge",
+          "goal": "Understand versioning saved state — the thing that breaks real apps on upgrade.",
+          "exercise": "Trace Northstar's own planVersion logic and explain why it exists.",
+          "resourceUrl": "https://zustand.docs.pmnd.rs/integrations/persisting-store-data",
+          "minutes": 75,
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "sk-redux",
+      "skill": "Redux Toolkit",
+      "category": "State management",
+      "badge": "RT",
+      "colour": "#764ABC",
+      "icon": "redux",
+      "optional": false,
+      "currentLevel": "None",
+      "target": "Can write slices and thunks, and argue for or against Redux",
+      "priority": "Medium",
+      "evidence": "One Northstar feature rebuilt as an RTK slice",
+      "action": "Learn modern Redux, not the 2018 boilerplate everyone complains about.",
+      "why": "It is still everywhere in existing codebases, which is exactly where junior roles are. Being able to compare it fairly with Zustand — rather than dismissing it — is what sounds experienced.",
+      "miniProject": "Rebuild the applications state as a Redux Toolkit slice on a branch, then write the honest comparison with the Zustand version.",
+      "miniProjectDod": "Both implementations work identically, and you have a written recommendation with specifics rather than preference.",
+      "resources": [
+        {
+          "id": "r-rt-1",
+          "title": "Redux Toolkit — Quick Start",
+          "url": "https://redux-toolkit.js.org/tutorials/quick-start",
+          "kind": "Course",
+          "note": "Modern Redux is far less boilerplate than its reputation. Start here."
+        },
+        {
+          "id": "r-rt-2",
+          "title": "Redux Essentials tutorial",
+          "url": "https://redux.js.org/tutorials/essentials/part-1-overview-concepts",
+          "kind": "Course",
+          "note": "The long-form version. Parts 1 to 4 are the ones that matter."
+        },
+        {
+          "id": "r-rt-3",
+          "title": "Redux — Style Guide",
+          "url": "https://redux.js.org/style-guide/",
+          "kind": "Reference",
+          "note": "The reasoning behind the patterns, which is what gets asked about."
+        },
+        {
+          "id": "r-rt-4",
+          "title": "You Might Not Need Redux",
+          "url": "https://medium.com/@dan_abramov/you-might-not-need-redux-be46360cf367",
+          "kind": "Article",
+          "note": "By Redux's own author. Knowing when not to use a tool is the mature answer."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-rt-1",
+          "order": 1,
+          "title": "Slices, reducers, actions",
+          "goal": "Write a slice without ceremony and understand what createSlice generates.",
+          "exercise": "Build an applications slice with add, update and remove.",
+          "resourceUrl": "https://redux-toolkit.js.org/tutorials/quick-start",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-rt-2",
+          "order": 2,
+          "title": "Selectors and derived state",
+          "goal": "Compute from state rather than duplicating it.",
+          "exercise": "Write selectors for the funnel numbers instead of storing them.",
+          "resourceUrl": "https://redux.js.org/tutorials/essentials/part-1-overview-concepts",
+          "minutes": 75,
+          "done": false
+        },
+        {
+          "id": "s-rt-3",
+          "order": 3,
+          "title": "Async with thunks",
+          "goal": "Handle loading, success and failure without inventing your own pattern.",
+          "exercise": "Fetch applications with createAsyncThunk and render all three states.",
+          "resourceUrl": "https://redux-toolkit.js.org/api/createAsyncThunk",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-rt-4",
+          "order": 4,
+          "title": "Decide, in writing",
+          "goal": "Turn the experiment into a defensible opinion.",
+          "exercise": "Write the Redux-versus-Zustand comparison as an ADR.",
+          "resourceUrl": "https://redux.js.org/style-guide/",
+          "minutes": 60,
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "sk-node",
+      "skill": "Node.js",
+      "category": "Backend",
+      "badge": "ND",
+      "colour": "#5fa04e",
+      "currentLevel": "Basic",
+      "target": "Comfortable with the runtime, modules, streams and async patterns",
+      "priority": "Critical",
+      "evidence": "The Northstar API running on it, with a documented startup path",
+      "action": "Learn the runtime, not just Express on top of it.",
+      "why": "Express is a thin layer; the questions that separate candidates are about the runtime underneath — the event loop, modules, environment, streams and error handling in async code.",
+      "miniProject": "Write a small CLI in Node that exports your job-search data to CSV, using streams rather than building the whole string in memory.",
+      "miniProjectDod": "It handles a large export without memory spikes, and you can explain why streaming matters here.",
+      "resources": [
+        {
+          "id": "r-nd-1",
+          "title": "Node.js — Learn",
+          "url": "https://nodejs.org/en/learn",
+          "kind": "Course",
+          "note": "The official guides. Start with modules, then async, then streams."
+        },
+        {
+          "id": "r-nd-2",
+          "title": "Node.js — API reference",
+          "url": "https://nodejs.org/docs/latest/api/",
+          "kind": "Reference",
+          "note": "fs, path, process and stream are the ones you'll actually open."
+        },
+        {
+          "id": "r-nd-3",
+          "title": "Node.js best practices",
+          "url": "https://github.com/goldbergyoni/nodebestpractices",
+          "kind": "Reference",
+          "note": "Skim project structure and error handling. Cite one and you sound experienced."
+        },
+        {
+          "id": "r-nd-4",
+          "title": "Node.js — ESM vs CommonJS",
+          "url": "https://nodejs.org/api/esm.html",
+          "kind": "Docs",
+          "note": "The source of a lot of confusing errors. Worth thirty focused minutes."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-nd-1",
+          "order": 1,
+          "title": "Modules and the runtime",
+          "goal": "Understand ESM versus CommonJS and why imports sometimes explode.",
+          "exercise": "Convert a small script both ways and read the errors carefully.",
+          "resourceUrl": "https://nodejs.org/api/esm.html",
+          "minutes": 60,
+          "done": false
+        },
+        {
+          "id": "s-nd-2",
+          "order": 2,
+          "title": "Async patterns and error handling",
+          "goal": "Handle rejections properly, including in code that isn't awaited.",
+          "exercise": "Add a top-level unhandled-rejection handler and prove it fires.",
+          "resourceUrl": "https://nodejs.org/en/learn/asynchronous-work/understanding-processnexttick",
+          "minutes": 75,
+          "done": false
+        },
+        {
+          "id": "s-nd-3",
+          "order": 3,
+          "title": "Files, paths and environment",
+          "goal": "Read configuration and touch the filesystem without surprises.",
+          "exercise": "Write the CSV export CLI reading config from environment variables.",
+          "resourceUrl": "https://nodejs.org/en/learn/manipulating-files/reading-files-with-nodejs",
+          "minutes": 75,
+          "done": false
+        },
+        {
+          "id": "s-nd-4",
+          "order": 4,
+          "title": "Streams",
+          "goal": "Know when streaming beats loading it all into memory.",
+          "exercise": "Rewrite the export using a stream and compare memory use on a big file.",
+          "resourceUrl": "https://nodejs.org/en/learn/modules/how-to-use-streams",
+          "minutes": 90,
+          "done": false
+        }
+      ],
+      "icon": "nodedotjs",
+      "optional": false
+    },
+    {
+      "id": "sk-express",
+      "skill": "Express & API design",
+      "category": "Backend",
+      "badge": "EX",
+      "colour": "#0A0A0A",
       "currentLevel": "Basic",
       "target": "Can design routes, middleware, validation, errors and tests",
       "priority": "Critical",
-      "evidence": "Production-style API for dashboard",
-      "action": "Finish backend; add validation, auth, logging and tests."
+      "evidence": "A production-style API for Northstar",
+      "action": "Finish the backend; add validation, auth, logging and tests.",
+      "why": "It turns you from someone who builds pages into someone who builds systems, and it is the half of the stack where interviewers probe hardest — because security and data integrity live there.",
+      "miniProject": "The Northstar API: routes, controllers, services and repositories cleanly separated, with validation, a global error handler and a health endpoint.",
+      "miniProjectDod": "A clean database can be created, seeded and driven entirely through the API, and every route has one obvious place its errors are handled.",
+      "resources": [
+        {
+          "id": "r-ex-1",
+          "title": "Express — Routing",
+          "url": "https://expressjs.com/en/guide/routing.html",
+          "kind": "Docs",
+          "note": "Start here, then middleware and error handling in the same series."
+        },
+        {
+          "id": "r-ex-2",
+          "title": "Express — Error handling",
+          "url": "https://expressjs.com/en/guide/error-handling.html",
+          "kind": "Docs",
+          "note": "The four-argument middleware signature is what people get wrong. Read it carefully."
+        },
+        {
+          "id": "r-ex-3",
+          "title": "MDN — HTTP status codes",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Status",
+          "kind": "Reference",
+          "note": "Knowing 400 versus 422 versus 409 is a small thing that reads as care."
+        },
+        {
+          "id": "r-ex-4",
+          "title": "OWASP Cheat Sheet Series",
+          "url": "https://cheatsheetseries.owasp.org/",
+          "kind": "Reference",
+          "note": "Read the Node.js and Authentication sheets before weeks 2 and 3."
+        },
+        {
+          "id": "r-ex-5",
+          "title": "Express — Production best practices",
+          "url": "https://expressjs.com/en/advanced/best-practice-security.html",
+          "kind": "Docs",
+          "note": "Helmet, rate limits and the settings that matter in production."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-ex-1",
+          "order": 1,
+          "title": "Request lifecycle and middleware",
+          "goal": "Trace a request through every middleware and know where to add behaviour.",
+          "exercise": "Write a logging middleware printing method, path, status and duration.",
+          "resourceUrl": "https://expressjs.com/en/guide/using-middleware.html",
+          "minutes": 75,
+          "done": false
+        },
+        {
+          "id": "s-ex-2",
+          "order": 2,
+          "title": "Layering: routes, controllers, services",
+          "goal": "Know what belongs in each layer and why mixing them hurts later.",
+          "exercise": "Split one fat route handler into a controller and a service, with no logic in the route.",
+          "resourceUrl": "https://github.com/goldbergyoni/nodebestpractices",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-ex-3",
+          "order": 3,
+          "title": "REST conventions that hold up",
+          "goal": "Design resource URLs, choose status codes, handle pagination consistently.",
+          "exercise": "Write the whole route table on paper before implementing any of it.",
+          "resourceUrl": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Status",
+          "minutes": 60,
+          "done": false
+        },
+        {
+          "id": "s-ex-4",
+          "order": 4,
+          "title": "Errors in one place",
+          "goal": "Use typed error classes and one error middleware instead of try/catch everywhere.",
+          "exercise": "Create NotFoundError and ValidationError and map them centrally.",
+          "resourceUrl": "https://expressjs.com/en/guide/error-handling.html",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-ex-5",
+          "order": 5,
+          "title": "Hardening the surface",
+          "goal": "Understand what Helmet, rate limiting and body limits actually protect against.",
+          "exercise": "Add all three, then write one sentence per middleware naming the attack it blocks.",
+          "resourceUrl": "https://cheatsheetseries.owasp.org/cheatsheets/Nodejs_Security_Cheat_Sheet.html",
+          "minutes": 75,
+          "done": false
+        }
+      ],
+      "icon": "express",
+      "optional": false
     },
     {
-      "id": "sk-003",
-      "skill": "PostgreSQL",
+      "id": "sk-postgres",
+      "skill": "PostgreSQL & Prisma",
+      "category": "Data",
+      "badge": "PG",
+      "colour": "#4169E1",
       "currentLevel": "Intermediate-beginner",
       "target": "Confident joins, schema design, migrations and indexes",
+      "priority": "Critical",
+      "evidence": "A normalised Northstar database with an ER diagram you can talk through",
+      "action": "Use it in the deployed app; write ten representative queries by hand.",
+      "why": "Data modelling is what most obviously separates candidates in a junior take-home, and 'can you write a join' is still asked constantly. It is also the foundation of week 1.",
+      "miniProject": "The schema for this app: normalised tables, foreign keys, sensible indexes, and an ER diagram you can walk someone through.",
+      "miniProjectDod": "The database can be dropped and rebuilt from migrations plus a seed, and you can explain every foreign key and index out loud.",
+      "resources": [
+        {
+          "id": "r-pg-1",
+          "title": "PostgreSQL Tutorial (official)",
+          "url": "https://www.postgresql.org/docs/current/tutorial.html",
+          "kind": "Docs",
+          "note": "Short and authoritative. Do it in psql, not a GUI, so the commands stick."
+        },
+        {
+          "id": "r-pg-2",
+          "title": "PG Exercises",
+          "url": "https://pgexercises.com/",
+          "kind": "Practice",
+          "note": "The best way to get fluent at joins and aggregates. Do the joins set twice."
+        },
+        {
+          "id": "r-pg-3",
+          "title": "Use The Index, Luke!",
+          "url": "https://use-the-index-luke.com/",
+          "kind": "Course",
+          "note": "Makes indexes stop being folklore. The first three chapters are enough."
+        },
+        {
+          "id": "r-pg-4",
+          "title": "Prisma — Data model",
+          "url": "https://www.prisma.io/docs/orm/prisma-schema/data-model",
+          "kind": "Docs",
+          "note": "How schema.prisma maps to real SQL. Read it beside the generated migration."
+        },
+        {
+          "id": "r-pg-5",
+          "title": "Prisma — Migrate",
+          "url": "https://www.prisma.io/docs/orm/prisma-migrate",
+          "kind": "Docs",
+          "note": "What a migration is, and why editing an applied one is dangerous."
+        },
+        {
+          "id": "r-pg-6",
+          "title": "PostgreSQL — Constraints",
+          "url": "https://www.postgresql.org/docs/current/ddl-constraints.html",
+          "kind": "Reference",
+          "note": "Constraints are how the database defends itself. Learn them before trusting app code."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-pg-1",
+          "order": 1,
+          "title": "psql and the basics",
+          "goal": "Create a database, a table and rows from the command line.",
+          "exercise": "Build a scratch database by hand, then drop it. Repeat until it's muscle memory.",
+          "resourceUrl": "https://www.postgresql.org/docs/current/tutorial.html",
+          "minutes": 60,
+          "done": false
+        },
+        {
+          "id": "s-pg-2",
+          "order": 2,
+          "title": "Joins until they're automatic",
+          "goal": "Write inner, left and aggregate joins without thinking about syntax.",
+          "exercise": "Complete the PG Exercises joins section. Redo any you needed the answer for.",
+          "resourceUrl": "https://pgexercises.com/questions/joins/",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-pg-3",
+          "order": 3,
+          "title": "Schema design and constraints",
+          "goal": "Model this app's domain with the right keys, types and NOT NULL choices.",
+          "exercise": "Draw the ER diagram for applications, contacts and companies before writing Prisma.",
+          "resourceUrl": "https://www.postgresql.org/docs/current/ddl-constraints.html",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-pg-4",
+          "order": 4,
+          "title": "Migrations you can trust",
+          "goal": "Understand what a migration file is and when it is safe to change.",
+          "exercise": "Run prisma migrate dev, read the SQL line by line, then reset and re-run it.",
+          "resourceUrl": "https://www.prisma.io/docs/orm/prisma-migrate",
+          "minutes": 75,
+          "done": false
+        },
+        {
+          "id": "s-pg-5",
+          "order": 5,
+          "title": "Indexes and EXPLAIN",
+          "goal": "Read a query plan and know when an index will help.",
+          "exercise": "Run EXPLAIN ANALYZE on your slowest filter, add an index, compare the plans.",
+          "resourceUrl": "https://use-the-index-luke.com/",
+          "minutes": 90,
+          "done": false
+        }
+      ],
+      "icon": "postgresql",
+      "optional": false
+    },
+    {
+      "id": "sk-vitest",
+      "skill": "Vitest & unit testing",
+      "category": "Testing",
+      "badge": "VT",
+      "colour": "#6DA544",
+      "currentLevel": "Not used yet",
+      "target": "Writes tests that survive a refactor and catch real bugs",
+      "priority": "Critical",
+      "evidence": "A green suite in CI covering the date and selector helpers",
+      "action": "Test the logic that would embarrass you if it broke.",
+      "why": "A repository with real tests is rare in a junior portfolio and immediately signals professional habits. It also lets you say 'I know it works' rather than 'I think it works'.",
+      "miniProject": "Unit tests for lib/dates and lib/selectors, including the edge cases: month boundaries, empty lists, division by zero in the response rate.",
+      "miniProjectDod": "Break one of those functions on purpose and a test goes red with a message that tells you what broke.",
+      "resources": [
+        {
+          "id": "r-vt-1",
+          "title": "Vitest — Getting started",
+          "url": "https://vitest.dev/guide/",
+          "kind": "Docs",
+          "note": "The natural fit for a Vite project. Setup is genuinely five minutes."
+        },
+        {
+          "id": "r-vt-2",
+          "title": "Testing Library — Guiding principles",
+          "url": "https://testing-library.com/docs/guiding-principles/",
+          "kind": "Article",
+          "note": "One page that reframes what to test. Quote it in an interview and it lands."
+        },
+        {
+          "id": "r-vt-3",
+          "title": "React Testing Library",
+          "url": "https://testing-library.com/docs/react-testing-library/intro/",
+          "kind": "Docs",
+          "note": "Query by what a user sees, not by class name."
+        },
+        {
+          "id": "r-vt-4",
+          "title": "Write tests. Not too many. Mostly integration.",
+          "url": "https://kentcdodds.com/blog/write-tests",
+          "kind": "Article",
+          "note": "The clearest argument for where to spend limited testing effort."
+        },
+        {
+          "id": "r-vt-5",
+          "title": "Vitest — Mocking",
+          "url": "https://vitest.dev/guide/mocking.html",
+          "kind": "Reference",
+          "note": "Read this to learn how little you should mock."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-vt-1",
+          "order": 1,
+          "title": "First tests",
+          "goal": "Set up Vitest and understand what makes a test worth writing.",
+          "exercise": "Test parseISO across a month boundary and currentWeekNumber outside the range.",
+          "resourceUrl": "https://vitest.dev/guide/",
+          "minutes": 75,
+          "done": false
+        },
+        {
+          "id": "s-vt-2",
+          "order": 2,
+          "title": "Testing logic, not implementation",
+          "goal": "Write tests that survive a refactor.",
+          "exercise": "Test funnel() and outreachStats(), including the empty and zero cases.",
+          "resourceUrl": "https://testing-library.com/docs/guiding-principles/",
+          "minutes": 75,
+          "done": false
+        },
+        {
+          "id": "s-vt-3",
+          "order": 3,
+          "title": "Component tests",
+          "goal": "Test what a user can see and do, not internal state.",
+          "exercise": "Test that StatusSelect calls onChange with the right value.",
+          "resourceUrl": "https://testing-library.com/docs/react-testing-library/intro/",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-vt-4",
+          "order": 4,
+          "title": "Make it prove itself",
+          "goal": "Know that a suite catching nothing is worse than no suite.",
+          "exercise": "Break something deliberately. If nothing fails, write the test that should have.",
+          "resourceUrl": "https://kentcdodds.com/blog/write-tests",
+          "minutes": 60,
+          "done": false
+        }
+      ],
+      "icon": "vitest",
+      "optional": false
+    },
+    {
+      "id": "sk-playwright",
+      "skill": "Playwright & end-to-end",
+      "category": "Testing",
+      "badge": "PW",
+      "colour": "#2ead33",
+      "currentLevel": "Not used yet",
+      "target": "One reliable end-to-end run of the path that matters",
       "priority": "High",
-      "evidence": "Normalized job-tracker database",
-      "action": "Use PostgreSQL in deployed app; write 10 representative queries."
+      "evidence": "A Playwright run in CI covering register → log in → create → see it",
+      "action": "One happy path, kept green. Flaky tests are worse than none.",
+      "why": "End-to-end tests are what let you deploy on a Friday. One reliable test through the critical path is worth more than twenty brittle ones, and being able to say that shows judgement.",
+      "miniProject": "One Playwright test: register, log in, create an application, and assert it appears on the dashboard.",
+      "miniProjectDod": "It passes ten times in a row locally and in CI, with no arbitrary waits.",
+      "resources": [
+        {
+          "id": "r-pw-1",
+          "title": "Playwright — Getting started",
+          "url": "https://playwright.dev/docs/intro",
+          "kind": "Docs",
+          "note": "Use the codegen recorder for your first test, then clean it up by hand."
+        },
+        {
+          "id": "r-pw-2",
+          "title": "Playwright — Locators",
+          "url": "https://playwright.dev/docs/locators",
+          "kind": "Docs",
+          "note": "Getting locators right is what makes tests stop being flaky."
+        },
+        {
+          "id": "r-pw-3",
+          "title": "Playwright — Best practices",
+          "url": "https://playwright.dev/docs/best-practices",
+          "kind": "Reference",
+          "note": "Read this before writing the second test, not after the tenth."
+        },
+        {
+          "id": "r-pw-4",
+          "title": "Playwright — CI",
+          "url": "https://playwright.dev/docs/ci-intro",
+          "kind": "Docs",
+          "note": "A test that only passes on your machine isn't a test."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-pw-1",
+          "order": 1,
+          "title": "Record, then rewrite",
+          "goal": "Get a first test running and understand what codegen produced.",
+          "exercise": "Record a run through the app, then rewrite it with proper locators.",
+          "resourceUrl": "https://playwright.dev/docs/intro",
+          "minutes": 75,
+          "done": false
+        },
+        {
+          "id": "s-pw-2",
+          "order": 2,
+          "title": "Locators and auto-waiting",
+          "goal": "Stop using sleeps and start using assertions that wait.",
+          "exercise": "Remove every fixed wait from your test and make it pass reliably.",
+          "resourceUrl": "https://playwright.dev/docs/locators",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-pw-3",
+          "order": 3,
+          "title": "The one path that matters",
+          "goal": "Cover the journey a user actually takes, and nothing more.",
+          "exercise": "Write the register → log in → create → verify test end to end.",
+          "resourceUrl": "https://playwright.dev/docs/best-practices",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-pw-4",
+          "order": 4,
+          "title": "Run it in CI",
+          "goal": "Make it part of the pipeline, with a trace when it fails.",
+          "exercise": "Add it to GitHub Actions and confirm the trace artefact on a failure.",
+          "resourceUrl": "https://playwright.dev/docs/ci-intro",
+          "minutes": 75,
+          "done": false
+        }
+      ],
+      "icon": "playwright",
+      "optional": false
     },
     {
-      "id": "sk-004",
-      "skill": "Testing",
-      "currentLevel": "Not listed",
-      "target": "Unit + integration + basic end-to-end tests",
+      "id": "sk-git",
+      "skill": "Git & GitHub",
+      "category": "Delivery",
+      "badge": "GH",
+      "colour": "#f05033",
+      "currentLevel": "Commits and pushes; rebase and conflicts are scary",
+      "target": "Works confidently with branches, rebases, conflicts and reviews",
+      "priority": "Critical",
+      "evidence": "A readable commit history and pull requests with real descriptions",
+      "action": "Every change goes through a branch and a pull request, even alone.",
+      "why": "Every team works this way, and a hiring manager can read your git history before they ever talk to you. Conventional Commits and a clear PR description make a solo project look like team work.",
+      "miniProject": "Adopt Conventional Commits and pull requests for the rest of this programme, and write one PR description with context, approach and how you tested.",
+      "miniProjectDod": "Your last ten commits read as deliberate work, and a stranger can follow one PR without asking you anything.",
+      "resources": [
+        {
+          "id": "r-gh-1",
+          "title": "Pro Git (free book)",
+          "url": "https://git-scm.com/book/en/v2",
+          "kind": "Course",
+          "note": "Chapters 2, 3 and 7. The branching chapter is the one that removes the fear."
+        },
+        {
+          "id": "r-gh-2",
+          "title": "Learn Git Branching",
+          "url": "https://learngitbranching.js.org/",
+          "kind": "Practice",
+          "note": "Visual and interactive. The fastest way to understand rebase."
+        },
+        {
+          "id": "r-gh-3",
+          "title": "Conventional Commits",
+          "url": "https://www.conventionalcommits.org/",
+          "kind": "Reference",
+          "note": "A five-minute read that makes your history look intentional."
+        },
+        {
+          "id": "r-gh-4",
+          "title": "GitHub — Pull requests",
+          "url": "https://docs.github.com/en/pull-requests",
+          "kind": "Docs",
+          "note": "Forks, branches, reviews. Know this before your first open-source PR."
+        },
+        {
+          "id": "r-gh-5",
+          "title": "Oh Shit, Git!?!",
+          "url": "https://ohshitgit.com/",
+          "kind": "Reference",
+          "note": "The page you'll want at the exact moment something goes wrong."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-gh-1",
+          "order": 1,
+          "title": "Branching without fear",
+          "goal": "Understand what a branch actually is and why it's cheap.",
+          "exercise": "Play Learn Git Branching through the main sequence.",
+          "resourceUrl": "https://learngitbranching.js.org/",
+          "minutes": 75,
+          "done": false
+        },
+        {
+          "id": "s-gh-2",
+          "order": 2,
+          "title": "Rebase, merge and history",
+          "goal": "Know the difference and when each is appropriate.",
+          "exercise": "Rebase a feature branch onto main and resolve a conflict on purpose.",
+          "resourceUrl": "https://git-scm.com/book/en/v2/Git-Branching-Rebasing",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-gh-3",
+          "order": 3,
+          "title": "Commits that explain themselves",
+          "goal": "Write history someone else can read.",
+          "exercise": "Adopt Conventional Commits and rewrite your last five messages on a branch.",
+          "resourceUrl": "https://www.conventionalcommits.org/",
+          "minutes": 60,
+          "done": false
+        },
+        {
+          "id": "s-gh-4",
+          "order": 4,
+          "title": "Pull requests and review",
+          "goal": "Present a change so it's easy to say yes to.",
+          "exercise": "Open a PR with context, approach and testing. Review it yourself a day later.",
+          "resourceUrl": "https://docs.github.com/en/pull-requests",
+          "minutes": 60,
+          "done": false
+        },
+        {
+          "id": "s-gh-5",
+          "order": 5,
+          "title": "Undoing things safely",
+          "goal": "Recover from mistakes without panic — reflog, revert, reset.",
+          "exercise": "Delete a commit on a scratch branch, then recover it with reflog.",
+          "resourceUrl": "https://ohshitgit.com/",
+          "minutes": 60,
+          "done": false
+        }
+      ],
+      "icon": "git",
+      "optional": false
+    },
+    {
+      "id": "sk-docker",
+      "skill": "Docker",
+      "category": "Delivery",
+      "badge": "DK",
+      "colour": "#2496ed",
+      "currentLevel": "Not installed yet",
+      "target": "Can containerise an app and run a local stack with Compose",
       "priority": "High",
-      "evidence": "CI passing on GitHub",
-      "action": "Add Vitest/Jest and Playwright or Supertest."
+      "evidence": "A Dockerfile and a Compose file that bring up the app and PostgreSQL",
+      "action": "Containerise your own app, not a tutorial's.",
+      "why": "'Works on my machine' is the problem it solves, and every backend job posting mentions it. A working Dockerfile in your repo is concrete evidence you can hand a project to someone else.",
+      "miniProject": "A multi-stage Dockerfile with a non-root user, plus a Compose file that starts the API and PostgreSQL together.",
+      "miniProjectDod": "docker compose up on a clean clone gives you a working app and database, and the image is small enough to explain why.",
+      "resources": [
+        {
+          "id": "r-dk-1",
+          "title": "Docker — Get started",
+          "url": "https://docs.docker.com/get-started/",
+          "kind": "Course",
+          "note": "Official and current. Do it with your own app once the concepts land."
+        },
+        {
+          "id": "r-dk-2",
+          "title": "Dockerfile best practices",
+          "url": "https://docs.docker.com/build/building/best-practices/",
+          "kind": "Reference",
+          "note": "Layer caching and image size, explained by the people who built it."
+        },
+        {
+          "id": "r-dk-3",
+          "title": "Docker Compose — Quickstart",
+          "url": "https://docs.docker.com/compose/gettingstarted/",
+          "kind": "Docs",
+          "note": "How to run the app and the database as one thing."
+        },
+        {
+          "id": "r-dk-4",
+          "title": "Docker — Multi-stage builds",
+          "url": "https://docs.docker.com/build/building/multi-stage/",
+          "kind": "Docs",
+          "note": "The trick that keeps production images small. Short page, big payoff."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-dk-1",
+          "order": 1,
+          "title": "Images, containers, layers",
+          "goal": "Understand what an image is and why layer order matters.",
+          "exercise": "Write a naive Dockerfile for the API, then reorder it and compare build times.",
+          "resourceUrl": "https://docs.docker.com/get-started/",
+          "minutes": 75,
+          "done": false
+        },
+        {
+          "id": "s-dk-2",
+          "order": 2,
+          "title": "A production-shaped image",
+          "goal": "Build small and run as a non-root user.",
+          "exercise": "Convert to a multi-stage build and compare the image sizes.",
+          "resourceUrl": "https://docs.docker.com/build/building/multi-stage/",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-dk-3",
+          "order": 3,
+          "title": "Compose: app plus database",
+          "goal": "Run the whole stack with one command, with volumes and networking.",
+          "exercise": "Write the Compose file and bring the app up against a containerised PostgreSQL.",
+          "resourceUrl": "https://docs.docker.com/compose/gettingstarted/",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-dk-4",
+          "order": 4,
+          "title": "Config and secrets",
+          "goal": "Get environment variables in without baking them into the image.",
+          "exercise": "Move every secret to env files and prove none are in the built image.",
+          "resourceUrl": "https://docs.docker.com/build/building/best-practices/",
+          "minutes": 60,
+          "done": false
+        }
+      ],
+      "icon": "docker",
+      "optional": false
     },
     {
-      "id": "sk-005",
-      "skill": "Next.js",
-      "currentLevel": "Basic",
-      "target": "Able to build/deploy one credible application",
-      "priority": "Medium",
-      "evidence": "One Next.js app with auth/database",
-      "action": "Build or migrate one small app; avoid collecting more unfinished projects."
-    },
-    {
-      "id": "sk-006",
-      "skill": "Technical communication",
-      "currentLevel": "Unknown",
-      "target": "Can explain architecture, tradeoffs and debugging clearly",
-      "priority": "High",
-      "evidence": "Two-minute demo + README diagrams",
-      "action": "Practice project walkthroughs and informational interviews."
-    },
-    {
-      "id": "sk-007",
-      "skill": "Open source",
+      "id": "sk-render",
+      "skill": "Render",
+      "category": "Hosting",
+      "badge": "RD",
+      "colour": "#000000",
+      "icon": "render",
+      "optional": false,
       "currentLevel": "None",
-      "target": "1-3 accepted small contributions",
-      "priority": "Medium",
-      "evidence": "Merged PRs or meaningful issue participation",
-      "action": "Start with tools already used; documentation/tests are valid."
-    },
-    {
-      "id": "sk-008",
-      "skill": "Algorithms / data structures",
-      "currentLevel": "Unknown",
-      "target": "Pass common entry-level screens",
+      "target": "Can host a long-running API and a managed PostgreSQL",
       "priority": "High",
-      "evidence": "Consistent practice log",
-      "action": "3-5 problems/week plus review, not mass LeetCode."
+      "evidence": "The Northstar API and database running in production",
+      "action": "This is where the backend actually lives. Not optional.",
+      "why": "Vercel is built for frontends; your Express API and PostgreSQL need somewhere that runs continuously. Render's free tier does both, which makes the whole stack demonstrable without a card.",
+      "miniProject": "Deploy the Northstar API and a managed PostgreSQL instance, with migrations running on release and a health check that actually reports health.",
+      "miniProjectDod": "The API answers from the public internet, migrations ran on deploy, and /health returns something meaningful.",
+      "resources": [
+        {
+          "id": "r-rd-1",
+          "title": "Render — Web services",
+          "url": "https://render.com/docs/web-services",
+          "kind": "Docs",
+          "note": "How a long-running Node process gets hosted. Start here."
+        },
+        {
+          "id": "r-rd-2",
+          "title": "Render — PostgreSQL",
+          "url": "https://render.com/docs/postgresql",
+          "kind": "Docs",
+          "note": "Managed database, connection strings, backups."
+        },
+        {
+          "id": "r-rd-3",
+          "title": "Render — Environment variables",
+          "url": "https://render.com/docs/configure-environment-variables",
+          "kind": "Reference",
+          "note": "Where DATABASE_URL and your session secret live in production."
+        },
+        {
+          "id": "r-rd-4",
+          "title": "The Twelve-Factor App",
+          "url": "https://12factor.net/",
+          "kind": "Article",
+          "note": "Config, dependencies, logs. Old, but still the vocabulary people use."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-rd-1",
+          "order": 1,
+          "title": "Host the API",
+          "goal": "Get a long-running Express process online.",
+          "exercise": "Deploy the API and hit it with curl from your machine.",
+          "resourceUrl": "https://render.com/docs/web-services",
+          "minutes": 75,
+          "done": false
+        },
+        {
+          "id": "s-rd-2",
+          "order": 2,
+          "title": "Managed PostgreSQL",
+          "goal": "Connect to a real hosted database and run migrations on release.",
+          "exercise": "Provision the database, wire DATABASE_URL, and run prisma migrate deploy on release.",
+          "resourceUrl": "https://render.com/docs/postgresql",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-rd-3",
+          "order": 3,
+          "title": "Health checks and config",
+          "goal": "Know what happens on deploy, in order.",
+          "exercise": "Add /health, point Render at it, and force a failed deploy on purpose to watch it roll back.",
+          "resourceUrl": "https://render.com/docs/configure-environment-variables",
+          "minutes": 60,
+          "done": false
+        }
+      ]
     },
     {
-      "id": "sk-009",
-      "skill": "AI integration",
-      "currentLevel": "Interest rank 3",
-      "target": "Can integrate an LLM API responsibly",
+      "id": "sk-vercel",
+      "skill": "Vercel",
+      "category": "Hosting",
+      "badge": "VC",
+      "colour": "#000000",
+      "icon": "vercel",
+      "optional": false,
+      "currentLevel": "Nothing deployed yet",
+      "target": "Can deploy a frontend with env vars and preview builds",
+      "priority": "High",
+      "evidence": "The Northstar frontend live on a URL",
+      "action": "Deploy early. A private project convinces nobody.",
+      "why": "It is the shortest path from a repository to a URL you can put on your CV, and preview deployments per pull request are a genuinely professional habit to demonstrate.",
+      "miniProject": "Deploy the Northstar frontend, wired to the production API, with environment variables and a preview build on every pull request.",
+      "miniProjectDod": "The live URL works from someone else's machine and every PR gets its own preview link.",
+      "resources": [
+        {
+          "id": "r-vc-1",
+          "title": "Vercel — Deployments",
+          "url": "https://vercel.com/docs/deployments/overview",
+          "kind": "Docs",
+          "note": "The core model: git push, get a deployment. Free tier is enough."
+        },
+        {
+          "id": "r-vc-2",
+          "title": "Vercel — Environment variables",
+          "url": "https://vercel.com/docs/environment-variables",
+          "kind": "Reference",
+          "note": "Which vars reach the browser and which don't. Get this wrong and you leak a secret."
+        },
+        {
+          "id": "r-vc-3",
+          "title": "Vercel — Preview deployments",
+          "url": "https://vercel.com/docs/deployments/environments",
+          "kind": "Docs",
+          "note": "A URL per pull request. Worth mentioning in an interview."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-vc-1",
+          "order": 1,
+          "title": "First deployment",
+          "goal": "Get the frontend live from a git push.",
+          "exercise": "Connect the repo and deploy. Open the URL on your phone.",
+          "resourceUrl": "https://vercel.com/docs/deployments/overview",
+          "minutes": 60,
+          "done": false
+        },
+        {
+          "id": "s-vc-2",
+          "order": 2,
+          "title": "Environment and secrets",
+          "goal": "Point the client at the production API without shipping anything private.",
+          "exercise": "Move the API base URL to an env var and verify no secret is in the bundle.",
+          "resourceUrl": "https://vercel.com/docs/environment-variables",
+          "minutes": 60,
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "sk-netlify",
+      "skill": "Netlify",
+      "category": "Hosting",
+      "badge": "NL",
+      "colour": "#00C7B7",
+      "icon": "netlify",
+      "optional": true,
+      "currentLevel": "None",
+      "target": "Can deploy a static site and knows how it differs from Vercel",
+      "priority": "Low",
+      "evidence": "One deploy, plus a written comparison with Vercel",
+      "action": "Weekend material. One deploy is enough to hold an opinion.",
+      "why": "The other name that appears constantly in job posts alongside Vercel. One afternoon gives you a real comparison instead of an opinion you borrowed.",
+      "miniProject": "Deploy the same frontend to Netlify as well, then write down what differed: build config, redirects, functions, speed.",
+      "miniProjectDod": "Both deployments are live and you can name three concrete differences.",
+      "resources": [
+        {
+          "id": "r-nl-1",
+          "title": "Netlify — Get started",
+          "url": "https://docs.netlify.com/get-started/",
+          "kind": "Docs",
+          "note": "Same shape as Vercel with different vocabulary."
+        },
+        {
+          "id": "r-nl-2",
+          "title": "Netlify — Redirects and rewrites",
+          "url": "https://docs.netlify.com/routing/redirects/",
+          "kind": "Reference",
+          "note": "The _redirects file is the thing you'll actually need for an SPA."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-nl-1",
+          "order": 1,
+          "title": "Deploy and compare",
+          "goal": "Get it live and understand where Netlify differs.",
+          "exercise": "Deploy the frontend, fix SPA routing with _redirects, and note three differences from Vercel.",
+          "resourceUrl": "https://docs.netlify.com/get-started/",
+          "minutes": 75,
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "sk-cli",
+      "skill": "Command line",
+      "category": "Tooling",
+      "badge": "SH",
+      "colour": "#4EAA25",
+      "icon": "gnubash",
+      "optional": false,
+      "currentLevel": "Uses it for git and npm only",
+      "target": "Moves around, pipes and scripts without reaching for a GUI",
+      "priority": "High",
+      "evidence": "A shell script in the repo that does something you used to do by hand",
+      "action": "One command a week, learned properly, compounds fast.",
+      "why": "Speed here compounds every single day, and it shows immediately in a pair-programming interview. It's also the difference between reading a deployment log and being defeated by it.",
+      "miniProject": "Write a shell script that resets your local database, seeds it, and starts the dev servers — one command instead of five.",
+      "miniProjectDod": "You run one script instead of remembering a sequence, and a teammate could use it from the README.",
+      "resources": [
+        {
+          "id": "r-sh-1",
+          "title": "The Missing Semester (MIT)",
+          "url": "https://missing.csail.mit.edu/",
+          "kind": "Course",
+          "note": "The class nobody teaches. Lectures 1 to 4 are the ones that pay off."
+        },
+        {
+          "id": "r-sh-2",
+          "title": "ExplainShell",
+          "url": "https://explainshell.com/",
+          "kind": "Practice",
+          "note": "Paste any command and see what each flag does. Use it on commands you copy."
+        },
+        {
+          "id": "r-sh-3",
+          "title": "GNU Bash manual",
+          "url": "https://www.gnu.org/software/bash/manual/",
+          "kind": "Reference",
+          "note": "For when you need the exact behaviour of an expansion."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-sh-1",
+          "order": 1,
+          "title": "Moving and finding",
+          "goal": "Navigate, search and filter without a file manager.",
+          "exercise": "Missing Semester lectures 1 and 2, then do a full day in the terminal only.",
+          "resourceUrl": "https://missing.csail.mit.edu/",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-sh-2",
+          "order": 2,
+          "title": "Pipes and composition",
+          "goal": "Chain small tools instead of looking for one big one.",
+          "exercise": "Count how many applications you logged per week using only grep, cut and sort.",
+          "resourceUrl": "https://explainshell.com/",
+          "minutes": 75,
+          "done": false
+        },
+        {
+          "id": "s-sh-3",
+          "order": 3,
+          "title": "Scripting what you repeat",
+          "goal": "Turn a sequence you type often into a script with arguments.",
+          "exercise": "Write the reset-and-seed script and put it in the README.",
+          "resourceUrl": "https://missing.csail.mit.edu/2020/shell-tools/",
+          "minutes": 75,
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "sk-vscode",
+      "skill": "VS Code",
+      "category": "Tooling",
+      "badge": "VS",
+      "colour": "#0078D4",
+      "icon": "vscode",
+      "optional": false,
+      "currentLevel": "Uses it daily at surface level",
+      "target": "Navigates by symbol, debugs with breakpoints, edits with multiple cursors",
+      "priority": "High",
+      "evidence": "A debugging session where you never type console.log",
+      "action": "Learn five shortcuts, use them deliberately for a week, repeat.",
+      "why": "It's where you spend eight hours a day. Someone who navigates by symbol and debugs with breakpoints looks experienced regardless of what their CV says — and it genuinely makes you faster.",
+      "miniProject": "Set up launch.json to debug both the Express API and the React client from the editor, and fix one real bug with breakpoints only.",
+      "miniProjectDod": "You can hit F5, stop on a breakpoint in server code, and step through it without a single console.log.",
+      "resources": [
+        {
+          "id": "r-vs-1",
+          "title": "VS Code — Tips and tricks",
+          "url": "https://code.visualstudio.com/docs/getstarted/tips-and-tricks",
+          "kind": "Reference",
+          "note": "Multi-cursor and go-to-symbol alone will save you hours a month."
+        },
+        {
+          "id": "r-vs-2",
+          "title": "VS Code — Debugging",
+          "url": "https://code.visualstudio.com/docs/editor/debugging",
+          "kind": "Docs",
+          "note": "launch.json, breakpoints, watch expressions. Replaces most console.log habits."
+        },
+        {
+          "id": "r-vs-3",
+          "title": "VS Code — Node.js debugging",
+          "url": "https://code.visualstudio.com/docs/nodejs/nodejs-debugging",
+          "kind": "Docs",
+          "note": "Attaching to your Express process. Worth the twenty minutes."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-vs-1",
+          "order": 1,
+          "title": "Navigation and editing speed",
+          "goal": "Move by symbol and edit in several places at once.",
+          "exercise": "Learn five shortcuts and use only those for one working day.",
+          "resourceUrl": "https://code.visualstudio.com/docs/getstarted/tips-and-tricks",
+          "minutes": 45,
+          "done": false
+        },
+        {
+          "id": "s-vs-2",
+          "order": 2,
+          "title": "Debugging without console.log",
+          "goal": "Stop on a breakpoint, inspect scope, step through.",
+          "exercise": "Write launch.json for the API and fix one real bug with breakpoints only.",
+          "resourceUrl": "https://code.visualstudio.com/docs/nodejs/nodejs-debugging",
+          "minutes": 90,
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "sk-devtools",
+      "skill": "Chrome DevTools",
+      "category": "Tooling",
+      "badge": "DT",
+      "colour": "#4285F4",
+      "icon": "googlechrome",
+      "optional": false,
+      "currentLevel": "Uses the console and little else",
+      "target": "Reads the network waterfall and a performance profile confidently",
+      "priority": "High",
+      "evidence": "A written performance finding with a before and after",
+      "action": "Record first, then change one thing. Never optimise by guessing.",
+      "why": "Debugging in the browser is half of frontend work, and 'how would you find out why this page is slow' is a standard interview question. The answer has to be a method, not a guess.",
+      "miniProject": "Profile the Northstar dashboard, find the three slowest things on load, fix one, and record the before and after numbers.",
+      "miniProjectDod": "You have two profile recordings and a paragraph explaining what changed and why it helped.",
+      "resources": [
+        {
+          "id": "r-dt-1",
+          "title": "Chrome DevTools — Documentation",
+          "url": "https://developer.chrome.com/docs/devtools",
+          "kind": "Docs",
+          "note": "Sources, Network and Performance are the panels that repay study."
+        },
+        {
+          "id": "r-dt-2",
+          "title": "DevTools — Debug JavaScript",
+          "url": "https://developer.chrome.com/docs/devtools/javascript",
+          "kind": "Course",
+          "note": "Breakpoints, step-through, watch expressions."
+        },
+        {
+          "id": "r-dt-3",
+          "title": "DevTools — Performance panel",
+          "url": "https://developer.chrome.com/docs/devtools/performance",
+          "kind": "Docs",
+          "note": "How to read a flame chart without being intimidated by it."
+        },
+        {
+          "id": "r-dt-4",
+          "title": "Lighthouse",
+          "url": "https://developer.chrome.com/docs/lighthouse/overview",
+          "kind": "Practice",
+          "note": "Run it on your deployed app. Every finding is something to fix or explain."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-dt-1",
+          "order": 1,
+          "title": "The Network panel",
+          "goal": "Read a waterfall and spot what's blocking the page.",
+          "exercise": "Record a cold load of Northstar and list the three slowest requests.",
+          "resourceUrl": "https://developer.chrome.com/docs/devtools",
+          "minutes": 60,
+          "done": false
+        },
+        {
+          "id": "s-dt-2",
+          "order": 2,
+          "title": "Breakpoints over console.log",
+          "goal": "Debug by inspecting live state.",
+          "exercise": "Fix one real bug using only the Sources panel.",
+          "resourceUrl": "https://developer.chrome.com/docs/devtools/javascript",
+          "minutes": 75,
+          "done": false
+        },
+        {
+          "id": "s-dt-3",
+          "order": 3,
+          "title": "Performance profiling",
+          "goal": "Read a flame chart and find where time actually goes.",
+          "exercise": "Record the dashboard, find the longest task, fix it, and record again.",
+          "resourceUrl": "https://developer.chrome.com/docs/devtools/performance",
+          "minutes": 90,
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "sk-figma",
+      "skill": "Figma & design literacy",
+      "category": "Tooling",
+      "badge": "FG",
+      "colour": "#F24E1E",
+      "currentLevel": "None",
+      "target": "Can read a design file and turn it into accurate markup",
       "priority": "Medium",
-      "evidence": "One useful feature with evaluation/error handling",
-      "action": "Add only after core full-stack project is stable."
+      "evidence": "One screen built pixel-faithfully from a Figma file",
+      "action": "You don't need to design. You need to implement a design exactly.",
+      "why": "You will be handed Figma files, and 'can implement a design accurately' is a real hiring criterion for frontend roles. Reading spacing, tokens and states from a file is the skill — not drawing.",
+      "miniProject": "Rebuild one screen of this app in Figma as a design file with proper tokens, then rebuild it back in code from the file alone.",
+      "miniProjectDod": "The coded version matches the file's spacing and colours without you eyeballing it.",
+      "resources": [
+        {
+          "id": "r-fg-1",
+          "title": "Figma — Learn design",
+          "url": "https://help.figma.com/hc/en-us/categories/360002051613",
+          "kind": "Course",
+          "note": "Official basics. You only need frames, auto-layout and inspect."
+        },
+        {
+          "id": "r-fg-2",
+          "title": "Figma — Dev Mode",
+          "url": "https://help.figma.com/hc/en-us/articles/15023124644247",
+          "kind": "Docs",
+          "note": "How developers actually use Figma: measurements, tokens and exports."
+        },
+        {
+          "id": "r-fg-3",
+          "title": "Refactoring UI — free tips",
+          "url": "https://www.refactoringui.com/",
+          "kind": "Article",
+          "note": "Why a design looks unfinished, explained by developers for developers."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-fg-1",
+          "order": 1,
+          "title": "Reading a file like a developer",
+          "goal": "Get spacing, colour and type values out of a design without guessing.",
+          "exercise": "Open any community file and extract its full token set.",
+          "resourceUrl": "https://help.figma.com/hc/en-us/articles/15023124644247",
+          "minutes": 60,
+          "done": false
+        },
+        {
+          "id": "s-fg-2",
+          "order": 2,
+          "title": "Auto-layout and components",
+          "goal": "Understand how designers express responsive intent.",
+          "exercise": "Rebuild the StatCard in Figma with auto-layout and variants for each state.",
+          "resourceUrl": "https://help.figma.com/hc/en-us/categories/360002051613",
+          "minutes": 75,
+          "done": false
+        },
+        {
+          "id": "s-fg-3",
+          "order": 3,
+          "title": "Design to code, faithfully",
+          "goal": "Implement from a file rather than from a screenshot.",
+          "exercise": "Rebuild the screen in code from the file alone, then diff them visually.",
+          "resourceUrl": "https://www.refactoringui.com/",
+          "minutes": 90,
+          "done": false
+        }
+      ],
+      "icon": "figma",
+      "optional": false
+    },
+    {
+      "id": "sk-claudecode",
+      "skill": "Claude Code",
+      "category": "AI-assisted work",
+      "badge": "CC",
+      "colour": "#D97757",
+      "icon": "claude",
+      "optional": false,
+      "currentLevel": "Using it to build this app",
+      "target": "Uses it deliberately and can explain every decision it made for you",
+      "priority": "High",
+      "evidence": "This repository, and your ability to defend all of it in an interview",
+      "action": "The interview risk is code you can't explain. Read everything it writes.",
+      "why": "You are building Northstar with it, so an interviewer will ask. The good answer is specific: what you directed, what you reviewed, what you rejected, and what you learned along the way.",
+      "miniProject": "Write a short, honest section in the README about how AI tooling was used on this project — what it did, what you did, and where you disagreed with it.",
+      "miniProjectDod": "You can hand the README to an interviewer and answer 'how did you use AI here?' without hedging.",
+      "resources": [
+        {
+          "id": "r-cc-1",
+          "title": "Claude Code — Documentation",
+          "url": "https://docs.claude.com/en/docs/claude-code/overview",
+          "kind": "Docs",
+          "note": "Most people use a fraction of what it can do. Worth an hour."
+        },
+        {
+          "id": "r-cc-2",
+          "title": "Claude Code — Common workflows",
+          "url": "https://docs.claude.com/en/docs/claude-code/common-workflows",
+          "kind": "Course",
+          "note": "Practical patterns: refactors, tests, debugging, code review."
+        },
+        {
+          "id": "r-cc-3",
+          "title": "Claude Code — Memory and CLAUDE.md",
+          "url": "https://docs.claude.com/en/docs/claude-code/memory",
+          "kind": "Reference",
+          "note": "Project conventions written once instead of repeated every session."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-cc-1",
+          "order": 1,
+          "title": "Set up the project properly",
+          "goal": "Give it the conventions once so you stop repeating them.",
+          "exercise": "Write a CLAUDE.md for Northstar covering stack, conventions and what not to touch.",
+          "resourceUrl": "https://docs.claude.com/en/docs/claude-code/memory",
+          "minutes": 60,
+          "done": false
+        },
+        {
+          "id": "s-cc-2",
+          "order": 2,
+          "title": "Workflows worth knowing",
+          "goal": "Use it for review and debugging, not only for writing new code.",
+          "exercise": "Have it review your own diff, then judge which findings you agree with.",
+          "resourceUrl": "https://docs.claude.com/en/docs/claude-code/common-workflows",
+          "minutes": 75,
+          "done": false
+        },
+        {
+          "id": "s-cc-3",
+          "order": 3,
+          "title": "Your interview answer",
+          "goal": "Have a clear, honest position on how you work with these tools.",
+          "exercise": "Write and rehearse a two-minute answer, in English, on how you used it here.",
+          "resourceUrl": "https://docs.claude.com/en/docs/claude-code/overview",
+          "minutes": 45,
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "sk-cursor",
+      "skill": "Cursor",
+      "category": "AI-assisted work",
+      "badge": "CU",
+      "colour": "#000000",
+      "icon": "cursor",
+      "optional": false,
+      "currentLevel": "Uses it casually",
+      "target": "Directs it with real context and reviews everything it writes",
+      "priority": "Medium",
+      "evidence": "A rules file in the repo and commits you can defend line by line",
+      "action": "Give it context up front; review as if a stranger wrote it.",
+      "why": "Editor-integrated AI is becoming the default way people write code, and using it well — with project rules and real review — is quickly becoming an expected skill rather than a novelty.",
+      "miniProject": "Write a rules file for Northstar covering its conventions, then use Cursor for one feature and annotate what you accepted and rejected.",
+      "miniProjectDod": "The feature is shipped, and you can walk through every line as your own work.",
+      "resources": [
+        {
+          "id": "r-cu-1",
+          "title": "Cursor — Documentation",
+          "url": "https://docs.cursor.com/",
+          "kind": "Docs",
+          "note": "Context, rules files and inline edits. The rules file is the underused part."
+        },
+        {
+          "id": "r-cu-2",
+          "title": "Cursor — Rules",
+          "url": "https://docs.cursor.com/context/rules",
+          "kind": "Reference",
+          "note": "How to stop repeating your conventions in every prompt."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-cu-1",
+          "order": 1,
+          "title": "Context and rules",
+          "goal": "Get output that matches your codebase rather than generic code.",
+          "exercise": "Write a rules file covering Northstar's naming, comments and structure.",
+          "resourceUrl": "https://docs.cursor.com/context/rules",
+          "minutes": 60,
+          "done": false
+        },
+        {
+          "id": "s-cu-2",
+          "order": 2,
+          "title": "Reviewing critically",
+          "goal": "Read generated code as if a stranger wrote it, and reject confidently.",
+          "exercise": "Annotate one generated file with every line you'd have written differently.",
+          "resourceUrl": "https://docs.cursor.com/",
+          "minutes": 60,
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "sk-agents",
+      "skill": "AI agents & tool use",
+      "category": "AI-assisted work",
+      "badge": "AG",
+      "colour": "#D97757",
+      "icon": "anthropic",
+      "optional": false,
+      "currentLevel": "Curious, hasn't built one",
+      "target": "Can build an agent that queries your own data safely",
+      "priority": "Medium",
+      "evidence": "The week-eleven assistant over your Northstar data",
+      "action": "Build it only once the app underneath it is solid.",
+      "why": "This is the natural next feature for Northstar — ask 'which companies haven't I followed up with' and get a grounded answer. It's also the current differentiator in junior interviews, provided you can talk about the failure modes.",
+      "miniProject": "An assistant over your own data: it answers from your real records, cites the rows it used, and never invents a company that isn't in your list.",
+      "miniProjectDod": "It answers correctly on ten questions with known answers, handles an API failure gracefully, and refuses to make things up.",
+      "resources": [
+        {
+          "id": "r-ag-1",
+          "title": "Claude — Tool use overview",
+          "url": "https://docs.claude.com/en/docs/agents-and-tools/tool-use/overview",
+          "kind": "Docs",
+          "note": "How agents actually work: tools, not magic. Start here."
+        },
+        {
+          "id": "r-ag-2",
+          "title": "Claude — Getting started",
+          "url": "https://docs.claude.com/en/docs/get-started",
+          "kind": "Docs",
+          "note": "The request shape, streaming and errors."
+        },
+        {
+          "id": "r-ag-3",
+          "title": "Prompt engineering overview",
+          "url": "https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/overview",
+          "kind": "Reference",
+          "note": "Read this before trying to fix outputs by trial and error."
+        },
+        {
+          "id": "r-ag-4",
+          "title": "OWASP Top 10 for LLM applications",
+          "url": "https://owasp.org/www-project-top-10-for-large-language-model-applications/",
+          "kind": "Reference",
+          "note": "Prompt injection is real. This is what makes the feature defensible."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-ag-1",
+          "order": 1,
+          "title": "First API call, server-side",
+          "goal": "Send a request and keep the key off the client.",
+          "exercise": "Add a server route that proxies one call. Never expose the key to the browser.",
+          "resourceUrl": "https://docs.claude.com/en/docs/get-started",
+          "minutes": 75,
+          "done": false
+        },
+        {
+          "id": "s-ag-2",
+          "order": 2,
+          "title": "Tools over your own data",
+          "goal": "Give the model functions to query records instead of pasting everything in.",
+          "exercise": "Define a tool that queries applications by status and let the model call it.",
+          "resourceUrl": "https://docs.claude.com/en/docs/agents-and-tools/tool-use/overview",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-ag-3",
+          "order": 3,
+          "title": "Failure modes and safety",
+          "goal": "Handle timeouts, rate limits and injection without breaking the page.",
+          "exercise": "Add retries and a fallback state, then try to make it leak another user's data.",
+          "resourceUrl": "https://owasp.org/www-project-top-10-for-large-language-model-applications/",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-ag-4",
+          "order": 4,
+          "title": "Evaluate it honestly",
+          "goal": "Know whether it's right, not just whether it responds.",
+          "exercise": "Write ten questions with known answers and check the output after each change.",
+          "resourceUrl": "https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/overview",
+          "minutes": 75,
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "sk-english",
+      "skill": "English — job interviews",
+      "category": "Career craft",
+      "badge": "EN",
+      "colour": "#0ea5e9",
+      "currentLevel": "Understands well, hesitates and loses structure under pressure",
+      "target": "Can run a full interview loop — intro, behavioural, technical — in fluent, connected English",
+      "priority": "Critical",
+      "evidence": "Weekly recordings answering real interview questions, plus one full mock per programme",
+      "action": "Forty-five minutes a day, on camera, answering as if the interviewer is real. Never just reading — every session ends with you speaking, unscripted, on the topic you just practised.",
+      "why": "Your technical level already clears the bar for the roles you're targeting; the interview is the one place all of that has to come out live, in English, under pressure. A perfect CV that can't defend itself in the room doesn't get the offer. This is the highest-leverage item you own.",
+      "miniProject": "A full mock interview, recorded start to finish: introduction, two behavioural questions, one technical walkthrough of Northstar, one moment of defending a decision under pushback, and two questions you ask back.",
+      "miniProjectDod": "You complete it in one sitting without stopping the recording, using at least three connectors naturally, and a native speaker who watches it says they'd move you to the next round.",
+      "resources": [
+        {
+          "id": "r-en-1",
+          "title": "Big Interview — question bank by category",
+          "url": "https://biginterview.com/blog/2013/07/list-of-behavioral-interview-questions.html",
+          "kind": "Reference",
+          "note": "Behavioural questions grouped by what they're actually testing — teamwork, failure, conflict, leadership."
+        },
+        {
+          "id": "r-en-2",
+          "title": "Tech Interview Handbook — behavioural interview",
+          "url": "https://www.techinterviewhandbook.org/behavioral-interview/",
+          "kind": "Reference",
+          "note": "The question bank to rehearse against, plus how US tech interviews are structured."
+        },
+        {
+          "id": "r-en-3",
+          "title": "The STAR method",
+          "url": "https://www.themuse.com/advice/star-interview-method",
+          "kind": "Article",
+          "note": "Gives your answers a shape — exactly what you need when the words are harder."
+        },
+        {
+          "id": "r-en-4",
+          "title": "Grammarly — 40 linking words for coherent speech",
+          "url": "https://www.grammarly.com/blog/linking-words/",
+          "kind": "Reference",
+          "note": "The connectors that make an answer sound structured instead of a list of facts: however, as a result, that said, on top of that."
+        },
+        {
+          "id": "r-en-5",
+          "title": "YouGlish",
+          "url": "https://youglish.com/",
+          "kind": "Practice",
+          "note": "Search any phrase and hear real speakers use it in context. The best pronunciation tool there is."
+        },
+        {
+          "id": "r-en-6",
+          "title": "Pramp — free peer mock interviews",
+          "url": "https://www.pramp.com/",
+          "kind": "Practice",
+          "note": "Free, in English, with a stranger. Uncomfortable and therefore the most useful hour you'll spend."
+        },
+        {
+          "id": "r-en-7",
+          "title": "Glassdoor — real interview questions by company",
+          "url": "https://www.glassdoor.com/Interview/index.htm",
+          "kind": "Reference",
+          "note": "Search the actual companies on your Tier A list. What was asked there, verbatim, from people who sat it."
+        },
+        {
+          "id": "r-en-8",
+          "title": "Exponent — system design and behavioural mocks",
+          "url": "https://www.tryexponent.com/questions",
+          "kind": "Practice",
+          "note": "Structured practice questions with example answers, closer to a real loop than generic lists."
+        },
+        {
+          "id": "r-en-9",
+          "title": "Anki",
+          "url": "https://apps.ankiweb.net/",
+          "kind": "Practice",
+          "note": "One deck of connectors and phrases you personally stumble on — not a generic vocabulary list."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-en-1",
+          "order": 1,
+          "title": "Tell me about yourself — and why this move",
+          "goal": "Deliver a 90-second answer that ends on why you're moving into engineering, without hesitating.",
+          "exercise": "Record it. Listen back, note every filler and every place you lost the thread. Record again. Keep the best take.",
+          "resourceUrl": "https://www.techinterviewhandbook.org/behavioral-interview/",
+          "minutes": 45,
+          "done": false
+        },
+        {
+          "id": "s-en-2",
+          "order": 2,
+          "title": "Connectors: making an answer sound structured",
+          "goal": "Use however, as a result, that said and on top of that inside a real answer, not as isolated phrases.",
+          "exercise": "Take yesterday's answer and rewrite it inserting five connectors from the Grammarly list. Record the new version.",
+          "resourceUrl": "https://www.grammarly.com/blog/linking-words/",
+          "minutes": 45,
+          "done": false
+        },
+        {
+          "id": "s-en-3",
+          "order": 3,
+          "title": "Behavioural: teamwork and conflict",
+          "goal": "Answer 'tell me about a conflict with a teammate' and 'tell me about working with someone difficult' using STAR.",
+          "exercise": "Write both as STAR, then deliver each from memory on camera, under two minutes.",
+          "resourceUrl": "https://www.themuse.com/advice/star-interview-method",
+          "minutes": 45,
+          "done": false
+        },
+        {
+          "id": "s-en-4",
+          "order": 4,
+          "title": "Behavioural: failure and feedback",
+          "goal": "Answer 'tell me about a time you failed' and 'tell me about difficult feedback you received' without sounding rehearsed or defensive.",
+          "exercise": "Write both as STAR. Say them once flat, then again with the connectors from session 2.",
+          "resourceUrl": "https://biginterview.com/blog/2013/07/list-of-behavioral-interview-questions.html",
+          "minutes": 45,
+          "done": false
+        },
+        {
+          "id": "s-en-5",
+          "order": 5,
+          "title": "Technical: narrating a decision",
+          "goal": "Explain one real decision from Northstar — what you chose, what you rejected, why — as a two-minute answer.",
+          "exercise": "Pick one ADR-worthy decision from the repo. Record yourself explaining it as if a technical interviewer just asked 'walk me through this'.",
+          "resourceUrl": "https://youglish.com/",
+          "minutes": 45,
+          "done": false
+        },
+        {
+          "id": "s-en-6",
+          "order": 6,
+          "title": "Defending a choice under pushback",
+          "goal": "Hold your position when the interviewer disagrees or asks 'why not X instead', without getting flustered or caving instantly.",
+          "exercise": "Have someone (or play both parts yourself) push back on the decision from session 5 twice. Answer each pushback in one breath, not three.",
+          "resourceUrl": "https://www.techinterviewhandbook.org/behavioral-interview/",
+          "minutes": 45,
+          "done": false
+        },
+        {
+          "id": "s-en-7",
+          "order": 7,
+          "title": "The vocabulary of architecture",
+          "goal": "Say middleware, schema, authentication, deploy, trade-off and scale without effort, mid-sentence.",
+          "exercise": "Look up ten terms on YouGlish, repeat each five times, add the ones you stumble on to Anki.",
+          "resourceUrl": "https://youglish.com/",
+          "minutes": 45,
+          "done": false
+        },
+        {
+          "id": "s-en-8",
+          "order": 8,
+          "title": "Buying time without going silent",
+          "goal": "Have phrases ready for when you need a moment, instead of freezing or saying 'um' for five seconds.",
+          "exercise": "Rehearse and use on camera: 'That's a good question, let me think for a second', 'Just to make sure I understood correctly...'",
+          "resourceUrl": "https://www.techinterviewhandbook.org/behavioral-interview/",
+          "minutes": 45,
+          "done": false
+        },
+        {
+          "id": "s-en-9",
+          "order": 9,
+          "title": "Questions for them, delivered well",
+          "goal": "Ask two prepared questions about the team or the role fluently, not read off a note.",
+          "exercise": "Write three questions specific to a real Tier A company. Practise asking them out loud until they don't sound memorised.",
+          "resourceUrl": "https://www.glassdoor.com/Interview/index.htm",
+          "minutes": 45,
+          "done": false
+        },
+        {
+          "id": "s-en-10",
+          "order": 10,
+          "title": "A real mock interview, full loop",
+          "goal": "Survive an unscripted 30–45 minute conversation covering intro, technical and behavioural, in English, with a stranger.",
+          "exercise": "Book a Pramp or Exponent session. Immediately after, write down the three moments you struggled most and why.",
+          "resourceUrl": "https://www.pramp.com/",
+          "minutes": 60,
+          "done": false
+        }
+      ],
+      "icon": "",
+      "optional": false
+    },
+    {
+      "id": "sk-algo",
+      "skill": "Algorithms — Cracking the Coding Interview",
+      "category": "Career craft",
+      "badge": "AL",
+      "colour": "#ef4444",
+      "currentLevel": "Own the book, haven't worked it systematically",
+      "target": "Chapters VI, 1–4, 7–10 worked through, and passes common entry-level screens",
+      "priority": "High",
+      "evidence": "A solution log: your attempt, the book's, and what you missed",
+      "action": "Follow the book's chapters in the order below, not front to back. Always write your own solution before reading Gayle's. Skip chapters 12 (C/C++), 13 (Java) and 15 (Threads and Locks) — they don't serve a TypeScript full-stack candidate.",
+      "why": "It is the gate on most structured interview processes, fair or not. You already own the book that most of those interviewers used to write their questions, so the fastest route is to work it properly rather than grind random problems. The goal is to clear the screen, not to become a competitive programmer.",
+      "miniProject": "A solution log in the repo: one entry per problem with your own attempt, the book's approach, the pattern it belongs to, and the specific thing you missed the first time.",
+      "miniProjectDod": "Chapters VI and 1 to 4 are complete with a logged entry per problem, and you can look at a new problem and name the pattern within a minute even when you can't yet solve it.",
+      "resources": [
+        {
+          "id": "r-al-1",
+          "title": "Cracking the Coding Interview, 6th edition",
+          "url": "https://www.crackingthecodinginterview.com/",
+          "kind": "Course",
+          "note": "The syllabus for this whole path — you already own it. Work the chapters in the order below, not front to back."
+        },
+        {
+          "id": "r-al-2",
+          "title": "CareerCup — the author's question bank",
+          "url": "https://www.careercup.com/",
+          "kind": "Practice",
+          "note": "Gayle's own site, referenced throughout the book. Useful for extra reps on a chapter that didn't stick."
+        },
+        {
+          "id": "r-al-3",
+          "title": "Big-O cheat sheet",
+          "url": "https://www.bigocheatsheet.com/",
+          "kind": "Reference",
+          "note": "Keep it open while you work chapter VI. You'll be asked for complexity every single time."
+        },
+        {
+          "id": "r-al-4",
+          "title": "NeetCode 150",
+          "url": "https://neetcode.io/practice",
+          "kind": "Practice",
+          "note": "Same patterns as the book, grouped, with video walkthroughs. Use it when a CTCI chapter leaves you stuck."
+        },
+        {
+          "id": "r-al-5",
+          "title": "Visualgo — data structure visualiser",
+          "url": "https://visualgo.net/en",
+          "kind": "Practice",
+          "note": "Watch the operation happen before implementing it. Pairs well with chapters 2, 3 and 4."
+        },
+        {
+          "id": "r-al-6",
+          "title": "LeetCode problem set",
+          "url": "https://leetcode.com/problemset/",
+          "kind": "Practice",
+          "note": "Where to get more repetitions of a pattern once the book has taught it to you."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-al-1",
+          "order": 1,
+          "title": "Chapter VI — Big O",
+          "goal": "State the time and space complexity of your own code without hesitating, and explain amortised cost.",
+          "exercise": "Work the chapter's examples, then analyse five functions you already wrote in this repo and write the complexity in a comment.",
+          "resourceUrl": "https://www.bigocheatsheet.com/",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-al-2",
+          "order": 2,
+          "title": "Technical Questions — the method",
+          "goal": "Have a procedure for an unfamiliar problem instead of staring at it: the seven steps, and BUD (bottlenecks, unnecessary work, duplicated work).",
+          "exercise": "Take one problem you've already solved and redo it out loud following the seven steps exactly, then optimise it with BUD.",
+          "resourceUrl": "https://www.crackingthecodinginterview.com/",
+          "minutes": 75,
+          "done": false
+        },
+        {
+          "id": "s-al-3",
+          "order": 3,
+          "title": "Chapter 1 — Arrays and Strings",
+          "goal": "Reach for a hash map as the first tool, and know the cost of string concatenation in a loop.",
+          "exercise": "Solve 1.1 to 1.6 in TypeScript. Write your own solution before reading the book's, then compare and note the gap.",
+          "resourceUrl": "https://www.crackingthecodinginterview.com/",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-al-4",
+          "order": 4,
+          "title": "Chapter 2 — Linked Lists",
+          "goal": "Know the runner technique and why a dummy head removes half the edge cases.",
+          "exercise": "Solve 2.1 to 2.5. Implement the list yourself rather than using an array — the point is pointer handling.",
+          "resourceUrl": "https://visualgo.net/en/list",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-al-5",
+          "order": 5,
+          "title": "Chapter 3 — Stacks and Queues",
+          "goal": "Recognise the problems where a stack is the whole answer, and implement both from scratch.",
+          "exercise": "Solve 3.1 to 3.4, then build a queue from two stacks and explain out loud why the amortised cost works out.",
+          "resourceUrl": "https://visualgo.net/en/list",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-al-6",
+          "order": 6,
+          "title": "Chapter 4 — Trees and Graphs",
+          "goal": "Write depth-first and breadth-first traversal from memory, recursive and iterative, and know which to reach for.",
+          "exercise": "Solve 4.1 to 4.5. Draw each tree on paper first — the drawing is what makes the recursion obvious.",
+          "resourceUrl": "https://visualgo.net/en/bst",
+          "minutes": 120,
+          "done": false
+        },
+        {
+          "id": "s-al-7",
+          "order": 7,
+          "title": "Chapter 10 — Sorting and Searching",
+          "goal": "Write binary search correctly first time, including the variants, and know when sorting first pays for itself.",
+          "exercise": "Solve 10.1 to 10.4. Implement binary search from memory and test the off-by-one boundaries deliberately.",
+          "resourceUrl": "https://www.crackingthecodinginterview.com/",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-al-8",
+          "order": 8,
+          "title": "Chapter 8 — Recursion and Dynamic Programming",
+          "goal": "Spot overlapping subproblems and turn a recursive solution into a memoised one.",
+          "exercise": "Solve 8.1 to 8.5. For each, write the naive recursion first, then memoise it and compare the two run times.",
+          "resourceUrl": "https://neetcode.io/practice",
+          "minutes": 120,
+          "done": false
+        },
+        {
+          "id": "s-al-9",
+          "order": 9,
+          "title": "Chapter 7 — Object-Oriented Design",
+          "goal": "Handle the design question that shows up in full-stack loops without freezing.",
+          "exercise": "Solve 7.1 to 7.3. Sketch the classes on paper and say the trade-offs aloud before writing any code.",
+          "resourceUrl": "https://www.crackingthecodinginterview.com/",
+          "minutes": 75,
+          "done": false
+        },
+        {
+          "id": "s-al-10",
+          "order": 10,
+          "title": "Chapter 9 — System Design and Scalability",
+          "goal": "Have the vocabulary for a junior system-design conversation: load, caching, sharding, single points of failure.",
+          "exercise": "Read the chapter, then design a URL shortener on paper end to end before reading 9.1's answer.",
+          "resourceUrl": "https://www.crackingthecodinginterview.com/",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-al-11",
+          "order": 11,
+          "title": "Solving out loud, in English",
+          "goal": "Narrate your thinking while coding — which is the thing actually being assessed in the room.",
+          "exercise": "Pick any problem from chapters 1 to 4, solve it on camera in English using the seven steps. Ties straight into the English track.",
+          "resourceUrl": "https://www.careercup.com/",
+          "minutes": 60,
+          "done": false
+        }
+      ],
+      "icon": "",
+      "optional": false
+    },
+    {
+      "id": "sk-comm",
+      "skill": "Technical communication",
+      "category": "Career craft",
+      "badge": "TC",
+      "colour": "#8b5cf6",
+      "currentLevel": "Unknown",
+      "target": "Can explain architecture, trade-offs and debugging clearly in writing",
+      "priority": "High",
+      "evidence": "A README a stranger can follow, plus three ADRs",
+      "action": "Write the explanation before you think you're ready to.",
+      "why": "Writing clearly is how a stranger decides you're worth interviewing before they ever meet you. A README, a PR description and a commit message are all auditions.",
+      "miniProject": "A README for Northstar that a stranger reads in five minutes and comes away understanding the problem, the architecture, the trade-offs and how to run it.",
+      "miniProjectDod": "Someone who has never seen the repo clones it, runs it, and explains back what it does and one decision you made.",
+      "resources": [
+        {
+          "id": "r-tc-1",
+          "title": "Google — Technical Writing One",
+          "url": "https://developers.google.com/tech-writing/one",
+          "kind": "Course",
+          "note": "Free, short, and it measurably improves your writing in an afternoon."
+        },
+        {
+          "id": "r-tc-2",
+          "title": "Make a README",
+          "url": "https://www.makeareadme.com/",
+          "kind": "Reference",
+          "note": "The structure to copy. Fill every section or delete it — no empty headings."
+        },
+        {
+          "id": "r-tc-3",
+          "title": "Architecture Decision Records",
+          "url": "https://adr.github.io/",
+          "kind": "Article",
+          "note": "Write three. Interviewers love being handed your reasoning."
+        },
+        {
+          "id": "r-tc-4",
+          "title": "Mermaid — diagrams as text",
+          "url": "https://mermaid.js.org/intro/",
+          "kind": "Docs",
+          "note": "Renders on GitHub, so your architecture diagram lives in the README and never goes stale."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-tc-1",
+          "order": 1,
+          "title": "Writing for a reader in a hurry",
+          "goal": "Lead with the point; cut the words that carry none.",
+          "exercise": "Do Technical Writing One, then rewrite this README's opening paragraph.",
+          "resourceUrl": "https://developers.google.com/tech-writing/one",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-tc-2",
+          "order": 2,
+          "title": "The README that gets you interviewed",
+          "goal": "Cover problem, demo, stack, setup, architecture and trade-offs, in that order.",
+          "exercise": "Write it, then delete every sentence that wouldn't change a reader's mind.",
+          "resourceUrl": "https://www.makeareadme.com/",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-tc-3",
+          "order": 3,
+          "title": "Diagrams that explain",
+          "goal": "Draw the request path and the data model so someone gets it without narration.",
+          "exercise": "Add a Mermaid architecture diagram and an ERD to the README.",
+          "resourceUrl": "https://mermaid.js.org/intro/",
+          "minutes": 75,
+          "done": false
+        },
+        {
+          "id": "s-tc-4",
+          "order": 4,
+          "title": "Recording the decisions",
+          "goal": "Explain why you chose something and what you gave up.",
+          "exercise": "Write three ADRs: why Zustand, why no backend at first, why ten applications a week.",
+          "resourceUrl": "https://adr.github.io/",
+          "minutes": 75,
+          "done": false
+        }
+      ],
+      "icon": "markdown",
+      "optional": false
+    },
+    {
+      "id": "sk-oss",
+      "skill": "Open source",
+      "category": "Career craft",
+      "badge": "OS",
+      "colour": "#22c55e",
+      "currentLevel": "None",
+      "target": "One to three accepted contributions",
+      "priority": "Medium",
+      "evidence": "Merged pull requests you can link from your CV",
+      "action": "Start with tools you already use; docs and tests count.",
+      "why": "A merged pull request in someone else's repository is third-party proof that you can work in an unfamiliar codebase and take review — which is most of what a junior job actually is.",
+      "miniProject": "Three merged pull requests in projects you genuinely use. Documentation and test fixes count and are the realistic way in.",
+      "miniProjectDod": "Three PRs merged, each linked from your CV, and you can describe the codebase and the review feedback for each.",
+      "resources": [
+        {
+          "id": "r-os-1",
+          "title": "First Timers Only",
+          "url": "https://www.firsttimersonly.com/",
+          "kind": "Article",
+          "note": "How the process works and why maintainers reserve easy issues for newcomers."
+        },
+        {
+          "id": "r-os-2",
+          "title": "Good First Issue",
+          "url": "https://goodfirstissue.dev/",
+          "kind": "Practice",
+          "note": "Filter by a language you know. Pick a project you've actually installed."
+        },
+        {
+          "id": "r-os-3",
+          "title": "How to Contribute to Open Source",
+          "url": "https://opensource.guide/how-to-contribute/",
+          "kind": "Course",
+          "note": "GitHub's own guide. Read the etiquette section before opening anything."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-os-1",
+          "order": 1,
+          "title": "Reconnaissance",
+          "goal": "Find three projects you already use that accept contributions.",
+          "exercise": "Read each CONTRIBUTING.md and note the test and commit conventions.",
+          "resourceUrl": "https://opensource.guide/how-to-contribute/",
+          "minutes": 60,
+          "done": false
+        },
+        {
+          "id": "s-os-2",
+          "order": 2,
+          "title": "Run someone else's codebase",
+          "goal": "Get an unfamiliar project building and its tests passing locally.",
+          "exercise": "Clone one and get the full suite green before changing anything.",
+          "resourceUrl": "https://docs.github.com/en/pull-requests",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-os-3",
+          "order": 3,
+          "title": "The smallest useful change",
+          "goal": "Fix a typo, a broken link or a missing test — and get the workflow right.",
+          "exercise": "Open one pull request. Small is the point; the process is what you're learning.",
+          "resourceUrl": "https://goodfirstissue.dev/",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-os-4",
+          "order": 4,
+          "title": "Taking review well",
+          "goal": "Respond to change requests without defensiveness and get something merged.",
+          "exercise": "Address every comment, push the fixes, thank the reviewer, write down the lesson.",
+          "resourceUrl": "https://opensource.guide/how-to-contribute/",
+          "minutes": 60,
+          "done": false
+        }
+      ],
+      "icon": "github",
+      "optional": false
+    },
+    {
+      "id": "sk-rn",
+      "skill": "React Native",
+      "category": "Weekend & extras",
+      "badge": "RN",
+      "colour": "#61dafb",
+      "currentLevel": "None",
+      "target": "Can ship one small app to a phone",
+      "priority": "Low",
+      "evidence": "One small app running on a real device",
+      "action": "Only after the web project is deployed and documented.",
+      "why": "It widens the roles you can apply for and reuses your React knowledge. But it is the clearest example of something that can wait: an unfinished mobile app helps nobody, while a finished web app gets interviews.",
+      "miniProject": "One small app on your own phone — a read-only mobile view of your Northstar data, talking to the same API.",
+      "miniProjectDod": "It runs on a physical device and shows real data from your deployed API.",
+      "resources": [
+        {
+          "id": "r-rn-1",
+          "title": "React Native — Get started",
+          "url": "https://reactnative.dev/docs/environment-setup",
+          "kind": "Docs",
+          "note": "Use Expo. The bare workflow is a distraction at this stage."
+        },
+        {
+          "id": "r-rn-2",
+          "title": "Expo — Tutorial",
+          "url": "https://docs.expo.dev/tutorial/introduction/",
+          "kind": "Course",
+          "note": "The fastest route from nothing to an app on your phone."
+        },
+        {
+          "id": "r-rn-3",
+          "title": "React Native — Core components",
+          "url": "https://reactnative.dev/docs/components-and-apis",
+          "kind": "Reference",
+          "note": "The mapping from div/span to View/Text. Short and necessary."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-rn-1",
+          "order": 1,
+          "title": "From web React to native",
+          "goal": "Understand what transfers and what doesn't.",
+          "exercise": "Do the Expo tutorial and get something on your own phone.",
+          "resourceUrl": "https://docs.expo.dev/tutorial/introduction/",
+          "minutes": 90,
+          "done": false
+        },
+        {
+          "id": "s-rn-2",
+          "order": 2,
+          "title": "Layout without CSS",
+          "goal": "Use flexbox the React Native way, without the CSS you're used to.",
+          "exercise": "Build a list screen showing your applications from the live API.",
+          "resourceUrl": "https://reactnative.dev/docs/flexbox",
+          "minutes": 90,
+          "done": false
+        }
+      ],
+      "icon": "expo",
+      "optional": true
     }
   ],
   "templates": [
@@ -3138,8 +6480,21 @@ export const seedState: AppState = {
   "reviews": {},
   "dailyLog": {},
   "settings": {
-    "programStart": "2026-07-15",
+    "programStart": "2026-07-27",
     "currentWeek": 1,
-    "todayOverride": null
-  }
+    "todayOverride": null,
+    "theme": "system",
+    "targets": {
+      "directApplicationsPerWeek": 4,
+      "bridgeApplicationsPerWeek": 5,
+      "contactsPerWeek": 6,
+      "responseRate": 15,
+      "liveConversations": 3,
+      "weeklyHours": 40
+    },
+    "planVersion": 13,
+    "font": "System"
+  },
+  "exceptions": [],
+  "oss": []
 };

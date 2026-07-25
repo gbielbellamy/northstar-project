@@ -5,6 +5,8 @@ import Badge from '../components/ui/Badge';
 import ProgressBar from '../components/ui/ProgressBar';
 import ProgressRing from '../components/ui/ProgressRing';
 import StatCard from '../components/ui/StatCard';
+import SkillIcon from '../components/ui/SkillIcon';
+import FontPicker from '../components/ui/FontPicker';
 import EmptyState from '../components/ui/EmptyState';
 import Checkbox from '../components/ui/Checkbox';
 import AnimatedSection from '../components/ui/AnimatedSection';
@@ -29,11 +31,24 @@ const CORE_TOKENS = [
 const AREA_TOKENS = [
   { name: 'Project', v: '--area-project' },
   { name: 'Learning', v: '--area-learning' },
+  { name: 'Algorithms', v: '--area-algorithms' },
   { name: 'Job Search', v: '--area-jobsearch' },
   { name: 'Networking', v: '--area-networking' },
+  { name: 'Contributions', v: '--area-opensource' },
   { name: 'Interview Prep', v: '--area-interview' },
   { name: 'Portfolio', v: '--area-portfolio' },
   { name: 'Review', v: '--area-review' },
+];
+
+/** The logos are real, from simple-icons — these are a sample of the set. */
+const TECH_SAMPLE = [
+  { icon: 'typescript', badge: 'TS' },
+  { icon: 'react', badge: 'RE' },
+  { icon: 'nodedotjs', badge: 'ND' },
+  { icon: 'postgresql', badge: 'PG' },
+  { icon: 'docker', badge: 'DK' },
+  { icon: 'github', badge: 'GH' },
+  { icon: 'zustand', badge: 'ZU' },
 ];
 
 function Swatch({ name, v }: { name: string; v: string }) {
@@ -57,6 +72,31 @@ function ComponentsPage() {
           properties. Toggle your OS theme and this whole page follows without a single line of JavaScript.
         </p>
       </div>
+
+      <div className="section">
+        <h2>Typeface</h2>
+        <span className="muted">
+          Pick one and the whole app changes — browse around and see how it wears.
+        </span>
+      </div>
+      <FontPicker />
+
+      <div className="section">
+        <h2>Typography</h2>
+        <span className="muted">The scale, rendered in whichever typeface is selected above.</span>
+      </div>
+      <Card>
+        <div className="stack">
+          <h1 style={{ margin: 0 }}>Heading 1 — 30px</h1>
+          <h2 style={{ margin: 0 }}>Heading 2 — 20px</h2>
+          <h3 style={{ margin: 0 }}>Heading 3 — 15px</h3>
+          <p>Body — 16px, 145% line height, inherited from --sans.</p>
+          <p className="muted">Muted — 12.5px, used for secondary detail.</p>
+          <p>
+            <code>Monospace — JetBrains Mono, for tokens and code</code>
+          </p>
+        </div>
+      </Card>
 
       <div className="section">
         <h2>Core tokens</h2>
@@ -85,22 +125,24 @@ function ComponentsPage() {
               {a}
             </span>
           ))}
+          <span className="area-chip area-chip--break">
+            <span className="area-dot" />
+            Breaks
+          </span>
         </div>
       </Card>
 
       <div className="section">
-        <h2>Typography</h2>
+        <h2>Technology tiles</h2>
+        <span className="muted">
+          Official logos from simple-icons; the letters are the fallback when a brand isn't in the set.
+        </span>
       </div>
       <Card>
-        <div className="stack">
-          <h1 style={{ margin: 0 }}>Heading 1 — 30px</h1>
-          <h2 style={{ margin: 0 }}>Heading 2 — 20px</h2>
-          <h3 style={{ margin: 0 }}>Heading 3 — 15px</h3>
-          <p>Body — system-ui, 16px, 145% line height.</p>
-          <p className="muted">Muted — 12.5px, used for secondary detail.</p>
-          <p>
-            <code>Monospace — ui-monospace, for tokens and code</code>
-          </p>
+        <div className="row" style={{ gap: 10, flexWrap: 'wrap' }}>
+          {TECH_SAMPLE.map((t) => (
+            <SkillIcon key={t.icon} icon={t.icon} badge={t.badge} />
+          ))}
         </div>
       </Card>
 
@@ -199,29 +241,40 @@ function ComponentsPage() {
         <h2>Stat cards</h2>
       </div>
       <div className="stat-grid">
-        <StatCard label="Applications sent" value={24} desc="Across 6 weeks" icon={<Sparkles size={15} />} />
         <StatCard
-          label="Response rate"
-          value="21%"
-          desc="5 of 24 came back"
-          icon={<Sparkles size={15} />}
-          color="var(--area-jobsearch)"
+          label="Below target"
+          value={2}
+          desc="Graded red — a long way to go"
+          icon={<Sparkles size={16} />}
+          progress={20}
+          targetLabel="2 / 10 this week"
+        />
+        <StatCard
+          label="Getting there"
+          value={5}
+          desc="Amber past a third of the way"
+          icon={<Sparkles size={16} />}
+          progress={50}
+          targetLabel="5 / 10 this week"
           index={1}
+        />
+        <StatCard
+          label="Target met"
+          value={10}
+          desc="Green once you hit it"
+          icon={<Sparkles size={16} />}
+          progress={100}
+          targetLabel="10 / 10 this week"
+          index={2}
         />
         <StatCard
           label="Follow-ups due"
           value={3}
-          desc="Chase them today"
-          icon={<Sparkles size={15} />}
-          color="var(--danger)"
-          index={2}
-        />
-        <StatCard
-          label="Tier A companies"
-          value={17}
-          desc="Apply here first"
-          icon={<Sparkles size={15} />}
-          color="var(--area-learning)"
+          desc="Inverted: rising is bad"
+          icon={<Sparkles size={16} />}
+          progress={60}
+          targetLabel="Keep this at zero"
+          invert
           index={3}
         />
       </div>

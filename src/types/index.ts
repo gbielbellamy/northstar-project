@@ -7,8 +7,10 @@
 export const AREAS = [
   'Project',
   'Learning',
+  'Algorithms',
   'Job Search',
   'Networking',
+  'Contributions',
   'Interview Prep',
   'Portfolio',
   'Review',
@@ -73,7 +75,27 @@ export type ScheduleBlock = {
   label: string;
   /** Weekend blocks are optional; weekdays are not. */
   optional: boolean;
+  /**
+   * What finishing *this sitting* looks like. Without it a block falls back to
+   * the week's definition of done, which reads wrong on a daily view: Monday's
+   * applications block would demand the whole week's nine.
+   */
+  sessionDone?: string;
+  /**
+   * The plan is allowed to change partway through. A block runs from `fromWeek`
+   * to `toWeek` inclusive; leave either null for "always". That's how open
+   * source can take over a slot in week 5 without existing weeks changing.
+   */
+  fromWeek?: number | null;
+  toWeek?: number | null;
 };
+
+/** Whether a block is part of the timetable in the given programme week. */
+export function blockAppliesTo(block: ScheduleBlock, week: number): boolean {
+  if (block.fromWeek != null && week < block.fromWeek) return false;
+  if (block.toWeek != null && week > block.toWeek) return false;
+  return true;
+}
 
 /* ---------- Applications ---------- */
 
@@ -205,7 +227,81 @@ export type Company = {
   notes: string;
 };
 
+/* ---------- Open source ---------- */
+
+/** The real shape of a contribution, from finding a project to getting merged. */
+export const OSS_STAGES = [
+  'Shortlisted',
+  'Running locally',
+  'Issue claimed',
+  'PR open',
+  'Changes requested',
+  'Merged',
+  'Closed',
+] as const;
+export type OssStage = (typeof OSS_STAGES)[number];
+
+/** Documentation and tests are the realistic way in, and they count. */
+export const OSS_KINDS = ['Docs', 'Tests', 'Bug fix', 'Feature', 'Triage'] as const;
+export type OssKind = (typeof OSS_KINDS)[number];
+
+export type OssContribution = {
+  id: string;
+  /** The project, e.g. "Zustand". */
+  project: string;
+  repoUrl: string;
+  /** What the change is, in one line. */
+  title: string;
+  kind: OssKind;
+  stage: OssStage;
+  issueUrl: string;
+  prUrl: string;
+  /** Why you picked this one — useful when an interviewer asks. */
+  why: string;
+  /** What the review taught you. The most valuable field here. */
+  reviewLesson: string;
+  dateStarted: string;
+  dateMerged: string;
+  notes: string;
+};
+
 /* ---------- Resources ---------- */
+
+export const RESOURCE_KINDS = [
+  'Docs',
+  'Course',
+  'Video',
+  'Article',
+  'Practice',
+  'Reference',
+] as const;
+export type ResourceKind = (typeof RESOURCE_KINDS)[number];
+
+/** One link worth your time, with the reason it earned its place. */
+export type SkillResource = {
+  id: string;
+  title: string;
+  url: string;
+  kind: ResourceKind;
+  note: string;
+};
+
+/**
+ * One sitting of the Learning block. Ordered, so the skill reads as a path
+ * rather than a pile of links — and sized to fit the time you actually have.
+ */
+export type SkillSession = {
+  id: string;
+  order: number;
+  title: string;
+  /** What you understand when it's over. */
+  goal: string;
+  /** What you write yourself. Reading alone doesn't count. */
+  exercise: string;
+  resourceUrl: string;
+  minutes: number;
+  done: boolean;
+};
 
 export type Skill = {
   id: string;
@@ -215,7 +311,44 @@ export type Skill = {
   priority: Priority;
   evidence: string;
   action: string;
+  /** Why this matters for the job hunt, not just in the abstract. */
+  why: string;
+  /** The thing you build to prove it. */
+  miniProject: string;
+  miniProjectDod: string;
+  resources: SkillResource[];
+  sessions: SkillSession[];
+  /** Groups the roadmap into readable sections. */
+  category: SkillCategory;
+  /** One or two letters for the tech badge, e.g. "TS". */
+  badge: string;
+  /** Brand colour behind the badge. */
+  colour: string;
+  /**
+   * simple-icons slug for the official logo, e.g. "typescript". Empty when the
+   * brand has no icon in the set, and the badge letters are used instead.
+   */
+  icon: string;
+  /** Not part of the weekday plan — pick these up at the weekend if you want to. */
+  optional: boolean;
 };
+
+export const SKILL_CATEGORIES = [
+  'Foundations',
+  'Styling',
+  'Frontend framework',
+  'State management',
+  'Backend',
+  'Data',
+  'Testing',
+  'Delivery',
+  'Hosting',
+  'Tooling',
+  'AI-assisted work',
+  'Career craft',
+  'Weekend & extras',
+] as const;
+export type SkillCategory = (typeof SKILL_CATEGORIES)[number];
 
 export type MessageTemplate = {
   id: string;
@@ -241,12 +374,83 @@ export type WeeklyReview = {
 
 /* ---------- Settings & logs ---------- */
 
+export const THEMES = ['system', 'light', 'dark'] as const;
+export type Theme = (typeof THEMES)[number];
+
+/**
+ * Typefaces to choose from. All are bundled locally rather than fetched from a
+ * CDN, so the app still looks right offline and nothing leaks to a third party.
+ */
+export const FONTS = [
+  'System',
+  'Inter',
+  'Manrope',
+  'Plus Jakarta Sans',
+  'Figtree',
+  'Space Grotesk',
+] as const;
+export type FontChoice = (typeof FONTS)[number];
+
+/**
+ * The numbers the dashboard grades you against. Yours to change — a target you
+ * can't move is a target you'll start ignoring.
+ */
+export type Targets = {
+  /** Tailored applications for Software/Full-Stack Engineer roles. */
+  directApplicationsPerWeek: number;
+  /** Bridge roles: support, solutions, implementation, QA. */
+  bridgeApplicationsPerWeek: number;
+  contactsPerWeek: number;
+  /** Percentage, 0–100. */
+  responseRate: number;
+  liveConversations: number;
+  weeklyHours: number;
+};
+
 export type Settings = {
   /** ISO date the programme actually began. */
   programStart: string;
   currentWeek: number;
   /** Overrides the real clock, for testing a different "today". */
   todayOverride: string | null;
+  theme: Theme;
+  font: FontChoice;
+  targets: Targets;
+  /**
+   * Bumped in the seed whenever the plan itself is rewritten. When the saved
+   * value is behind, the stored plan is replaced — which is more reliable than
+   * relying on the persist version, since that only fires once per upgrade.
+   */
+  planVersion: number;
+};
+
+/* ---------- Days that don't go to plan ---------- */
+
+export const EXCEPTION_KINDS = [
+  'Networking event',
+  'Interview',
+  'Technical blocker',
+  'Personal',
+  'Sick',
+  'Holiday',
+] as const;
+export type ExceptionKind = (typeof EXCEPTION_KINDS)[number];
+
+/**
+ * A day the plan didn't happen — an in-person meet-up, an interview, illness.
+ * The hours don't vanish: they're owed, and this records where they come back.
+ */
+export type DayException = {
+  id: string;
+  /** ISO date the plan was displaced. */
+  date: string;
+  kind: ExceptionKind;
+  note: string;
+  /** Hours owed. Defaults to the day's planned work, but you can do half a day. */
+  hoursOwed: number;
+  /** ISO date you'll make them up — a weekend day, or extra time midweek. */
+  recoverOn: string;
+  recovered: boolean;
 };
 
 /** dailyLog[isoDate][blockId] = completed */
@@ -256,6 +460,8 @@ export type AppState = {
   roadmap: RoadmapWeek[];
   goals: WeeklyGoal[];
   schedule: ScheduleBlock[];
+  exceptions: DayException[];
+  oss: OssContribution[];
   applications: Application[];
   contacts: Contact[];
   companies: Company[];

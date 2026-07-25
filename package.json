@@ -1,5 +1,5 @@
 {
-  "name": "career-transition-os",
+  "name": "northstar",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -9,11 +9,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource-variable/figtree": "^5.3.0",
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "@fontsource-variable/manrope": "^5.3.0",
+    "@fontsource-variable/plus-jakarta-sans": "^5.3.0",
+    "@fontsource-variable/space-grotesk": "^5.3.0",
     "framer-motion": "^12.41.0",
     "lucide-react": "^0.545.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "recharts": "^3.8.1",
+    "simple-icons": "^16.27.0",
     "zustand": "^5.0.14"
   },
   "devDependencies": {

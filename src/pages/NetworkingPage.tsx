@@ -1,9 +1,20 @@
 import { useMemo, useState } from 'react';
-import { AlarmClock, Check, ExternalLink, Pencil, Plus, Search, Trash2, Users } from 'lucide-react';
+import {
+  AlarmClock,
+  Check,
+  ExternalLink,
+  MessageCircleReply,
+  Pencil,
+  Plus,
+  Search,
+  Send,
+  Trash2,
+  Users,
+} from 'lucide-react';
 import { useStore } from '../store/useStore';
 import { currentWeekNumber, fmtShort, todayISO } from '../lib/dates';
 import { outreachStats } from '../lib/selectors';
-import { contactVariant } from '../lib/ui';
+import { contactIcon, contactVariant } from '../lib/ui';
 import {
   CONTACT_STATUSES,
   CONTACT_TYPES,
@@ -11,16 +22,17 @@ import {
   type ContactStatus,
   type ContactType,
 } from '../types';
-import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
+import StatCard from '../components/ui/StatCard';
 import Badge from '../components/ui/Badge';
+import StatusSelect from '../components/ui/StatusSelect';
 import Modal from '../components/ui/Modal';
 import Field from '../components/ui/Field';
 import EmptyState from '../components/ui/EmptyState';
 import AnimatedSection from '../components/ui/AnimatedSection';
 
 function NetworkingPage() {
-  const { contacts, companies, roadmap, templates, settings } = useStore();
+  const { contacts, companies, roadmap, settings } = useStore();
   const add = useStore((s) => s.add);
   const update = useStore((s) => s.update);
   const remove = useStore((s) => s.remove);
@@ -96,51 +108,45 @@ function NetworkingPage() {
           <div>
             <h1>Networking</h1>
             <p className="page__sub">
-              {contacts.length} outreach targets, two per company: a peer first, a hiring influencer second.
-              The peer tells you the truth about the team; the manager decides. Ask for advice in a first
-              message, never a referral — the referral comes on its own if the first message was good.
+              Six contacts a week: three on Monday, three on Thursday.
             </p>
           </div>
-          <Button variant="primary" onClick={openNew}>
-            <Plus size={14} /> Add contact
-          </Button>
         </div>
       </div>
 
       <div className="stat-grid" style={{ marginBottom: 18 }}>
-        <Card className="stat">
-          <div className="stat__label">Targets</div>
-          <div className="stat__value">{o.totalTargets}</div>
-          <div className="stat__desc">Across {companies.length} companies</div>
-        </Card>
-        <Card className="stat">
-          <div className="stat__label">Contacted</div>
-          <div className="stat__value">{o.contacted}</div>
-          <div className="stat__desc">Target: 6 a week</div>
-        </Card>
-        <Card className="stat">
-          <div className="stat__label">Replies</div>
-          <div className="stat__value">{o.replied}</div>
-          <div className="stat__desc">{o.meetings} meeting{o.meetings === 1 ? '' : 's'} scheduled</div>
-        </Card>
-        <Card className="stat">
-          <div className="stat__label">Follow-ups due</div>
-          <div className="stat__value" style={{ color: o.followupsDue > 0 ? 'var(--danger)' : undefined }}>
-            {o.followupsDue}
-          </div>
-          <div className="stat__desc">One nudge is fair; two is noise</div>
-        </Card>
+        <StatCard
+          label="Targets"
+          value={o.totalTargets}
+          desc={`Across ${companies.length} companies`}
+          icon={<Users size={16} />}
+          color="var(--area-networking)"
+        />
+        <StatCard
+          label="Contacted"
+          value={o.contacted}
+          desc="Target: 6 a week"
+          icon={<Send size={16} />}
+          color="var(--info)"
+          index={1}
+        />
+        <StatCard
+          label="Replies"
+          value={o.replied}
+          desc={`${o.meetings} meeting${o.meetings === 1 ? '' : 's'} scheduled`}
+          icon={<MessageCircleReply size={16} />}
+          color="var(--ok)"
+          index={2}
+        />
+        <StatCard
+          label="Follow-ups due"
+          value={o.followupsDue}
+          desc="One nudge is fair; two is noise"
+          icon={<AlarmClock size={16} />}
+          color={o.followupsDue > 0 ? 'var(--danger)' : 'var(--muted-dot)'}
+          index={3}
+        />
       </div>
-
-      {templates.length > 0 && (
-        <Card title="Before you send" className="card--hover">
-          <p className="muted">
-            The templates live in <strong>Resources</strong>. Use them as a skeleton, then change at least one
-            sentence to something only you could have written — the actual product, the actual bug you hit.
-            A message that could have been sent to fifty companies reads like it was.
-          </p>
-        </Card>
-      )}
 
       <div className="toolbar" style={{ marginTop: 18 }}>
         <div className="filters">
@@ -164,7 +170,12 @@ function NetworkingPage() {
             ))}
           </select>
         </div>
-        <span className="muted">{rows.length} shown</span>
+        <div className="row" style={{ gap: 12 }}>
+          <span className="muted">{rows.length} shown</span>
+          <Button variant="primary" onClick={openNew}>
+            <Plus size={14} /> Add contact
+          </Button>
+        </div>
       </div>
 
       {rows.length === 0 ? (
@@ -214,25 +225,18 @@ function NetworkingPage() {
                         <span className="muted">{c.contactType}</span>
                       </td>
                       <td className="tight">
-                        <select
-                          className="select select--inline"
+                        <StatusSelect
                           value={c.status}
-                          onChange={(e) => {
-                            const next = e.target.value as ContactStatus;
+                          options={CONTACT_STATUSES}
+                          onChange={(next) => {
                             const patch: Partial<Contact> = { status: next };
                             if (next === 'Sent' && !c.dateSent) patch.dateSent = today;
                             update('contacts', c.id, patch);
                           }}
-                        >
-                          {CONTACT_STATUSES.map((s) => (
-                            <option key={s}>{s}</option>
-                          ))}
-                        </select>
-                        <div style={{ marginTop: 4 }}>
-                          <Badge variant={contactVariant[c.status]} dot>
-                            {c.status}
-                          </Badge>
-                        </div>
+                          variant={contactVariant[c.status]}
+                          icon={contactIcon[c.status]}
+                          ariaLabel={`Status for ${c.person || c.company}`}
+                        />
                       </td>
                       <td className="tight">{c.dateSent ? fmtShort(c.dateSent) : '—'}</td>
                       <td className="tight">
@@ -356,15 +360,14 @@ function NetworkingPage() {
               </select>
             </Field>
             <Field label="Status">
-              <select
-                className="select"
+              <StatusSelect
+                block
                 value={draft.status}
-                onChange={(e) => setDraft({ ...draft, status: e.target.value as ContactStatus })}
-              >
-                {CONTACT_STATUSES.map((s) => (
-                  <option key={s}>{s}</option>
-                ))}
-              </select>
+                options={CONTACT_STATUSES}
+                onChange={(v) => setDraft({ ...draft, status: v })}
+                variant={contactVariant[draft.status]}
+                icon={contactIcon[draft.status]}
+              />
             </Field>
             <Field label="People-search URL" full>
               <input

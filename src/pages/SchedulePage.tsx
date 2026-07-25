@@ -1,5 +1,16 @@
 import { useMemo, useState } from 'react';
-import { CalendarDays, Check, Coffee, Pencil, Plus, Trash2 } from 'lucide-react';
+import {
+  CalendarDays,
+  CalendarX,
+  Check,
+  Circle,
+  CircleCheck,
+  Coffee,
+  Pencil,
+  Plus,
+  Trash2,
+  Undo2,
+} from 'lucide-react';
 import { useStore } from '../store/useStore';
 import {
   DAY_KEYS,
@@ -12,8 +23,17 @@ import {
   todayISO,
 } from '../lib/dates';
 import { goalsForWeek } from '../lib/selectors';
-import { areaClass, statusVariant } from '../lib/ui';
-import { AREAS, STATUSES, type Area, type DayKey, type ScheduleBlock, type Status } from '../types';
+import { areaClass } from '../lib/ui';
+import {
+  AREAS,
+  EXCEPTION_KINDS,
+  blockAppliesTo,
+  type Area,
+  type DayException,
+  type DayKey,
+  type ExceptionKind,
+  type ScheduleBlock,
+} from '../types';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import Badge from '../components/ui/Badge';
@@ -32,11 +52,10 @@ const EMPTY: Omit<ScheduleBlock, 'id'> = {
 };
 
 function SchedulePage() {
-  const { roadmap, goals, schedule, dailyLog, settings } = useStore();
+  const { roadmap, goals, schedule, exceptions, dailyLog, settings } = useStore();
   const add = useStore((s) => s.add);
   const update = useStore((s) => s.update);
   const remove = useStore((s) => s.remove);
-  const updateGoal = useStore((s) => s.update);
   const toggleLog = useStore((s) => s.toggleLog);
 
   const today = todayISO(settings.todayOverride);
@@ -44,30 +63,48 @@ function SchedulePage() {
   const [editing, setEditing] = useState<ScheduleBlock | null>(null);
   const [draft, setDraft] = useState<Omit<ScheduleBlock, 'id'>>(EMPTY);
   const [open, setOpen] = useState(false);
+  const [exEditing, setExEditing] = useState<DayException | null>(null);
+  const [exDraft, setExDraft] = useState<Omit<DayException, 'id'> | null>(null);
 
   const rw = roadmap.find((r) => r.week === week);
   const weekGoals = goalsForWeek(goals, week);
+
+  /** Only the blocks that belong to the week being shown. */
+  const weekBlocks = useMemo(
+    () => schedule.filter((b) => blockAppliesTo(b, week)),
+    [schedule, week],
+  );
 
   const byDay = useMemo(() => {
     const map = new Map<DayKey, ScheduleBlock[]>();
     for (const key of DAY_KEYS) {
       map.set(
         key,
-        schedule.filter((b) => b.day === key).sort((a, b) => a.start.localeCompare(b.start)),
+        weekBlocks.filter((b) => b.day === key).sort((a, b) => a.start.localeCompare(b.start)),
       );
     }
     return map;
+  }, [weekBlocks]);
+
+  /** Breaks are part of the working day, so the badge counts them in. */
+  const { workHours, breakHours } = useMemo(() => {
+    let work = 0;
+    let brk = 0;
+    for (const b of weekBlocks) {
+      if (b.optional) continue;
+      const h = hoursBetween(b.start, b.end);
+      if (b.area) work += h;
+      else brk += h;
+    }
+    return { workHours: work, breakHours: brk };
   }, [schedule]);
 
-  const weekdayHours = useMemo(
-    () =>
-      schedule
-        .filter((b) => b.area && !b.optional)
-        .reduce((sum, b) => sum + hoursBetween(b.start, b.end), 0),
-    [schedule],
-  );
-
   if (!rw) return <div className="page">No week selected.</div>;
+
+  /** Hours displaced this week and not yet made up. */
+  const hoursOwed = exceptions
+    .filter((e) => !e.recovered && e.date >= rw.start && e.date <= rw.end)
+    .reduce((sum, e) => sum + e.hoursOwed, 0);
 
   const sessions = DAY_KEYS.flatMap((dk, i) =>
     (byDay.get(dk) ?? []).filter((b) => b.area).map((b) => ({ b, date: addDays(rw.start, i) })),
@@ -92,6 +129,40 @@ function SchedulePage() {
     setOpen(false);
   }
 
+  /** Planned work on a given weekday — the default number of hours owed. */
+  function dayWorkHours(day: DayKey): number {
+    return (byDay.get(day) ?? [])
+      .filter((b) => b.area && !b.optional)
+      .reduce((sum, b) => sum + hoursBetween(b.start, b.end), 0);
+  }
+
+  function openException(date: string, defaultHours: number) {
+    const found = exceptions.find((e) => e.date === date) ?? null;
+    setExEditing(found);
+    if (found) {
+      const { id: _id, ...rest } = found;
+      void _id;
+      setExDraft(rest);
+    } else {
+      setExDraft({
+        date,
+        kind: 'Networking event',
+        note: '',
+        hoursOwed: defaultHours,
+        recoverOn: '',
+        recovered: false,
+      });
+    }
+  }
+
+  function saveException() {
+    if (!exDraft) return;
+    if (exEditing) update('exceptions', exEditing.id, exDraft);
+    else add('exceptions', exDraft);
+    setExDraft(null);
+    setExEditing(null);
+  }
+
   return (
     <div className="page">
       <div className="page__head">
@@ -99,16 +170,35 @@ function SchedulePage() {
           <div>
             <h1>Schedule</h1>
             <p className="page__sub">
-              A fixed working day, 09:00–17:00, with a 30-minute lunch. Same shape every day so you stop
-              deciding and start working. Each block shows the week’s real goal for that area — change the goal
-              once and every day that touches it updates.
+              09:00–17:45: eight hours and 45 minutes of clock, eight of work, with lunch at 12:45 and a
+              break at 15:30. The morning is the same every day so you stop deciding and start building; the
+              afternoon has one theme, so the day doesn’t fragment. Each block says what finishing that one
+              sitting looks like — the week’s target lives in Roadmap.
             </p>
           </div>
+        </div>
+      </div>
+
+      {/* Pinned beside the theme toggle: this page runs seven days long, and
+          jumping back to now shouldn't mean scrolling to the top first. */}
+      <button
+        type="button"
+        className="page-action"
+        onClick={() => setWeek(currentWeekNumber(roadmap, today))}
+        title="Jump to the current week"
+      >
+        <CalendarDays size={15} /> Today
+      </button>
+
+      <Card>
+        {/* The week picker belongs with the week it changes. */}
+        <div className="toolbar" style={{ marginBottom: 10 }}>
           <div className="filters">
             <select
               className="select select--inline"
               value={week}
               onChange={(e) => setWeek(Number(e.target.value))}
+              aria-label="Week"
             >
               {[...roadmap]
                 .sort((a, b) => a.week - b.week)
@@ -118,14 +208,9 @@ function SchedulePage() {
                   </option>
                 ))}
             </select>
-            <Button onClick={() => setWeek(currentWeekNumber(roadmap, today))}>
-              <CalendarDays size={14} /> Today
-            </Button>
           </div>
         </div>
-      </div>
 
-      <Card className="card--hover">
         <div className="toolbar" style={{ marginBottom: 8 }}>
           <div>
             <div className="card__title" style={{ marginBottom: 2 }}>
@@ -134,7 +219,12 @@ function SchedulePage() {
             <p className="muted">{rw.definitionOfDone}</p>
           </div>
           <div className="row">
-            <Badge variant="info">{weekdayHours} h planned</Badge>
+            <Badge variant="info">{workHours}h planned</Badge>
+            {hoursOwed > 0 && (
+              <Badge variant="warning" dot>
+                <CalendarX size={11} /> {hoursOwed}h to make up
+              </Badge>
+            )}
             <Badge variant={doneCount === sessions.length ? 'success' : 'muted'}>
               {doneCount}/{sessions.length} sessions logged
             </Badge>
@@ -147,6 +237,10 @@ function SchedulePage() {
               {a}
             </span>
           ))}
+          <span className="area-chip area-chip--break" title={`${breakHours}h a week`}>
+            <span className="area-dot" />
+            Breaks
+          </span>
         </div>
       </Card>
 
@@ -158,26 +252,67 @@ function SchedulePage() {
           const isPast = date < today;
           const isWeekend = dk === 'Sat' || dk === 'Sun';
           const beforeStart = date < settings.programStart;
+          const ex = exceptions.find((e) => e.date === date);
+          const recovering = exceptions.filter((e) => e.recoverOn === date && !e.recovered);
 
           return (
             <AnimatedSection key={dk} delay={i * 0.03}>
               <div
                 className={`day ${isToday ? 'day--today' : ''} ${isPast && !isToday ? 'day--past' : ''} ${
                   isWeekend ? 'day--off' : ''
-                }`.trim()}
+                } ${ex ? 'day--displaced' : ''}`.trim()}
               >
                 <div className="day__head">
                   <span className="day__name">{DAY_NAMES[dk]}</span>
                   <span className="day__date">{fmtShort(date)}</span>
                   {isToday && <Badge variant="neutral">Today</Badge>}
                   {beforeStart && <Badge variant="muted">Before you started</Badge>}
-                  {isWeekend && <Badge variant="muted">Optional</Badge>}
+                  {isWeekend && !ex && recovering.length === 0 && (
+                    <Badge variant="muted">Optional</Badge>
+                  )}
+                  {ex && (
+                    <Badge variant="warning" dot>
+                      <CalendarX size={11} /> {ex.kind}
+                    </Badge>
+                  )}
+                  {recovering.length > 0 && (
+                    <Badge variant="info" dot>
+                      <Undo2 size={11} /> Making up{' '}
+                      {recovering.reduce((n, e) => n + e.hoursOwed, 0)}h
+                    </Badge>
+                  )}
                   <div className="day__right">
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => openException(date, dayWorkHours(dk))}
+                    >
+                      <CalendarX size={13} /> {ex ? 'Edit event' : 'Event'}
+                    </Button>
                     <Button size="sm" variant="ghost" onClick={() => openNew(dk)}>
                       <Plus size={13} /> Block
                     </Button>
                   </div>
                 </div>
+
+                {ex && (
+                  <div className="displaced-note">
+                    <strong>{ex.kind}</strong>
+                    {ex.note ? ` — ${ex.note}` : ''}.{' '}
+                    {ex.recovered ? (
+                      <>Those {ex.hoursOwed}h have been made up.</>
+                    ) : ex.recoverOn ? (
+                      <>
+                        {ex.hoursOwed}h owed, booked for {fmtShort(ex.recoverOn)}.
+                      </>
+                    ) : (
+                      <>
+                        {ex.hoursOwed}h owed — pick a day to make them up, at the weekend or as extra
+                        time midweek.
+                      </>
+                    )}
+                  </div>
+                )}
 
                 {blocks.length === 0 && (
                   <div className="block block--break">
@@ -220,30 +355,27 @@ function SchedulePage() {
                         </div>
                         <div className="block__title">{goal?.title ?? `No goal set for ${b.area}`}</div>
                         <p className="block__detail">{goal?.detail ?? ''}</p>
-                        {goal && <p className="block__dod muted">Done when: {goal.definitionOfDone}</p>}
+                        {/* Strictly this sitting's target. The week's belongs in
+                            Roadmap, and showing it here made a Monday block
+                            demand the whole week's work. */}
+                        {b.sessionDone && (
+                          <p className="block__dod muted">Done when: {b.sessionDone}</p>
+                        )}
                       </div>
 
                       <div className="block__side">
-                        {goal && (
-                          <select
-                            className="select select--inline"
-                            value={goal.status}
-                            onChange={(e) =>
-                              updateGoal('goals', goal.id, { status: e.target.value as Status })
-                            }
-                            aria-label={`Status for ${b.area}`}
-                          >
-                            {STATUSES.map((s) => (
-                              <option key={s}>{s}</option>
-                            ))}
-                          </select>
-                        )}
-                        {goal && <Badge variant={statusVariant[goal.status]} dot>{goal.status}</Badge>}
-                        <Checkbox
-                          checked={done}
-                          onChange={(v) => toggleLog(date, b.id, v)}
-                          label="Done today"
-                        />
+                        {/* No weekly status here: it wasn't editable from a day
+                            anyway, and a day's own state is the toggle below. */}
+                        <button
+                          type="button"
+                          className={`day-toggle ${done ? 'day-toggle--on' : ''}`.trim()}
+                          onClick={() => toggleLog(date, b.id, !done)}
+                          aria-pressed={done}
+                          aria-label={`Mark ${b.label} done on ${fmtShort(date)}`}
+                        >
+                          {done ? <CircleCheck size={14} /> : <Circle size={14} />}
+                          {done ? 'Done' : 'Mark done'}
+                        </button>
                         <div className="row" style={{ gap: 2 }}>
                           <Button size="icon" variant="ghost" onClick={() => openEdit(b)} aria-label="Edit block">
                             <Pencil size={13} />
@@ -345,7 +477,19 @@ function SchedulePage() {
               className="input"
               value={draft.label}
               onChange={(e) => setDraft({ ...draft, label: e.target.value })}
-              placeholder="Deep work — Career Transition OS"
+              placeholder="Deep work — Northstar"
+            />
+          </Field>
+          <Field
+            label="Done when"
+            full
+            hint="What finishing this one sitting looks like. The week's target lives in Roadmap."
+          >
+            <textarea
+              className="textarea"
+              value={draft.sessionDone ?? ''}
+              onChange={(e) => setDraft({ ...draft, sessionDone: e.target.value })}
+              placeholder="Three applications out, chosen from both tracks."
             />
           </Field>
           <div className="full">
@@ -356,6 +500,112 @@ function SchedulePage() {
             />
           </div>
         </div>
+      </Modal>
+
+      {/* ---------- Day that didn't go to plan ---------- */}
+      <Modal
+        open={exDraft !== null}
+        title={exEditing ? 'Edit event day' : 'Mark an event day'}
+        subtitle="An in-person meet-up beats the timetable — but the hours don't vanish. Say when they come back and the week still adds up."
+        onClose={() => {
+          setExDraft(null);
+          setExEditing(null);
+        }}
+        actions={
+          <>
+            {exEditing && (
+              <span className="spacer">
+                <Button
+                  variant="danger"
+                  onClick={() => {
+                    remove('exceptions', exEditing.id);
+                    setExDraft(null);
+                    setExEditing(null);
+                  }}
+                >
+                  <Trash2 size={14} /> Remove
+                </Button>
+              </span>
+            )}
+            <Button
+              onClick={() => {
+                setExDraft(null);
+                setExEditing(null);
+              }}
+            >
+              Cancel
+            </Button>
+            <Button variant="primary" onClick={saveException}>
+              <Check size={14} /> Save
+            </Button>
+          </>
+        }
+      >
+        {exDraft && (
+          <div className="form-grid">
+            <Field label="Date">
+              <input
+                className="input"
+                type="date"
+                value={exDraft.date}
+                onChange={(e) => setExDraft({ ...exDraft, date: e.target.value })}
+              />
+            </Field>
+            <Field label="What came up">
+              <select
+                className="select"
+                value={exDraft.kind}
+                onChange={(e) =>
+                  setExDraft({ ...exDraft, kind: e.target.value as ExceptionKind })
+                }
+              >
+                {EXCEPTION_KINDS.map((k) => (
+                  <option key={k}>{k}</option>
+                ))}
+              </select>
+            </Field>
+            <Field
+              label="Hours owed"
+              hint="Defaults to the whole day. Drop it if you only lost the afternoon."
+            >
+              <input
+                className="input"
+                type="number"
+                min={0}
+                step={0.25}
+                value={exDraft.hoursOwed}
+                onChange={(e) => setExDraft({ ...exDraft, hoursOwed: Number(e.target.value) })}
+              />
+            </Field>
+            <Field label="Make them up on" hint="A weekend day, or extra time midweek.">
+              <input
+                className="input"
+                type="date"
+                value={exDraft.recoverOn}
+                onChange={(e) => setExDraft({ ...exDraft, recoverOn: e.target.value })}
+              />
+            </Field>
+            <Field
+              label="Notes"
+              full
+              hint="What happened — the event and who you met, or the bug and where it stalled you."
+            >
+              <textarea
+                className="textarea"
+                value={exDraft.note}
+                onChange={(e) => setExDraft({ ...exDraft, note: e.target.value })}
+                placeholder="React meetup, San Jose — two people from the Postman team going. Or: migration wouldn't run against the seeded data, lost the afternoon to it."
+              />
+            </Field>
+            <div className="full">
+              <Checkbox
+                checked={exDraft.recovered}
+                onChange={(v) => setExDraft({ ...exDraft, recovered: v })}
+                label="Already made up — stop counting these hours as owed"
+              />
+            </div>
+          </div>
+        )}
       </Modal>
     </div>
   );

@@ -1,19 +1,36 @@
 import { useMemo, useState } from 'react';
-import { Building2, Check, ExternalLink, Pencil, Plus, Search, Trash2, Users } from 'lucide-react';
+import {
+  Building2,
+  Check,
+  Circle,
+  CircleDot,
+  ExternalLink,
+  Pencil,
+  Plus,
+  Search,
+  Star,
+  Trash2,
+  Users,
+} from 'lucide-react';
 import { useStore } from '../store/useStore';
 import { todayISO } from '../lib/dates';
-import { companyPriorityVariant } from '../lib/ui';
+import {
+  companyPriorityIcon,
+  companyPriorityVariant,
+  companyStatusIcon,
+  companyStatusVariant,
+} from '../lib/ui';
 import {
   COMPANY_PRIORITIES,
   COMPANY_STATUSES,
   type Company,
   type CompanyPriority,
-  type CompanyStatus,
   type Contact,
 } from '../types';
-import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import Badge from '../components/ui/Badge';
+import StatCard from '../components/ui/StatCard';
+import StatusSelect from '../components/ui/StatusSelect';
 import Modal from '../components/ui/Modal';
 import Field from '../components/ui/Field';
 import EmptyState from '../components/ui/EmptyState';
@@ -174,33 +191,41 @@ function CompaniesPage() {
               Add a company and its two networking targets are created for you.
             </p>
           </div>
-          <Button variant="primary" onClick={openNew}>
-            <Plus size={14} /> Add company
-          </Button>
         </div>
       </div>
 
       <div className="stat-grid" style={{ marginBottom: 18 }}>
-        <Card className="stat">
-          <div className="stat__label">Total</div>
-          <div className="stat__value">{companies.length}</div>
-          <div className="stat__desc">{contacts.length} contacts linked</div>
-        </Card>
-        <Card className="stat">
-          <div className="stat__label">Tier A</div>
-          <div className="stat__value" style={{ color: 'var(--ok)' }}>{tierCounts.A}</div>
-          <div className="stat__desc">Apply here first</div>
-        </Card>
-        <Card className="stat">
-          <div className="stat__label">Tier B</div>
-          <div className="stat__value">{tierCounts.B}</div>
-          <div className="stat__desc">Worth the effort, higher bar</div>
-        </Card>
-        <Card className="stat">
-          <div className="stat__label">Tier C</div>
-          <div className="stat__value">{tierCounts.C}</div>
-          <div className="stat__desc">Network now, apply later</div>
-        </Card>
+        <StatCard
+          label="Total"
+          value={companies.length}
+          desc={`${contacts.length} contacts linked`}
+          icon={<Building2 size={16} />}
+          color="var(--area-learning)"
+        />
+        <StatCard
+          label="Tier A"
+          value={tierCounts.A}
+          desc="Apply here first"
+          icon={<Star size={16} />}
+          color="var(--ok)"
+          index={1}
+        />
+        <StatCard
+          label="Tier B"
+          value={tierCounts.B}
+          desc="Worth the effort, higher bar"
+          icon={<CircleDot size={16} />}
+          color="var(--warn)"
+          index={2}
+        />
+        <StatCard
+          label="Tier C"
+          value={tierCounts.C}
+          desc="Network now, apply later"
+          icon={<Circle size={16} />}
+          color="var(--muted-dot)"
+          index={3}
+        />
       </div>
 
       <div className="toolbar">
@@ -227,7 +252,12 @@ function CompaniesPage() {
             ))}
           </select>
         </div>
-        <span className="muted">{rows.length} shown</span>
+        <div className="row" style={{ gap: 12 }}>
+          <span className="muted">{rows.length} shown</span>
+          <Button variant="primary" onClick={openNew}>
+            <Plus size={14} /> Add company
+          </Button>
+        </div>
       </div>
 
       {rows.length === 0 ? (
@@ -265,21 +295,15 @@ function CompaniesPage() {
                       </div>
                     </td>
                     <td className="tight">
-                      <select
-                        className="select select--inline"
+                      <StatusSelect
                         value={c.priority}
-                        onChange={(e) =>
-                          update('companies', c.id, { priority: e.target.value as CompanyPriority })
-                        }
-                        style={{ minWidth: 60 }}
-                      >
-                        {COMPANY_PRIORITIES.map((p) => (
-                          <option key={p}>{p}</option>
-                        ))}
-                      </select>
-                      <div style={{ marginTop: 4 }}>
-                        <Badge variant={companyPriorityVariant[c.priority]}>Tier {c.priority}</Badge>
-                      </div>
+                        options={COMPANY_PRIORITIES}
+                        onChange={(v) => update('companies', c.id, { priority: v })}
+                        variant={companyPriorityVariant[c.priority]}
+                        icon={companyPriorityIcon[c.priority]}
+                        renderLabel={(p) => `Tier ${p}`}
+                        ariaLabel={`Tier for ${c.name}`}
+                      />
                     </td>
                     <td className="tight">{c.fitScore}</td>
                     <td>
@@ -376,17 +400,15 @@ function CompaniesPage() {
               />
             </Field>
             <Field label="Tier">
-              <select
-                className="select"
+              <StatusSelect
+                block
                 value={draft.priority}
-                onChange={(e) => setDraft({ ...draft, priority: e.target.value as CompanyPriority })}
-              >
-                {COMPANY_PRIORITIES.map((p) => (
-                  <option key={p} value={p}>
-                    Tier {p}
-                  </option>
-                ))}
-              </select>
+                options={COMPANY_PRIORITIES}
+                onChange={(v) => setDraft({ ...draft, priority: v })}
+                variant={companyPriorityVariant[draft.priority]}
+                icon={companyPriorityIcon[draft.priority]}
+                renderLabel={(p) => `Tier ${p}`}
+              />
             </Field>
             <Field label="Fit score (0–100)" hint="Be honest. A 95 you can't back up just wastes a week.">
               <input
@@ -399,15 +421,14 @@ function CompaniesPage() {
               />
             </Field>
             <Field label="Status">
-              <select
-                className="select"
+              <StatusSelect
+                block
                 value={draft.status}
-                onChange={(e) => setDraft({ ...draft, status: e.target.value as CompanyStatus })}
-              >
-                {COMPANY_STATUSES.map((s) => (
-                  <option key={s}>{s}</option>
-                ))}
-              </select>
+                options={COMPANY_STATUSES}
+                onChange={(v) => setDraft({ ...draft, status: v })}
+                variant={companyStatusVariant[draft.status]}
+                icon={companyStatusIcon[draft.status]}
+              />
             </Field>
             <Field label="Primary target roles" full>
               <input

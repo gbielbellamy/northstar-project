@@ -4,6 +4,8 @@ import {
   ArrowRight,
   Building2,
   CalendarCheck,
+  Circle,
+  CircleCheck,
   Download,
   MessageSquare,
   RotateCcw,
@@ -16,10 +18,12 @@ import { useStore } from '../store/useStore';
 import { completionPct, funnel, goalsForWeek, outreachStats } from '../lib/selectors';
 import { currentWeekNumber, dayKeyOf, fmtLong, fmtRange, hoursBetween, todayISO } from '../lib/dates';
 import { areaClass } from '../lib/ui';
-import type { AppState, Area } from '../types';
+import { blockAppliesTo, type AppState, type Area } from '../types';
 import type { PageKey } from '../App';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
+import Modal from '../components/ui/Modal';
+import Field from '../components/ui/Field';
 import StatCard from '../components/ui/StatCard';
 import ProgressRing from '../components/ui/ProgressRing';
 import AnimatedSection from '../components/ui/AnimatedSection';
@@ -31,6 +35,8 @@ import WeekProgressChart from '../components/charts/WeekProgressChart';
 const AREA_COLOR: Record<Area, string> = {
   Project: 'var(--area-project)',
   Learning: 'var(--area-learning)',
+  Algorithms: 'var(--area-algorithms)',
+  Contributions: 'var(--area-opensource)',
   'Job Search': 'var(--area-jobsearch)',
   Networking: 'var(--area-networking)',
   'Interview Prep': 'var(--area-interview)',
@@ -52,8 +58,11 @@ function DashboardPage({ setPage }: Props) {
   const { roadmap, goals, schedule, applications, contacts, companies, dailyLog, settings } = state;
   const replaceAll = useStore((s) => s.replaceAll);
   const reset = useStore((s) => s.reset);
+  const toggleLog = useStore((s) => s.toggleLog);
+  const setSettings = useStore((s) => s.setSettings);
 
   const [toast, setToast] = useState<string | null>(null);
+  const [targetsOpen, setTargetsOpen] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
   const today = todayISO(settings.todayOverride);
@@ -64,25 +73,53 @@ function DashboardPage({ setPage }: Props) {
   const o = useMemo(() => outreachStats(contacts, today), [contacts, today]);
   const weekPct = completionPct(goals, week);
 
+  /**
+   * The timetable changes partway through the programme — open source takes
+   * over a slot in week 5 — so only count the blocks that apply to the week
+   * being shown. Summing every block double-counts the swapped slot.
+   */
+  const weekBlocks = useMemo(
+    () => schedule.filter((b) => blockAppliesTo(b, week)),
+    [schedule, week],
+  );
+
   const todayBlocks = useMemo(() => {
     const dk = dayKeyOf(today);
-    return schedule
+    return weekBlocks
       .filter((b) => b.day === dk && b.area !== null)
       .sort((a, b) => a.start.localeCompare(b.start));
-  }, [schedule, today]);
+  }, [weekBlocks, today]);
 
   const todayDone = todayBlocks.filter((b) => dailyLog[today]?.[b.id]).length;
+  /** Week 1 hasn't begun yet — don't nag about blocks that aren't due. */
+  const beforeStart = today < settings.programStart;
 
+  /** Work by area, plus the breaks — they're part of the working day too. */
   const hourSlices: HourSlice[] = useMemo(() => {
     const byArea = new Map<Area, number>();
-    for (const b of schedule) {
-      if (!b.area || b.optional) continue;
-      byArea.set(b.area, (byArea.get(b.area) ?? 0) + hoursBetween(b.start, b.end));
+    let breaks = 0;
+    for (const b of weekBlocks) {
+      if (b.optional) continue;
+      const h = hoursBetween(b.start, b.end);
+      if (b.area) byArea.set(b.area, (byArea.get(b.area) ?? 0) + h);
+      else breaks += h;
     }
-    return [...byArea.entries()]
+    const slices: HourSlice[] = [...byArea.entries()]
       .sort((a, b) => b[1] - a[1])
       .map(([area, value]) => ({ name: area, value: Math.round(value * 10) / 10, color: AREA_COLOR[area] }));
-  }, [schedule]);
+    if (breaks > 0) {
+      slices.push({ name: 'Breaks', value: Math.round(breaks * 10) / 10, color: 'var(--muted-dot)' });
+    }
+    return slices;
+  }, [weekBlocks]);
+
+  const workHours = useMemo(
+    () =>
+      weekBlocks
+        .filter((b) => b.area && !b.optional)
+        .reduce((sum, b) => sum + hoursBetween(b.start, b.end), 0),
+    [weekBlocks],
+  );
 
   const weekPoints = useMemo(
     () =>
@@ -96,11 +133,26 @@ function DashboardPage({ setPage }: Props) {
   const weekGoals = goalsForWeek(goals, week);
   const doneGoals = weekGoals.filter((g) => g.status === 'Done').length;
 
+  /** What you've actually done inside the current roadmap week. */
+  const thisWeek = useMemo(() => {
+    const inRange = (d: string) => Boolean(rw) && d >= rw!.start && d <= rw!.end;
+    return {
+      applications: applications.filter((a) => inRange(a.dateApplied)).length,
+      contacts: contacts.filter((c) => inRange(c.dateSent)).length,
+    };
+  }, [applications, contacts, rw]);
+
+  const t = settings.targets;
+  const applicationTarget = t.directApplicationsPerWeek + t.bridgeApplicationsPerWeek;
+  const pct = (done: number, target: number) => (target > 0 ? (done / target) * 100 : 0);
+
   function exportBackup() {
     const payload: AppState = {
       roadmap: state.roadmap,
       goals: state.goals,
       schedule: state.schedule,
+      exceptions: state.exceptions,
+      oss: state.oss,
       applications: state.applications,
       contacts: state.contacts,
       companies: state.companies,
@@ -148,10 +200,19 @@ function DashboardPage({ setPage }: Props) {
               {greeting()}. {rw?.theme ?? 'Let’s go'}.
             </h1>
             <p className="hero__meta">
-              {fmtLong(today)} — {todayBlocks.length} blocks planned, {todayDone} done.{' '}
-              {todayDone === todayBlocks.length && todayBlocks.length > 0
-                ? 'That’s the day closed out. Well done.'
-                : 'Open the schedule and take the next one.'}
+              {beforeStart ? (
+                <>
+                  {fmtLong(today)} — the programme starts {fmtLong(settings.programStart)}. Nothing to log
+                  yet: use the time to read week 1 and line up the first five companies.
+                </>
+              ) : (
+                <>
+                  {fmtLong(today)} — {todayBlocks.length} blocks planned, {todayDone} done.{' '}
+                  {todayDone === todayBlocks.length && todayBlocks.length > 0
+                    ? 'That’s the day closed out. Well done.'
+                    : 'Open the schedule and take the next one.'}
+                </>
+              )}
             </p>
             <div className="row" style={{ marginTop: 14 }}>
               <Button variant="primary" onClick={() => setPage('schedule')}>
@@ -174,55 +235,67 @@ function DashboardPage({ setPage }: Props) {
 
       <div className="section">
         <h2>The search</h2>
-        <span className="muted">Response rate is the number that tells you if your targeting works.</span>
+        <span className="muted">
+          The coloured cards are graded against your own targets — hover one to change it.
+        </span>
       </div>
       <div className="stat-grid">
         <StatCard
           index={0}
-          label="Applications sent"
-          value={f.sent}
+          label="Applications this week"
+          value={thisWeek.applications}
           desc={`${f.total} tracked in total`}
-          icon={<Send size={15} />}
-          color="var(--area-jobsearch)"
+          icon={<Send size={16} />}
+          progress={pct(thisWeek.applications, applicationTarget)}
+          targetLabel={`${thisWeek.applications} / ${applicationTarget} this week`}
+          onEditTarget={() => setTargetsOpen(true)}
         />
         <StatCard
           index={1}
           label="Response rate"
           value={f.responseRate === null ? '—' : `${f.responseRate}%`}
           desc={f.sent === 0 ? 'Send the first one' : `${f.responded} of ${f.sent} came back`}
-          icon={<TrendingUp size={15} />}
-          color="var(--area-project)"
+          icon={<TrendingUp size={16} />}
+          progress={pct(f.responseRate ?? 0, t.responseRate)}
+          targetLabel={`Target ${t.responseRate}%`}
+          onEditTarget={() => setTargetsOpen(true)}
         />
         <StatCard
           index={2}
           label="Live conversations"
           value={f.active}
           desc={`${f.interviewing} interviewing · ${f.offers} offer${f.offers === 1 ? '' : 's'}`}
-          icon={<Target size={15} />}
-          color="var(--area-interview)"
+          icon={<Target size={16} />}
+          progress={pct(f.active, t.liveConversations)}
+          targetLabel={`${f.active} / ${t.liveConversations} at once`}
+          onEditTarget={() => setTargetsOpen(true)}
         />
         <StatCard
           index={3}
           label="Follow-ups due"
           value={f.followupsDue + o.followupsDue}
           desc="Applications and contacts combined"
-          icon={<AlarmClock size={15} />}
-          color={f.followupsDue + o.followupsDue > 0 ? 'var(--danger)' : 'var(--muted-dot)'}
+          icon={<AlarmClock size={16} />}
+          progress={Math.min(100, (f.followupsDue + o.followupsDue) * 20)}
+          targetLabel="Keep this at zero"
+          invert
         />
         <StatCard
           index={4}
-          label="People contacted"
-          value={o.contacted}
+          label="People contacted this week"
+          value={thisWeek.contacts}
           desc={`${o.totalTargets} targets loaded`}
-          icon={<MessageSquare size={15} />}
-          color="var(--area-networking)"
+          icon={<MessageSquare size={16} />}
+          progress={pct(thisWeek.contacts, t.contactsPerWeek)}
+          targetLabel={`${thisWeek.contacts} / ${t.contactsPerWeek} this week`}
+          onEditTarget={() => setTargetsOpen(true)}
         />
         <StatCard
           index={5}
           label="Replies"
           value={o.replied}
           desc={`${o.meetings} meeting${o.meetings === 1 ? '' : 's'} scheduled`}
-          icon={<CalendarCheck size={15} />}
+          icon={<CalendarCheck size={16} />}
           color="var(--area-review)"
         />
         <StatCard
@@ -230,7 +303,7 @@ function DashboardPage({ setPage }: Props) {
           label="Tier A companies"
           value={tierA}
           desc={`${companies.length} in the list`}
-          icon={<Building2 size={15} />}
+          icon={<Building2 size={16} />}
           color="var(--area-learning)"
         />
         <StatCard
@@ -238,8 +311,9 @@ function DashboardPage({ setPage }: Props) {
           label="Programme progress"
           value={`${completionPct(goals)}%`}
           desc={`${goals.filter((g) => g.status === 'Done').length} of ${goals.length} goals`}
-          icon={<Target size={15} />}
-          color="var(--area-portfolio)"
+          icon={<Target size={16} />}
+          progress={completionPct(goals)}
+          targetLabel="All ten weeks"
         />
       </div>
 
@@ -259,7 +333,7 @@ function DashboardPage({ setPage }: Props) {
           </Card>
         </AnimatedSection>
         <AnimatedSection delay={0.1}>
-          <Card title="Where the week goes (37.5 h)">
+          <Card title={`Where the week goes (${workHours}h + breaks)`}>
             <HoursChart data={hourSlices} />
           </Card>
         </AnimatedSection>
@@ -302,7 +376,18 @@ function DashboardPage({ setPage }: Props) {
                     <div className="block__title">{goal?.title ?? b.label}</div>
                     <p className="block__detail">{goal?.detail ?? ''}</p>
                   </div>
-                  <div className="block__side" />
+                  <div className="block__side">
+                    <button
+                      type="button"
+                      className={`day-toggle ${done ? 'day-toggle--on' : ''}`.trim()}
+                      onClick={() => toggleLog(today, b.id, !done)}
+                      aria-pressed={done}
+                      aria-label={`Mark ${b.label} done today`}
+                    >
+                      {done ? <CircleCheck size={14} /> : <Circle size={14} />}
+                      {done ? 'Done' : 'Mark done'}
+                    </button>
+                  </div>
                 </div>
               </AnimatedSection>
             );
@@ -350,6 +435,88 @@ function DashboardPage({ setPage }: Props) {
           </Button>
         </div>
       </Card>
+
+      <Modal
+        open={targetsOpen}
+        title="Your weekly targets"
+        subtitle="These are the numbers the cards grade you against. Move them when the plan changes — a target you can't change is one you'll start ignoring."
+        onClose={() => setTargetsOpen(false)}
+        actions={<Button variant="primary" onClick={() => setTargetsOpen(false)}>Done</Button>}
+      >
+        <div className="form-grid">
+          <Field label="Direct applications / week" hint="Software Engineer, Full-Stack Engineer.">
+            <input
+              className="input"
+              type="number"
+              min={0}
+              value={t.directApplicationsPerWeek}
+              onChange={(e) =>
+                setSettings({
+                  targets: { ...t, directApplicationsPerWeek: Number(e.target.value) },
+                })
+              }
+            />
+          </Field>
+          <Field label="Bridge applications / week" hint="Support, solutions, implementation, QA.">
+            <input
+              className="input"
+              type="number"
+              min={0}
+              value={t.bridgeApplicationsPerWeek}
+              onChange={(e) =>
+                setSettings({
+                  targets: { ...t, bridgeApplicationsPerWeek: Number(e.target.value) },
+                })
+              }
+            />
+          </Field>
+          <Field label="Contacts / week">
+            <input
+              className="input"
+              type="number"
+              min={0}
+              value={t.contactsPerWeek}
+              onChange={(e) =>
+                setSettings({ targets: { ...t, contactsPerWeek: Number(e.target.value) } })
+              }
+            />
+          </Field>
+          <Field label="Response rate target (%)" hint="Under 10% means targeting or CV, not volume.">
+            <input
+              className="input"
+              type="number"
+              min={0}
+              max={100}
+              value={t.responseRate}
+              onChange={(e) =>
+                setSettings({ targets: { ...t, responseRate: Number(e.target.value) } })
+              }
+            />
+          </Field>
+          <Field label="Live conversations" hint="Interviews and offers running at once.">
+            <input
+              className="input"
+              type="number"
+              min={0}
+              value={t.liveConversations}
+              onChange={(e) =>
+                setSettings({ targets: { ...t, liveConversations: Number(e.target.value) } })
+              }
+            />
+          </Field>
+          <Field label="Weekly hours" hint={`The schedule currently plans ${workHours}h of work.`}>
+            <input
+              className="input"
+              type="number"
+              min={0}
+              value={t.weeklyHours}
+              onChange={(e) =>
+                setSettings({ targets: { ...t, weeklyHours: Number(e.target.value) } })
+              }
+            />
+          </Field>
+        </div>
+      </Modal>
 
       <Toast message={toast} />
     </div>

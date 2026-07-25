@@ -6,6 +6,7 @@ import RoadmapPage from './pages/RoadmapPage';
 import ApplicationsPage from './pages/ApplicationsPage';
 import NetworkingPage from './pages/NetworkingPage';
 import CompaniesPage from './pages/CompaniesPage';
+import ContributionsPage from './pages/ContributionsPage';
 import ResourcesPage from './pages/ResourcesPage';
 import ComponentsPage from './pages/ComponentsPage';
 import { useStore } from './store/useStore';
@@ -19,6 +20,7 @@ export type PageKey =
   | 'applications'
   | 'networking'
   | 'companies'
+  | 'contributions'
   | 'resources'
   | 'components';
 
@@ -39,6 +41,7 @@ function App() {
       {page === 'applications' && <ApplicationsPage />}
       {page === 'networking' && <NetworkingPage />}
       {page === 'companies' && <CompaniesPage />}
+      {page === 'contributions' && <ContributionsPage />}
       {page === 'resources' && <ResourcesPage />}
       {page === 'components' && <ComponentsPage />}
     </AppLayout>

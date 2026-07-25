@@ -6,6 +6,8 @@ import type {
   Application,
   Company,
   Contact,
+  DayException,
+  OssContribution,
   MessageTemplate,
   RoadmapWeek,
   ScheduleBlock,
@@ -22,6 +24,8 @@ type ListKey =
   | 'roadmap'
   | 'goals'
   | 'schedule'
+  | 'exceptions'
+  | 'oss'
   | 'applications'
   | 'contacts'
   | 'companies'
@@ -32,6 +36,8 @@ type Entity = {
   roadmap: RoadmapWeek;
   goals: WeeklyGoal;
   schedule: ScheduleBlock;
+  exceptions: DayException;
+  oss: OssContribution;
   applications: Application;
   contacts: Contact;
   companies: Company;
@@ -67,6 +73,8 @@ const ID_PREFIX: Record<ListKey, string> = {
   roadmap: 'rw',
   goals: 'g',
   schedule: 'sb',
+  exceptions: 'ex',
+  oss: 'os',
   applications: 'ap',
   contacts: 'ct',
   companies: 'co',
@@ -77,6 +85,37 @@ const ID_PREFIX: Record<ListKey, string> = {
 /** Deep clone that works in every browser we care about. */
 function cloneSeed(): AppState {
   return JSON.parse(JSON.stringify(seedState)) as AppState;
+}
+
+/**
+ * A skill saved before the learning-path fields existed has no `resources` or
+ * `sessions`, and the UI maps over both. Fill the gaps from the seed entry with
+ * the same name when there is one, so the new content arrives without
+ * overwriting anything already edited by hand.
+ */
+function normaliseSkill(saved: Partial<Skill> & { skill?: string }): Skill {
+  const seeded = seedState.skills.find(
+    (s) => s.skill.toLowerCase() === (saved.skill ?? '').toLowerCase(),
+  );
+  return {
+    id: saved.id ?? newId('sk'),
+    skill: saved.skill ?? '',
+    currentLevel: saved.currentLevel ?? seeded?.currentLevel ?? '',
+    target: saved.target ?? seeded?.target ?? '',
+    priority: saved.priority ?? seeded?.priority ?? 'Medium',
+    evidence: saved.evidence ?? seeded?.evidence ?? '',
+    action: saved.action ?? seeded?.action ?? '',
+    why: saved.why ?? seeded?.why ?? '',
+    miniProject: saved.miniProject ?? seeded?.miniProject ?? '',
+    miniProjectDod: saved.miniProjectDod ?? seeded?.miniProjectDod ?? '',
+    resources: saved.resources ?? seeded?.resources ?? [],
+    sessions: saved.sessions ?? seeded?.sessions ?? [],
+    category: saved.category ?? seeded?.category ?? 'Foundations',
+    badge: saved.badge ?? seeded?.badge ?? (saved.skill ?? '?').slice(0, 2).toUpperCase(),
+    colour: saved.colour ?? seeded?.colour ?? '#8b5cf6',
+    icon: saved.icon ?? seeded?.icon ?? '',
+    optional: saved.optional ?? seeded?.optional ?? false,
+  };
 }
 
 export const useStore = create<Store>()(
@@ -127,12 +166,14 @@ export const useStore = create<Store>()(
     }),
     {
       name: STORAGE_KEY,
-      version: 1,
+      version: 5,
       /** Persist only the data, never the action functions. */
       partialize: (s): AppState => ({
         roadmap: s.roadmap,
         goals: s.goals,
         schedule: s.schedule,
+        exceptions: s.exceptions,
+        oss: s.oss,
         applications: s.applications,
         contacts: s.contacts,
         companies: s.companies,
@@ -142,18 +183,57 @@ export const useStore = create<Store>()(
         dailyLog: s.dailyLog,
         settings: s.settings,
       }),
+      /** Old skills predate the learning path, so give them the new shape. */
+      migrate: (persisted, version) => {
+        const saved = (persisted ?? {}) as Partial<AppState>;
+        if (version < 2) {
+          return { ...saved, skills: (saved.skills ?? []).map(normaliseSkill) };
+        }
+        return saved;
+      },
+
       /**
-       * A saved state from an older build can be missing keys added since.
-       * Fill any gap from the seed instead of crashing on undefined.
+       * A saved state from an older build can be missing keys added since, so
+       * fill any gap from the seed rather than crashing on undefined.
+       *
+       * The plan itself — weeks, goals, schedule, skill paths — is replaced
+       * whenever the seed's `planVersion` moves ahead of the saved one. That is
+       * deliberate: when the programme is rewritten, keeping the old timetable
+       * would keep exactly the thing that was replaced. Everything you actually
+       * recorded (applications, contacts, companies, templates, event days) is
+       * yours and survives untouched.
        */
       merge: (persisted, current) => {
         const saved = (persisted ?? {}) as Partial<AppState>;
         const seed = cloneSeed();
+        const planIsStale = (saved.settings?.planVersion ?? 0) < seed.settings.planVersion;
+
+        const settings: Settings = {
+          ...seed.settings,
+          ...(saved.settings ?? {}),
+          // Nested, so a spread alone would drop any target added since.
+          targets: { ...seed.settings.targets, ...(saved.settings?.targets ?? {}) },
+          planVersion: seed.settings.planVersion,
+        };
+        if (planIsStale) {
+          settings.programStart = seed.settings.programStart;
+          settings.currentWeek = seed.settings.currentWeek;
+        }
+
         return {
           ...current,
           ...seed,
           ...saved,
-          settings: { ...seed.settings, ...(saved.settings ?? {}) },
+          roadmap: planIsStale ? seed.roadmap : (saved.roadmap ?? seed.roadmap),
+          goals: planIsStale ? seed.goals : (saved.goals ?? seed.goals),
+          schedule: planIsStale ? seed.schedule : (saved.schedule ?? seed.schedule),
+          skills: (planIsStale ? seed.skills : (saved.skills ?? seed.skills)).map(normaliseSkill),
+          // Logs are keyed to a timetable that no longer exists.
+          reviews: planIsStale ? {} : (saved.reviews ?? {}),
+          dailyLog: planIsStale ? {} : (saved.dailyLog ?? {}),
+          exceptions: saved.exceptions ?? [],
+          oss: saved.oss ?? [],
+          settings,
         };
       },
     },

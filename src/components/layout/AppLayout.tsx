@@ -1,6 +1,7 @@
 import { useState, type ReactNode } from 'react';
 import { Menu } from 'lucide-react';
 import Sidebar from './Sidebar';
+import ThemeToggle from '../ui/ThemeToggle';
 import type { PageKey } from '../../App';
 
 type Props = {
@@ -23,6 +24,8 @@ function AppLayout({ page, setPage, followupsDue, children }: Props) {
       <button className="hamburger" onClick={() => setNavOpen((v) => !v)} aria-label="Menu">
         <Menu size={18} />
       </button>
+      {/* Pinned top-right on every page, so it never moves. */}
+      <ThemeToggle />
       {navOpen && <div className="overlay" onClick={() => setNavOpen(false)} />}
       <Sidebar page={page} setPage={go} open={navOpen} followupsDue={followupsDue} />
       <main className="layout__main">{children}</main>

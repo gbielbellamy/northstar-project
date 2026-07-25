@@ -3,21 +3,21 @@ import { Check, ClipboardCheck, Pencil, Plus, Trash2 } from 'lucide-react';
 import { useStore } from '../store/useStore';
 import { addDays, currentWeekNumber, fmtRange, todayISO } from '../lib/dates';
 import { completionPct, funnel, goalsForWeek, outreachStats } from '../lib/selectors';
-import { areaClass, priorityVariant, statusVariant } from '../lib/ui';
+import { areaClass, priorityIcon, priorityVariant, statusIcon, statusVariant } from '../lib/ui';
 import {
   AREAS,
   PRIORITIES,
   STATUSES,
   type Area,
-  type Priority,
   type RoadmapWeek,
-  type Status,
   type WeeklyGoal,
   type WeeklyReview,
 } from '../types';
 import Card from '../components/ui/Card';
+import WorkingRules from '../components/ui/WorkingRules';
 import Button from '../components/ui/Button';
 import Badge from '../components/ui/Badge';
+import StatusSelect from '../components/ui/StatusSelect';
 import Modal from '../components/ui/Modal';
 import Field from '../components/ui/Field';
 import Checkbox from '../components/ui/Checkbox';
@@ -204,7 +204,9 @@ function RoadmapPage() {
         </div>
       </div>
 
-      <div className="stack">
+      <WorkingRules />
+
+      <div className="stack" style={{ marginTop: 18 }}>
         {sorted.map((w, i) => {
           const pct = completionPct(goals, w.week);
           const wg = goalsForWeek(goals, w.week).sort(
@@ -224,23 +226,19 @@ function RoadmapPage() {
                         Week {w.week} — {w.theme}
                       </h3>
                       {isNow && <Badge variant="neutral">This week</Badge>}
-                      <Badge variant={statusVariant[w.status]} dot>
-                        {w.status}
-                      </Badge>
                       {review?.weekComplete && <Badge variant="success">Reviewed</Badge>}
                     </div>
                     <p className="muted">{fmtRange(w.start, w.end)} · {w.projectDirection}</p>
                   </div>
                   <div className="row">
-                    <select
-                      className="select select--inline"
+                    <StatusSelect
                       value={w.status}
-                      onChange={(e) => update('roadmap', w.id, { status: e.target.value as Status })}
-                    >
-                      {STATUSES.map((s) => (
-                        <option key={s}>{s}</option>
-                      ))}
-                    </select>
+                      options={STATUSES}
+                      onChange={(v) => update('roadmap', w.id, { status: v })}
+                      variant={statusVariant[w.status]}
+                      icon={statusIcon[w.status]}
+                      ariaLabel={`Status for week ${w.week}`}
+                    />
                     <Button size="sm" onClick={() => openReview(w.week)}>
                       <ClipboardCheck size={13} /> Review
                     </Button>
@@ -299,20 +297,24 @@ function RoadmapPage() {
                             </td>
                             <td className="tight">{g.plannedHours} h</td>
                             <td className="tight">
-                              <Badge variant={priorityVariant[g.priority]}>{g.priority}</Badge>
+                              <StatusSelect
+                                value={g.priority}
+                                options={PRIORITIES}
+                                onChange={(v) => update('goals', g.id, { priority: v })}
+                                variant={priorityVariant[g.priority]}
+                                icon={priorityIcon[g.priority]}
+                                ariaLabel={`Priority for ${g.title}`}
+                              />
                             </td>
                             <td className="tight">
-                              <select
-                                className="select select--inline"
+                              <StatusSelect
                                 value={g.status}
-                                onChange={(e) =>
-                                  update('goals', g.id, { status: e.target.value as Status })
-                                }
-                              >
-                                {STATUSES.map((s) => (
-                                  <option key={s}>{s}</option>
-                                ))}
-                              </select>
+                                options={STATUSES}
+                                onChange={(v) => update('goals', g.id, { status: v })}
+                                variant={statusVariant[g.status]}
+                                icon={statusIcon[g.status]}
+                                ariaLabel={`Status for ${g.title}`}
+                              />
                             </td>
                             <td className="tight">
                               <div className="row-actions">
@@ -394,15 +396,14 @@ function RoadmapPage() {
               />
             </Field>
             <Field label="Status">
-              <select
-                className="select"
+              <StatusSelect
+                block
                 value={weekDraft.status}
-                onChange={(e) => setWeekDraft({ ...weekDraft, status: e.target.value as Status })}
-              >
-                {STATUSES.map((s) => (
-                  <option key={s}>{s}</option>
-                ))}
-              </select>
+                options={STATUSES}
+                onChange={(v) => setWeekDraft({ ...weekDraft, status: v })}
+                variant={statusVariant[weekDraft.status]}
+                icon={statusIcon[weekDraft.status]}
+              />
             </Field>
             <Field label="Start (Monday)">
               <input
@@ -502,15 +503,14 @@ function RoadmapPage() {
               />
             </Field>
             <Field label="Priority">
-              <select
-                className="select"
+              <StatusSelect
+                block
                 value={goalDraft.priority}
-                onChange={(e) => setGoalDraft({ ...goalDraft, priority: e.target.value as Priority })}
-              >
-                {PRIORITIES.map((p) => (
-                  <option key={p}>{p}</option>
-                ))}
-              </select>
+                options={PRIORITIES}
+                onChange={(v) => setGoalDraft({ ...goalDraft, priority: v })}
+                variant={priorityVariant[goalDraft.priority]}
+                icon={priorityIcon[goalDraft.priority]}
+              />
             </Field>
             <Field label="Planned hours">
               <input
@@ -551,15 +551,14 @@ function RoadmapPage() {
               />
             </Field>
             <Field label="Status">
-              <select
-                className="select"
+              <StatusSelect
+                block
                 value={goalDraft.status}
-                onChange={(e) => setGoalDraft({ ...goalDraft, status: e.target.value as Status })}
-              >
-                {STATUSES.map((s) => (
-                  <option key={s}>{s}</option>
-                ))}
-              </select>
+                options={STATUSES}
+                onChange={(v) => setGoalDraft({ ...goalDraft, status: v })}
+                variant={statusVariant[goalDraft.status]}
+                icon={statusIcon[goalDraft.status]}
+              />
             </Field>
           </div>
         )}
