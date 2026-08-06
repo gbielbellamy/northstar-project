@@ -200,9 +200,8 @@ function RoadmapPage() {
           <div>
             <h1>Roadmap</h1>
             <p className="page__sub">
-              Ten weeks, one project. Each week has a theme and a definition of done — if you can’t tick the
-              definition of done, the week isn’t finished, however busy it felt. Everything here is editable,
-              and you can add weeks past the tenth when you get there.
+              Ten weeks, one project. Each week has a theme and a definition of done. Everything here is
+              editable.
             </p>
           </div>
           <Button variant="primary" onClick={openAddWeek}>
@@ -570,7 +569,7 @@ function RoadmapPage() {
       <Modal
         open={reviewWeek !== null}
         title={`Week ${reviewWeek} review`}
-        subtitle="Thirty minutes on a Friday. The counts are prefilled from what you logged — the lesson and the blocker have to come from you."
+        subtitle="Counts are prefilled from what you logged."
         onClose={() => setReviewWeek(null)}
         actions={
           <>

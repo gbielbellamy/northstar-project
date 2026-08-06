@@ -443,7 +443,7 @@ function DashboardPage({ setPage }: Props) {
       <Modal
         open={targetsOpen}
         title="Your weekly targets"
-        subtitle="These are the numbers the cards grade you against. Move them when the plan changes — a target you can't change is one you'll start ignoring."
+        subtitle="The numbers the cards are measured against."
         onClose={() => setTargetsOpen(false)}
         actions={<Button variant="primary" onClick={() => setTargetsOpen(false)}>Done</Button>}
       >

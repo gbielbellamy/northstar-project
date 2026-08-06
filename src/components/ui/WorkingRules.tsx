@@ -10,16 +10,11 @@ type Step = {
   where?: string;
 };
 
-/**
- * The working rule, spelled out. It used to be one long sentence repeated on
- * all ten weeks; nobody follows a rule they can't act on, so here it is as
- * steps with the actual commands.
- */
 const STEPS: Step[] = [
   {
     title: 'Open the issue before you start',
-    where: 'github.com/<your-user>/northstar → Issues → New issue',
-    body: 'Title it as the outcome of the block, not the topic — "Add applications CRUD routes", not "backend work". Put the block\'s "Done when" in the body, assign it to yourself, and add it to the week\'s milestone. The issue is what turns a vague afternoon into a finishable task.',
+    where: 'Issues → New issue',
+    body: 'Title it as the outcome, not the topic. Put the block\'s "Done when" in the body and add it to the week\'s milestone.',
     commands: [
       'gh issue create --title "feat(api): applications CRUD routes" \\',
       '  --body "Done when: a clean database can be driven through the API." \\',
@@ -28,15 +23,12 @@ const STEPS: Step[] = [
   },
   {
     title: 'Branch off main',
-    body: 'Never commit straight to main, even alone. A branch per issue is what makes the pull request possible, and the pull request is what a hiring manager reads. Name it type/short-description.',
-    commands: [
-      'git switch main && git pull',
-      'git switch -c feat/applications-crud',
-    ],
+    body: 'One branch per issue, named type/short-description.',
+    commands: ['git switch main && git pull', 'git switch -c feat/applications-crud'],
   },
   {
     title: 'Commit as you go, in Conventional Commits',
-    body: 'Format is type(scope): description, in the imperative. Types: feat, fix, docs, refactor, test, chore. Small commits that each do one thing — a reviewer should be able to read them like a story. Reference the issue so GitHub links them.',
+    body: 'type(scope): description, in the imperative. Small commits that each do one thing, referencing the issue.',
     commands: [
       'git commit -m "feat(api): add applications CRUD routes" -m "Refs #12"',
       'git commit -m "test(api): cover the not-found path"',
@@ -45,8 +37,7 @@ const STEPS: Step[] = [
   },
   {
     title: 'Push and open the pull request',
-    where: 'GitHub shows a "Compare & pull request" banner after the first push',
-    body: 'The description is the part that matters. Three headings: Context (why), Approach (what you did and what you rejected), Testing (how you know it works). Close the issue from the PR so the history joins up.',
+    body: 'Three headings in the description: Context, Approach, Testing. Close the issue from the PR.',
     commands: [
       'git push -u origin feat/applications-crud',
       'gh pr create --title "feat(api): applications CRUD routes" \\',
@@ -56,18 +47,18 @@ const STEPS: Step[] = [
   {
     title: 'Review your own pull request',
     where: 'The Files changed tab',
-    body: 'Read the diff on GitHub as if a stranger wrote it — you will catch leftover console.logs, commented-out code and bad names every time. Then squash-merge and delete the branch.',
+    body: 'Read the diff as if a stranger wrote it, then squash-merge and delete the branch.',
     commands: ['gh pr merge --squash --delete-branch'],
   },
   {
     title: 'Record the evidence before you mark it done',
     where: 'Roadmap → the goal → Evidence URL',
-    body: 'Paste the PR or commit URL into the goal. Applications go in the Applications tab the moment they go out; messages go in Networking; a contribution goes in Contributions. The log is only honest if it is written at the time.',
+    body: 'Paste the PR or commit URL into the goal. Applications go in Applications, contributions in Contributions.',
   },
   {
     title: 'Only then tick the block',
     where: 'Schedule → the block → Mark done',
-    body: 'The tick is the last step, not the first. If the evidence is not recorded, the block is not done — that rule is the whole point, because it is what stops a busy week from leaving no trace.',
+    body: 'The tick is the last step. No evidence recorded, no block done.',
   },
 ];
 

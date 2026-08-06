@@ -1,19 +1,8 @@
 /**
- * Elastic scheduling. A block's weekday slot never moves — Monday 09:00 is
- * always Project — but which *content* (which week's goal, which roadmap
- * theme) counts as current for a given area on a given date can fall behind
- * if you skip a session. This module is the pure-function core of that: no
- * React, no store, just schedule + deferrals + programStart in, dates and
- * week numbers out.
- *
- * Two week-number concepts, kept deliberately separate:
- *  - "Nominal week" is pure elapsed time (`nominalWeek`) — it decides the
- *    physical template: which slot has which area, and template changes like
- *    Contributions phasing in at week 5 (`blockAppliesTo`). Never affected by
- *    lag.
- *  - "Content week" (`contentWeek`) is which WeeklyGoal is actually being
- *    worked on for a given area — this is what lags behind when sessions are
- *    skipped. Project's content week doubles as the roadmap's current week.
+ * Elastic scheduling. A block's weekday slot never moves, but which week's
+ * content is current for an area lags behind when sessions are skipped.
+ * "Nominal week" is elapsed time and picks the template; "content week" is
+ * which goal is actually due and is what falls behind.
  */
 import { addDays, dayKeyOf, isWeekday, weekdaysSince } from './dates';
 import { blockAppliesTo, type Area, type Deferral, type ScheduleBlock } from '../types';
@@ -49,8 +38,6 @@ function occurrenceIndexUpTo(
 ): number {
   let count = 0;
   let d = programStart;
-  // A stretched plan is still only ever a handful of years of weekdays at
-  // worst; a day-by-day walk is simple and cheap enough here.
   for (let guard = 0; guard < 20_000 && d <= date; guard++) {
     if (isWeekday(d)) {
       const week = nominalWeek(programStart, d);
@@ -121,11 +108,8 @@ export function currentRoadmapWeek(
 }
 
 /**
- * The computed Monday–Sunday date range for roadmap week `weekNumber`,
- * shifted later by however many Project sessions are currently unrecovered.
- * Replaces reading `RoadmapWeek.start/end` directly for display — `start` is
- * the calendar date of that week's first Project session, and `end` is six
- * days after it, matching the Monday/Sunday shape every call site expects.
+ * The Monday–Sunday range for roadmap week `weekNumber`, shifted later by
+ * however many Project sessions are currently unrecovered.
  */
 export function roadmapWeekRange(
   schedule: ScheduleBlock[],

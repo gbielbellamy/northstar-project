@@ -149,10 +149,8 @@ function ContributionsPage() {
           <div>
             <h1>Contributions</h1>
             <p className="page__sub">
-              A merged pull request in someone else's repository is third-party proof that you can work in an
-              unfamiliar codebase and take review — which is most of what a junior job actually is. Three
-              merged contributions is the target, and documentation and test fixes count. This gets its own
-              slot in the timetable from week 5, once Northstar is past the hard part.
+              Open source contributions, from shortlisting a project to getting the pull request merged.
+              Documentation and test fixes count.
             </p>
           </div>
         </div>

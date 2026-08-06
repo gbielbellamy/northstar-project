@@ -145,10 +145,8 @@ function ResourcesPage() {
       <div className="page__head">
         <h1>Resources</h1>
         <p className="page__sub">
-          The skills you're closing the gap on, and the messages you send while you close it. Each skill is a
-          path, not a wish: a reason it matters, something to build, links worth your time, and sessions sized
-          to fit one Learning block. Both sections are yours to edit — the templates especially. A template you
-          haven't rewritten is a template that reads like one.
+          Skills and outreach templates. Each skill carries links, a mini project, and sessions sized to fit
+          one Learning block.
         </p>
       </div>
 
@@ -436,7 +434,7 @@ function ResourcesPage() {
       <Modal
         open={skillDraft !== null}
         title={skillEdit ? `Edit ${skillEdit.skill}` : 'Add skill'}
-        subtitle="A skill without a mini-project is a wish. Give it something to build and something to read."
+        subtitle="Give it something to build and something to read."
         onClose={() => {
           setSkillDraft(null);
           setSkillEdit(null);
