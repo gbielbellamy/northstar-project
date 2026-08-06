@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { seedState } from '../data/seed';
+import { BLANK_COMPANY, contactsFor } from '../lib/companies';
+import { addDays } from '../lib/dates';
 import type {
   AppState,
   Application,
@@ -92,11 +94,76 @@ function cloneSeed(): AppState {
 }
 
 /**
- * A skill saved before the learning-path fields existed has no `resources` or
- * `sessions`, and the UI maps over both. Fill the gaps from the seed entry with
- * the same name when there is one, so the new content arrives without
- * overwriting anything already edited by hand.
+ * Every company you've applied to should be on the target list with someone to
+ * contact. Backfills the ones that predate that rule, matching on name
+ * case-insensitively so an existing entry is never duplicated.
  */
+function backfillCompanies(
+  applications: Application[],
+  companies: Company[],
+  contacts: Contact[],
+): { companies: Company[]; contacts: Contact[] } {
+  const nextCompanies = [...companies];
+  const nextContacts = [...contacts];
+  const known = new Set(companies.map((c) => c.name.trim().toLowerCase()));
+  const hasContacts = new Set(contacts.map((c) => c.company.trim().toLowerCase()));
+
+  for (const a of applications) {
+    const name = a.company.trim();
+    const key = name.toLowerCase();
+    if (!name) continue;
+
+    if (!known.has(key)) {
+      known.add(key);
+      nextCompanies.push({
+        ...BLANK_COMPANY,
+        id: newId('co'),
+        name,
+        status: 'Applied',
+        lastReviewed: a.dateApplied || '',
+      });
+    }
+    if (!hasContacts.has(key)) {
+      hasContacts.add(key);
+      for (const c of contactsFor({ name, linkedinUrl: '' })) {
+        nextContacts.push({ ...c, id: newId('ct') });
+      }
+    }
+  }
+  return { companies: nextCompanies, contacts: nextContacts };
+}
+
+/**
+ * Spreads already-applied rows evenly across the programme's first three days.
+ * A one-off for the plan rewrite that moved the start date — gated on the plan
+ * version below, so later rewrites don't keep flattening the dates every time.
+ */
+const RESTRUCTURE_PLAN_VERSION = 14;
+const RESTRUCTURE_LAUNCH_DATES = ['2026-08-03', '2026-08-04', '2026-08-05'];
+function redistributeApplicationDates(applications: Application[]): Application[] {
+  let i = 0;
+  return applications.map((a) => {
+    if (!a.dateApplied) return a;
+    const dateApplied = RESTRUCTURE_LAUNCH_DATES[i % RESTRUCTURE_LAUNCH_DATES.length];
+    i += 1;
+    return { ...a, dateApplied };
+  });
+}
+
+/**
+ * You cannot chase a company before you wrote to it. Any follow-up that lands
+ * on or before its own application is re-booked ten days out. Idempotent, so it
+ * runs on every load and quietly repairs whatever moved a date underneath it.
+ */
+function repairFollowups(applications: Application[]): Application[] {
+  return applications.map((a) => {
+    if (!a.dateApplied || !a.followup) return a;
+    if (a.followup > a.dateApplied) return a;
+    return { ...a, followup: addDays(a.dateApplied, 10) };
+  });
+}
+
+/** Fills missing fields on an older saved skill from the seed entry of the same name. */
 function normaliseSkill(saved: Partial<Skill> & { skill?: string }): Skill {
   const seeded = seedState.skills.find(
     (s) => s.skill.toLowerCase() === (saved.skill ?? '').toLowerCase(),
@@ -198,19 +265,18 @@ export const useStore = create<Store>()(
       },
 
       /**
-       * A saved state from an older build can be missing keys added since, so
-       * fill any gap from the seed rather than crashing on undefined.
-       *
-       * The plan itself — weeks, goals, schedule, skill paths — is replaced
-       * whenever the seed's `planVersion` moves ahead of the saved one. That is
-       * deliberate: when the programme is rewritten, keeping the old timetable
-       * would keep exactly the thing that was replaced. Everything you actually
-       * recorded (applications, contacts, companies, templates, event days) is
-       * yours and survives untouched.
+       * Fills gaps from the seed, and replaces the plan itself — weeks, goals,
+       * schedule, skills — whenever the seed's planVersion moves ahead.
+       * Recorded data survives untouched.
        */
       merge: (persisted, current) => {
-        const saved = (persisted ?? {}) as Partial<AppState>;
         const seed = cloneSeed();
+        // Nothing stored yet: take the seed whole, including its sample log and
+        // reviews. The staleness path below deliberately clears those, which is
+        // right for an upgrade but would empty every screen on a first visit.
+        if (persisted == null) return { ...current, ...seed };
+
+        const saved = persisted as Partial<AppState>;
         const planIsStale = (saved.settings?.planVersion ?? 0) < seed.settings.planVersion;
 
         const settings: Settings = {
@@ -225,6 +291,18 @@ export const useStore = create<Store>()(
           settings.currentWeek = seed.settings.currentWeek;
         }
 
+        const savedVersion = saved.settings?.planVersion ?? 0;
+        const applications = repairFollowups(
+          savedVersion < RESTRUCTURE_PLAN_VERSION
+            ? redistributeApplicationDates(saved.applications ?? [])
+            : (saved.applications ?? []),
+        );
+        const linked = backfillCompanies(
+          applications,
+          saved.companies ?? seed.companies,
+          saved.contacts ?? seed.contacts,
+        );
+
         return {
           ...current,
           ...seed,
@@ -233,6 +311,7 @@ export const useStore = create<Store>()(
           goals: planIsStale ? seed.goals : (saved.goals ?? seed.goals),
           schedule: planIsStale ? seed.schedule : (saved.schedule ?? seed.schedule),
           skills: (planIsStale ? seed.skills : (saved.skills ?? seed.skills)).map(normaliseSkill),
+          templates: planIsStale ? seed.templates : (saved.templates ?? seed.templates),
           // Logs are keyed to a timetable that no longer exists.
           reviews: planIsStale ? {} : (saved.reviews ?? {}),
           dailyLog: planIsStale ? {} : (saved.dailyLog ?? {}),
@@ -241,6 +320,9 @@ export const useStore = create<Store>()(
           // once that schedule is replaced.
           deferrals: planIsStale ? [] : (saved.deferrals ?? []),
           oss: saved.oss ?? [],
+          applications,
+          companies: linked.companies,
+          contacts: linked.contacts,
           settings,
         };
       },
