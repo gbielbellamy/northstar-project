@@ -82,3 +82,23 @@ export function minutesBetween(start: string, end: string): number {
 export function hoursBetween(start: string, end: string): number {
   return minutesBetween(start, end) / 60;
 }
+
+/** True for Mon–Fri, false for Sat/Sun. */
+export function isWeekday(iso: string): boolean {
+  const dow = parseISO(iso).getDay();
+  return dow !== 0 && dow !== 6;
+}
+
+/** Weekdays elapsed from `startISO` to `dateISO` inclusive of both ends. */
+export function weekdaysSince(startISO: string, dateISO: string): number {
+  let count = 0;
+  let d = parseISO(startISO);
+  const end = parseISO(dateISO);
+  while (d.getTime() <= end.getTime()) {
+    const dow = d.getDay();
+    if (dow !== 0 && dow !== 6) count++;
+    d = new Date(d.getTime());
+    d.setDate(d.getDate() + 1);
+  }
+  return count;
+}

@@ -37,7 +37,7 @@ import EmptyState from '../components/ui/EmptyState';
 import Toast from '../components/ui/Toast';
 import AnimatedSection from '../components/ui/AnimatedSection';
 
-const BLANK: Omit<Company, 'id'> = {
+export const BLANK_COMPANY: Omit<Company, 'id'> = {
   name: '',
   sector: '',
   size: '',
@@ -132,7 +132,7 @@ function CompaniesPage() {
 
   function openNew() {
     setEditing(null);
-    setDraft({ ...BLANK, lastReviewed: today });
+    setDraft({ ...BLANK_COMPANY, lastReviewed: today });
   }
   function openEdit(c: Company) {
     setEditing(c);

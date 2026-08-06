@@ -7,6 +7,7 @@ import type {
   Company,
   Contact,
   DayException,
+  Deferral,
   OssContribution,
   MessageTemplate,
   RoadmapWeek,
@@ -25,6 +26,7 @@ type ListKey =
   | 'goals'
   | 'schedule'
   | 'exceptions'
+  | 'deferrals'
   | 'oss'
   | 'applications'
   | 'contacts'
@@ -37,6 +39,7 @@ type Entity = {
   goals: WeeklyGoal;
   schedule: ScheduleBlock;
   exceptions: DayException;
+  deferrals: Deferral;
   oss: OssContribution;
   applications: Application;
   contacts: Contact;
@@ -74,6 +77,7 @@ const ID_PREFIX: Record<ListKey, string> = {
   goals: 'g',
   schedule: 'sb',
   exceptions: 'ex',
+  deferrals: 'df',
   oss: 'os',
   applications: 'ap',
   contacts: 'ct',
@@ -173,6 +177,7 @@ export const useStore = create<Store>()(
         goals: s.goals,
         schedule: s.schedule,
         exceptions: s.exceptions,
+        deferrals: s.deferrals,
         oss: s.oss,
         applications: s.applications,
         contacts: s.contacts,
@@ -232,6 +237,9 @@ export const useStore = create<Store>()(
           reviews: planIsStale ? {} : (saved.reviews ?? {}),
           dailyLog: planIsStale ? {} : (saved.dailyLog ?? {}),
           exceptions: saved.exceptions ?? [],
+          // Deferrals point at blockIds from the old schedule — meaningless
+          // once that schedule is replaced.
+          deferrals: planIsStale ? [] : (saved.deferrals ?? []),
           oss: saved.oss ?? [],
           settings,
         };

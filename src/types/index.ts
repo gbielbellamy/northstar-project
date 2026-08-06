@@ -456,11 +456,28 @@ export type DayException = {
 /** dailyLog[isoDate][blockId] = completed */
 export type DailyLog = Record<string, Record<string, boolean>>;
 
+/**
+ * A skipped occurrence. The block's weekday slot never moves — Monday's
+ * Project block is always Monday's Project block — but the content it was
+ * due to carry gets pushed to that area's next occurrence, and everything
+ * after it in that area's queue slides one slot later. An area's current lag
+ * is never stored directly: it's always `deferrals.filter(d => d.area ===
+ * area).length`, so undoing a skip can't drift out of sync with the count.
+ */
+export type Deferral = {
+  id: string;
+  /** The date the occurrence was originally due. */
+  date: string;
+  blockId: string;
+  area: Area;
+};
+
 export type AppState = {
   roadmap: RoadmapWeek[];
   goals: WeeklyGoal[];
   schedule: ScheduleBlock[];
   exceptions: DayException[];
+  deferrals: Deferral[];
   oss: OssContribution[];
   applications: Application[];
   contacts: Contact[];

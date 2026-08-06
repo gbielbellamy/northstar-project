@@ -6496,5 +6496,6 @@ export const seedState: AppState = {
     "font": "System"
   },
   "exceptions": [],
+  "deferrals": [],
   "oss": []
 };

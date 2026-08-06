@@ -8,6 +8,7 @@ import {
   Coffee,
   Pencil,
   Plus,
+  SkipForward,
   Trash2,
   Undo2,
 } from 'lucide-react';
@@ -16,13 +17,13 @@ import {
   DAY_KEYS,
   DAY_NAMES,
   addDays,
-  currentWeekNumber,
+  dayKeyOf,
   fmtRange,
   fmtShort,
   hoursBetween,
   todayISO,
 } from '../lib/dates';
-import { goalsForWeek } from '../lib/selectors';
+import { contentWeek, currentRoadmapWeek, lagFor, roadmapWeekRange } from '../lib/pacing';
 import { areaClass } from '../lib/ui';
 import {
   AREAS,
@@ -52,14 +53,16 @@ const EMPTY: Omit<ScheduleBlock, 'id'> = {
 };
 
 function SchedulePage() {
-  const { roadmap, goals, schedule, exceptions, dailyLog, settings } = useStore();
+  const { roadmap, goals, schedule, exceptions, deferrals, dailyLog, settings } = useStore();
   const add = useStore((s) => s.add);
   const update = useStore((s) => s.update);
   const remove = useStore((s) => s.remove);
   const toggleLog = useStore((s) => s.toggleLog);
 
   const today = todayISO(settings.todayOverride);
-  const [week, setWeek] = useState(() => currentWeekNumber(roadmap, today));
+  const [week, setWeek] = useState(() =>
+    currentRoadmapWeek(schedule, deferrals, settings.programStart, today),
+  );
   const [editing, setEditing] = useState<ScheduleBlock | null>(null);
   const [draft, setDraft] = useState<Omit<ScheduleBlock, 'id'>>(EMPTY);
   const [open, setOpen] = useState(false);
@@ -67,7 +70,13 @@ function SchedulePage() {
   const [exDraft, setExDraft] = useState<Omit<DayException, 'id'> | null>(null);
 
   const rw = roadmap.find((r) => r.week === week);
-  const weekGoals = goalsForWeek(goals, week);
+  // The theme/definition-of-done for week N still come straight off the
+  // roadmap entry; only the calendar dates are computed, since Project's lag
+  // is what stretches the whole ten-week plan.
+  const weekRange = useMemo(
+    () => roadmapWeekRange(schedule, deferrals, settings.programStart, week),
+    [schedule, deferrals, settings.programStart, week],
+  );
 
   /** Only the blocks that belong to the week being shown. */
   const weekBlocks = useMemo(
@@ -103,11 +112,13 @@ function SchedulePage() {
 
   /** Hours displaced this week and not yet made up. */
   const hoursOwed = exceptions
-    .filter((e) => !e.recovered && e.date >= rw.start && e.date <= rw.end)
+    .filter((e) => !e.recovered && e.date >= weekRange.start && e.date <= weekRange.end)
     .reduce((sum, e) => sum + e.hoursOwed, 0);
 
   const sessions = DAY_KEYS.flatMap((dk, i) =>
-    (byDay.get(dk) ?? []).filter((b) => b.area).map((b) => ({ b, date: addDays(rw.start, i) })),
+    (byDay.get(dk) ?? [])
+      .filter((b) => b.area)
+      .map((b) => ({ b, date: addDays(weekRange.start, i) })),
   );
   const doneCount = sessions.filter((s) => dailyLog[s.date]?.[s.b.id]).length;
 
@@ -157,8 +168,22 @@ function SchedulePage() {
 
   function saveException() {
     if (!exDraft) return;
-    if (exEditing) update('exceptions', exEditing.id, exDraft);
-    else add('exceptions', exDraft);
+    if (exEditing) {
+      update('exceptions', exEditing.id, exDraft);
+    } else {
+      add('exceptions', exDraft);
+      // Cancelling a whole day defers every area-block scheduled on it in one
+      // go, instead of clicking Skip on each block individually. Only on
+      // create — re-saving an existing exception shouldn't re-defer blocks
+      // that may since have been marked done or already skipped.
+      const dayBlocks = byDay.get(dayKeyOf(exDraft.date)) ?? [];
+      for (const b of dayBlocks) {
+        if (!b.area) continue;
+        if (dailyLog[exDraft.date]?.[b.id]) continue;
+        if (deferrals.some((d) => d.date === exDraft.date && d.blockId === b.id)) continue;
+        add('deferrals', { date: exDraft.date, blockId: b.id, area: b.area });
+      }
+    }
     setExDraft(null);
     setExEditing(null);
   }
@@ -184,7 +209,7 @@ function SchedulePage() {
       <button
         type="button"
         className="page-action"
-        onClick={() => setWeek(currentWeekNumber(roadmap, today))}
+        onClick={() => setWeek(currentRoadmapWeek(schedule, deferrals, settings.programStart, today))}
         title="Jump to the current week"
       >
         <CalendarDays size={15} /> Today
@@ -202,11 +227,16 @@ function SchedulePage() {
             >
               {[...roadmap]
                 .sort((a, b) => a.week - b.week)
-                .map((r) => (
-                  <option key={r.id} value={r.week}>
-                    Week {r.week} · {fmtRange(r.start, r.end)}
-                  </option>
-                ))}
+                .map((r) => {
+                  // Each option needs its own computed range — later weeks
+                  // stretch further out the more the plan has slipped.
+                  const range = roadmapWeekRange(schedule, deferrals, settings.programStart, r.week);
+                  return (
+                    <option key={r.id} value={r.week}>
+                      Week {r.week} · {fmtRange(range.start, range.end)}
+                    </option>
+                  );
+                })}
             </select>
           </div>
         </div>
@@ -246,7 +276,7 @@ function SchedulePage() {
 
       <div className="stack" style={{ marginTop: 18 }}>
         {DAY_KEYS.map((dk, i) => {
-          const date = addDays(rw.start, i);
+          const date = addDays(weekRange.start, i);
           const blocks = byDay.get(dk) ?? [];
           const isToday = date === today;
           const isPast = date < today;
@@ -334,8 +364,20 @@ function SchedulePage() {
                       </div>
                     );
                   }
-                  const goal = weekGoals.find((g) => g.area === b.area);
+                  // Which week's goal is actually due here — falls behind the
+                  // page's selected week if this area has unrecovered skips.
+                  const activeWeek = contentWeek(
+                    schedule,
+                    deferrals,
+                    settings.programStart,
+                    b.area,
+                    date,
+                  );
+                  const goal = goals.find((g) => g.area === b.area && g.week === activeWeek);
+                  const lag = lagFor(deferrals, b.area);
+                  const catchingUp = activeWeek < week;
                   const done = Boolean(dailyLog[date]?.[b.id]);
+                  const deferral = deferrals.find((d) => d.date === date && d.blockId === b.id);
                   return (
                     <div
                       key={b.id}
@@ -361,21 +403,55 @@ function SchedulePage() {
                         {b.sessionDone && (
                           <p className="block__dod muted">Done when: {b.sessionDone}</p>
                         )}
+                        {catchingUp && (
+                          <p className="block__dod" style={{ color: 'var(--warn)' }}>
+                            Catching up: Week {activeWeek}’s goal — {lag} session{lag === 1 ? '' : 's'}{' '}
+                            behind on {b.area}.
+                          </p>
+                        )}
                       </div>
 
                       <div className="block__side">
-                        {/* No weekly status here: it wasn't editable from a day
-                            anyway, and a day's own state is the toggle below. */}
-                        <button
-                          type="button"
-                          className={`day-toggle ${done ? 'day-toggle--on' : ''}`.trim()}
-                          onClick={() => toggleLog(date, b.id, !done)}
-                          aria-pressed={done}
-                          aria-label={`Mark ${b.label} done on ${fmtShort(date)}`}
-                        >
-                          {done ? <CircleCheck size={14} /> : <Circle size={14} />}
-                          {done ? 'Done' : 'Mark done'}
-                        </button>
+                        {deferral ? (
+                          <div className="skip-note">
+                            <span className="status-chip status-chip--warning">
+                              <SkipForward size={13} /> Skipped
+                            </span>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              onClick={() => remove('deferrals', deferral.id)}
+                            >
+                              <Undo2 size={13} /> Undo
+                            </Button>
+                          </div>
+                        ) : (
+                          <>
+                            <button
+                              type="button"
+                              className={`day-toggle ${done ? 'day-toggle--on' : ''}`.trim()}
+                              onClick={() => toggleLog(date, b.id, !done)}
+                              aria-pressed={done}
+                              aria-label={`Mark ${b.label} done on ${fmtShort(date)}`}
+                            >
+                              {done ? <CircleCheck size={14} /> : <Circle size={14} />}
+                              {done ? 'Done' : 'Mark done'}
+                            </button>
+                            {!done && (
+                              <button
+                                type="button"
+                                className="day-toggle"
+                                onClick={() =>
+                                  add('deferrals', { date, blockId: b.id, area: b.area! })
+                                }
+                                title={`Push this to the next ${b.area} session`}
+                                aria-label={`Skip ${b.label} on ${fmtShort(date)} — push to the next ${b.area} session`}
+                              >
+                                <SkipForward size={14} /> Skip
+                              </button>
+                            )}
+                          </>
+                        )}
                         <div className="row" style={{ gap: 2 }}>
                           <Button size="icon" variant="ghost" onClick={() => openEdit(b)} aria-label="Edit block">
                             <Pencil size={13} />

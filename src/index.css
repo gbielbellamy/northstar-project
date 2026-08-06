@@ -489,6 +489,12 @@ a { color: inherit; }
 }
 .day-toggle--on:hover { border-color: transparent; color: var(--ok); }
 
+/* A block already pushed to its next occurrence: the chip plus its undo. */
+.skip-note { display: flex; align-items: center; gap: 6px; }
+
+/* Project has fallen behind — the whole roadmap below has shifted. */
+.lag-banner { margin-top: 18px; border-color: var(--warn); }
+
 /* Read-only twin of .status-select, for a state you can see but not set here. */
 .status-chip {
   display: inline-flex;

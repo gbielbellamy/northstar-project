@@ -16,7 +16,8 @@ import {
 } from 'lucide-react';
 import { useStore } from '../store/useStore';
 import { completionPct, funnel, goalsForWeek, outreachStats } from '../lib/selectors';
-import { currentWeekNumber, dayKeyOf, fmtLong, fmtRange, hoursBetween, todayISO } from '../lib/dates';
+import { dayKeyOf, fmtLong, fmtRange, hoursBetween, todayISO } from '../lib/dates';
+import { currentRoadmapWeek, roadmapWeekRange } from '../lib/pacing';
 import { areaClass } from '../lib/ui';
 import { blockAppliesTo, type AppState, type Area } from '../types';
 import type { PageKey } from '../App';
@@ -55,7 +56,8 @@ type Props = { setPage: (p: PageKey) => void };
 
 function DashboardPage({ setPage }: Props) {
   const state = useStore();
-  const { roadmap, goals, schedule, applications, contacts, companies, dailyLog, settings } = state;
+  const { roadmap, goals, schedule, deferrals, applications, contacts, companies, dailyLog, settings } =
+    state;
   const replaceAll = useStore((s) => s.replaceAll);
   const reset = useStore((s) => s.reset);
   const toggleLog = useStore((s) => s.toggleLog);
@@ -66,8 +68,9 @@ function DashboardPage({ setPage }: Props) {
   const fileRef = useRef<HTMLInputElement>(null);
 
   const today = todayISO(settings.todayOverride);
-  const week = currentWeekNumber(roadmap, today);
+  const week = currentRoadmapWeek(schedule, deferrals, settings.programStart, today);
   const rw = roadmap.find((r) => r.week === week);
+  const weekRange = roadmapWeekRange(schedule, deferrals, settings.programStart, week);
 
   const f = useMemo(() => funnel(applications, today), [applications, today]);
   const o = useMemo(() => outreachStats(contacts, today), [contacts, today]);
@@ -152,6 +155,7 @@ function DashboardPage({ setPage }: Props) {
       goals: state.goals,
       schedule: state.schedule,
       exceptions: state.exceptions,
+      deferrals: state.deferrals,
       oss: state.oss,
       applications: state.applications,
       contacts: state.contacts,
@@ -194,7 +198,7 @@ function DashboardPage({ setPage }: Props) {
         <div className="hero">
           <div className="hero__body">
             <div className="hero__eyebrow">
-              Week {week} of {roadmap.length} · {rw ? fmtRange(rw.start, rw.end) : ''}
+              Week {week} of {roadmap.length} · {rw ? fmtRange(weekRange.start, weekRange.end) : ''}
             </div>
             <h1 className="hero__title">
               {greeting()}. {rw?.theme ?? 'Let’s go'}.

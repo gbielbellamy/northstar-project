@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react';
 import { Check, ClipboardCheck, Pencil, Plus, Trash2 } from 'lucide-react';
 import { useStore } from '../store/useStore';
-import { addDays, currentWeekNumber, fmtRange, todayISO } from '../lib/dates';
+import { addDays, fmtRange, todayISO } from '../lib/dates';
+import { currentRoadmapWeek, lagFor, roadmapWeekRange } from '../lib/pacing';
 import { completionPct, funnel, goalsForWeek, outreachStats } from '../lib/selectors';
 import { areaClass, priorityIcon, priorityVariant, statusIcon, statusVariant } from '../lib/ui';
 import {
@@ -39,14 +40,16 @@ const BLANK_REVIEW: WeeklyReview = {
 };
 
 function RoadmapPage() {
-  const { roadmap, goals, applications, contacts, reviews, settings } = useStore();
+  const { roadmap, goals, schedule, deferrals, applications, contacts, reviews, settings } =
+    useStore();
   const add = useStore((s) => s.add);
   const update = useStore((s) => s.update);
   const remove = useStore((s) => s.remove);
   const setReview = useStore((s) => s.setReview);
 
   const today = todayISO(settings.todayOverride);
-  const thisWeek = currentWeekNumber(roadmap, today);
+  const thisWeek = currentRoadmapWeek(schedule, deferrals, settings.programStart, today);
+  const projectLag = lagFor(deferrals, 'Project');
 
   const [openWeek, setOpenWeek] = useState<number | null>(thisWeek);
   const [weekModal, setWeekModal] = useState<RoadmapWeek | null>(null);
@@ -63,7 +66,11 @@ function RoadmapPage() {
   function openAddWeek() {
     const last = sorted[sorted.length - 1];
     const nextNum = last ? last.week + 1 : 1;
-    const start = last ? addDays(last.start, 7) : today;
+    // Dates are computed from the schedule template now (see roadmapWeekRange)
+    // — these stored values are only ever used as an initial placeholder.
+    const start = last
+      ? roadmapWeekRange(schedule, deferrals, settings.programStart, nextNum).start
+      : today;
     setWeekModal(null);
     setWeekDraft({
       week: nextNum,
@@ -159,11 +166,11 @@ function RoadmapPage() {
       setReviewDraft(existing);
     } else {
       // Prefill the counts from what you've actually logged this week.
-      const w = sorted.find((r) => r.week === week);
-      const inWeek = w
-        ? applications.filter((a) => a.dateApplied >= w.start && a.dateApplied <= w.end)
-        : [];
-      const msgs = w ? contacts.filter((c) => c.dateSent >= w.start && c.dateSent <= w.end) : [];
+      const range = roadmapWeekRange(schedule, deferrals, settings.programStart, week);
+      const inWeek = applications.filter(
+        (a) => a.dateApplied >= range.start && a.dateApplied <= range.end,
+      );
+      const msgs = contacts.filter((c) => c.dateSent >= range.start && c.dateSent <= range.end);
       setReviewDraft({
         ...BLANK_REVIEW,
         applicationsSent: inWeek.length,
@@ -206,8 +213,21 @@ function RoadmapPage() {
 
       <WorkingRules />
 
+      {projectLag > 0 && (
+        <Card className="lag-banner">
+          <p className="muted">
+            <strong style={{ color: 'var(--text-h)' }}>
+              Project is {projectLag} session{projectLag === 1 ? '' : 's'} behind
+            </strong>{' '}
+            — every week below has shifted later by the same amount. Catch up in Schedule, or skip
+            the block there again if it's not happening.
+          </p>
+        </Card>
+      )}
+
       <div className="stack" style={{ marginTop: 18 }}>
         {sorted.map((w, i) => {
+          const range = roadmapWeekRange(schedule, deferrals, settings.programStart, w.week);
           const pct = completionPct(goals, w.week);
           const wg = goalsForWeek(goals, w.week).sort(
             (a, b) => AREAS.indexOf(a.area) - AREAS.indexOf(b.area),
@@ -228,7 +248,7 @@ function RoadmapPage() {
                       {isNow && <Badge variant="neutral">This week</Badge>}
                       {review?.weekComplete && <Badge variant="success">Reviewed</Badge>}
                     </div>
-                    <p className="muted">{fmtRange(w.start, w.end)} · {w.projectDirection}</p>
+                    <p className="muted">{fmtRange(range.start, range.end)} · {w.projectDirection}</p>
                   </div>
                   <div className="row">
                     <StatusSelect
@@ -403,24 +423,6 @@ function RoadmapPage() {
                 onChange={(v) => setWeekDraft({ ...weekDraft, status: v })}
                 variant={statusVariant[weekDraft.status]}
                 icon={statusIcon[weekDraft.status]}
-              />
-            </Field>
-            <Field label="Start (Monday)">
-              <input
-                className="input"
-                type="date"
-                value={weekDraft.start}
-                onChange={(e) =>
-                  setWeekDraft({ ...weekDraft, start: e.target.value, end: addDays(e.target.value, 6) })
-                }
-              />
-            </Field>
-            <Field label="End (Sunday)">
-              <input
-                className="input"
-                type="date"
-                value={weekDraft.end}
-                onChange={(e) => setWeekDraft({ ...weekDraft, end: e.target.value })}
               />
             </Field>
             <Field label="Theme" full>

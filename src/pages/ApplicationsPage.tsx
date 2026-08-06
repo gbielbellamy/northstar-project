@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { useStore } from '../store/useStore';
 import { currentWeekNumber, fmtShort, todayISO } from '../lib/dates';
+import { BLANK_COMPANY } from './CompaniesPage';
 import { daysSinceApplied, funnel } from '../lib/selectors';
 import { applicationIcon, applicationVariant } from '../lib/ui';
 import {
@@ -120,7 +121,14 @@ function ApplicationsPage() {
     const patch = { ...draft };
     if (patch.status === 'Applied' && !patch.dateApplied) patch.dateApplied = today;
     if (editing) update('applications', editing.id, patch);
-    else add('applications', patch);
+    else {
+      add('applications', patch);
+      const name = patch.company.trim();
+      const known = companies.some((c) => c.name.trim().toLowerCase() === name.toLowerCase());
+      if (!known) {
+        add('companies', { ...BLANK_COMPANY, name, lastReviewed: today });
+      }
+    }
     setDraft(null);
     setEditing(null);
   }
