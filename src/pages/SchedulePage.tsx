@@ -195,10 +195,9 @@ function SchedulePage() {
           <div>
             <h1>Schedule</h1>
             <p className="page__sub">
-              09:00–17:45: eight hours and 45 minutes of clock, eight of work, with lunch at 12:45 and a
-              break at 15:30. The morning is the same every day so you stop deciding and start building; the
-              afternoon has one theme, so the day doesn’t fragment. Each block says what finishing that one
-              sitting looks like — the week’s target lives in Roadmap.
+              09:00–17:45, eight hours of work. Mornings are Job Search; afternoons alternate Project and
+              Contributions; evenings alternate Skills roadmap and algorithms, with English to close.
+              Saturday morning is portfolio and the weekly review. Sunday is off.
             </p>
           </div>
         </div>
@@ -395,13 +394,17 @@ function SchedulePage() {
                           <span className="area-dot" />
                           {b.label}
                         </div>
-                        <div className="block__title">{goal?.title ?? `No goal set for ${b.area}`}</div>
-                        <p className="block__detail">{goal?.detail ?? ''}</p>
-                        {/* Strictly this sitting's target. The week's belongs in
-                            Roadmap, and showing it here made a Monday block
-                            demand the whole week's work. */}
-                        {b.sessionDone && (
-                          <p className="block__dod muted">Done when: {b.sessionDone}</p>
+                        {/* Only this sitting's task. The week's goal and its full
+                            detail belong in Roadmap. */}
+                        <div className="block__title">
+                          {b.sessionDone ?? goal?.title ?? `No goal set for ${b.area}`}
+                        </div>
+                        {b.steps && b.steps.length > 0 && (
+                          <ol className="block__steps">
+                            {b.steps.map((step) => (
+                              <li key={step}>{step}</li>
+                            ))}
+                          </ol>
                         )}
                         {catchingUp && (
                           <p className="block__dod" style={{ color: 'var(--warn)' }}>
@@ -582,7 +585,7 @@ function SchedulePage() {
       <Modal
         open={exDraft !== null}
         title={exEditing ? 'Edit event day' : 'Mark an event day'}
-        subtitle="An in-person meet-up beats the timetable — but the hours don't vanish. Say when they come back and the week still adds up."
+        subtitle="The hours don't vanish — say when they come back and the week still adds up."
         onClose={() => {
           setExDraft(null);
           setExEditing(null);

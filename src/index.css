@@ -907,6 +907,15 @@ td.tight { white-space: nowrap; }
   padding-left: 9px;
   border-left: 2px solid var(--border);
 }
+.block__steps {
+  margin: 7px 0 0;
+  padding-left: 18px;
+  font-size: 11.5px;
+  color: var(--text);
+  line-height: 1.55;
+}
+.block__steps li { margin-bottom: 3px; }
+.block__steps li::marker { color: var(--muted-dot); }
 .block__side { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
 
 /* Area colour is applied to the block's left rail and its dot. */

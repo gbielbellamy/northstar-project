@@ -75,17 +75,11 @@ export type ScheduleBlock = {
   label: string;
   /** Weekend blocks are optional; weekdays are not. */
   optional: boolean;
-  /**
-   * What finishing *this sitting* looks like. Without it a block falls back to
-   * the week's definition of done, which reads wrong on a daily view: Monday's
-   * applications block would demand the whole week's nine.
-   */
+  /** What finishing this one sitting looks like. */
   sessionDone?: string;
-  /**
-   * The plan is allowed to change partway through. A block runs from `fromWeek`
-   * to `toWeek` inclusive; leave either null for "always". That's how open
-   * source can take over a slot in week 5 without existing weeks changing.
-   */
+  /** Ordered steps for the sitting, shown under the block on the day view. */
+  steps?: string[];
+  /** Inclusive week range the block applies to; null on either for "always". */
   fromWeek?: number | null;
   toWeek?: number | null;
 };
@@ -166,10 +160,7 @@ export type ContactStatus = (typeof CONTACT_STATUSES)[number];
 export const CONTACT_TYPES = ['Peer contact', 'Hiring influencer', 'Recruiter'] as const;
 export type ContactType = (typeof CONTACT_TYPES)[number];
 
-/**
- * One outreach target. Created automatically for every company you add,
- * then filled in as you identify a real human behind the profile.
- */
+/** One outreach target, created automatically for every company added. */
 export type Contact = {
   id: string;
   company: string;
@@ -241,7 +232,7 @@ export const OSS_STAGES = [
 ] as const;
 export type OssStage = (typeof OSS_STAGES)[number];
 
-/** Documentation and tests are the realistic way in, and they count. */
+/** Documentation and tests count. */
 export const OSS_KINDS = ['Docs', 'Tests', 'Bug fix', 'Feature', 'Triage'] as const;
 export type OssKind = (typeof OSS_KINDS)[number];
 
@@ -256,9 +247,9 @@ export type OssContribution = {
   stage: OssStage;
   issueUrl: string;
   prUrl: string;
-  /** Why you picked this one — useful when an interviewer asks. */
+  /** Why this one was picked. */
   why: string;
-  /** What the review taught you. The most valuable field here. */
+  /** What the review taught you. */
   reviewLesson: string;
   dateStarted: string;
   dateMerged: string;
@@ -277,7 +268,7 @@ export const RESOURCE_KINDS = [
 ] as const;
 export type ResourceKind = (typeof RESOURCE_KINDS)[number];
 
-/** One link worth your time, with the reason it earned its place. */
+/** One resource link, with the reason it earned its place. */
 export type SkillResource = {
   id: string;
   title: string;
@@ -286,17 +277,14 @@ export type SkillResource = {
   note: string;
 };
 
-/**
- * One sitting of the Learning block. Ordered, so the skill reads as a path
- * rather than a pile of links — and sized to fit the time you actually have.
- */
+/** One sitting of the Learning block, ordered so the skill reads as a path. */
 export type SkillSession = {
   id: string;
   order: number;
   title: string;
   /** What you understand when it's over. */
   goal: string;
-  /** What you write yourself. Reading alone doesn't count. */
+  /** What you write yourself. */
   exercise: string;
   resourceUrl: string;
   minutes: number;
@@ -311,9 +299,9 @@ export type Skill = {
   priority: Priority;
   evidence: string;
   action: string;
-  /** Why this matters for the job hunt, not just in the abstract. */
+  /** Why this skill matters. */
   why: string;
-  /** The thing you build to prove it. */
+  /** What you build to prove it. */
   miniProject: string;
   miniProjectDod: string;
   resources: SkillResource[];
@@ -377,10 +365,7 @@ export type WeeklyReview = {
 export const THEMES = ['system', 'light', 'dark'] as const;
 export type Theme = (typeof THEMES)[number];
 
-/**
- * Typefaces to choose from. All are bundled locally rather than fetched from a
- * CDN, so the app still looks right offline and nothing leaks to a third party.
- */
+/** Typefaces to choose from. Bundled locally rather than fetched from a CDN. */
 export const FONTS = [
   'System',
   'Inter',
@@ -391,10 +376,7 @@ export const FONTS = [
 ] as const;
 export type FontChoice = (typeof FONTS)[number];
 
-/**
- * The numbers the dashboard grades you against. Yours to change — a target you
- * can't move is a target you'll start ignoring.
- */
+/** The numbers the dashboard measures against. */
 export type Targets = {
   /** Tailored applications for Software/Full-Stack Engineer roles. */
   directApplicationsPerWeek: number;
@@ -416,11 +398,7 @@ export type Settings = {
   theme: Theme;
   font: FontChoice;
   targets: Targets;
-  /**
-   * Bumped in the seed whenever the plan itself is rewritten. When the saved
-   * value is behind, the stored plan is replaced — which is more reliable than
-   * relying on the persist version, since that only fires once per upgrade.
-   */
+  /** Bumped in the seed when the plan is rewritten; a behind value triggers replacement. */
   planVersion: number;
 };
 
@@ -436,10 +414,7 @@ export const EXCEPTION_KINDS = [
 ] as const;
 export type ExceptionKind = (typeof EXCEPTION_KINDS)[number];
 
-/**
- * A day the plan didn't happen — an in-person meet-up, an interview, illness.
- * The hours don't vanish: they're owed, and this records where they come back.
- */
+/** A day the plan didn't happen. The hours are owed; this records where they come back. */
 export type DayException = {
   id: string;
   /** ISO date the plan was displaced. */
@@ -457,12 +432,8 @@ export type DayException = {
 export type DailyLog = Record<string, Record<string, boolean>>;
 
 /**
- * A skipped occurrence. The block's weekday slot never moves — Monday's
- * Project block is always Monday's Project block — but the content it was
- * due to carry gets pushed to that area's next occurrence, and everything
- * after it in that area's queue slides one slot later. An area's current lag
- * is never stored directly: it's always `deferrals.filter(d => d.area ===
- * area).length`, so undoing a skip can't drift out of sync with the count.
+ * A skipped occurrence. The slot stays put; its content slides to that area's
+ * next occurrence. Lag is always derived from this list, never stored.
  */
 export type Deferral = {
   id: string;
