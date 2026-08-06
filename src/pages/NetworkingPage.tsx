@@ -49,15 +49,19 @@ function NetworkingPage() {
 
   const rows = useMemo(() => {
     const needle = q.trim().toLowerCase();
-    return contacts.filter((c) => {
-      if (status !== 'All' && c.status !== status) return false;
-      if (!needle) return true;
-      return (
-        c.company.toLowerCase().includes(needle) ||
-        c.person.toLowerCase().includes(needle) ||
-        c.targetProfile.toLowerCase().includes(needle)
-      );
-    });
+    return contacts
+      .filter((c) => {
+        if (status !== 'All' && c.status !== status) return false;
+        if (!needle) return true;
+        return (
+          c.company.toLowerCase().includes(needle) ||
+          c.person.toLowerCase().includes(needle) ||
+          c.targetProfile.toLowerCase().includes(needle)
+        );
+      })
+      // Two rows per company, so break the tie on the target profile to keep
+      // a company's contacts adjacent and in a stable order.
+      .sort((a, b) => a.company.localeCompare(b.company) || a.targetProfile.localeCompare(b.targetProfile));
   }, [contacts, q, status]);
 
   function openNew() {
@@ -108,7 +112,7 @@ function NetworkingPage() {
           <div>
             <h1>Networking</h1>
             <p className="page__sub">
-              Six contacts a week: three on Monday, three on Thursday.
+              Outreach targets and their status, one row per person.
             </p>
           </div>
         </div>
