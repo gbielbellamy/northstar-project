@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import { useStore } from '../store/useStore';
 import { currentWeekNumber, fmtShort, todayISO } from '../lib/dates';
-import { BLANK_COMPANY } from './CompaniesPage';
+import { BLANK_COMPANY, contactsFor } from '../lib/companies';
 import { daysSinceApplied, funnel } from '../lib/selectors';
 import { applicationIcon, applicationVariant } from '../lib/ui';
 import {
@@ -123,10 +123,13 @@ function ApplicationsPage() {
     if (editing) update('applications', editing.id, patch);
     else {
       add('applications', patch);
+      // A company you've applied to belongs on the target list, and it isn't
+      // worth tracking without someone to reach out to — so seed both.
       const name = patch.company.trim();
       const known = companies.some((c) => c.name.trim().toLowerCase() === name.toLowerCase());
       if (!known) {
-        add('companies', { ...BLANK_COMPANY, name, lastReviewed: today });
+        add('companies', { ...BLANK_COMPANY, name, status: 'Applied', lastReviewed: today });
+        for (const c of contactsFor({ name, linkedinUrl: '' })) add('contacts', c);
       }
     }
     setDraft(null);
@@ -146,10 +149,8 @@ function ApplicationsPage() {
           <div>
             <h1>Applications</h1>
             <p className="page__sub">
-              Ten applications a week, split deliberately: five direct — Software Engineer and Full-Stack
-              Engineer roles, properly tailored — and five bridge roles in support, solutions, implementation
-              or QA, which get you into the industry and pay while you keep building. Log every one the
-              moment it goes out; the response rate below is only honest if this log is.
+              Every application, across both tracks: direct engineering roles and bridge roles in support,
+              solutions, implementation or QA.
             </p>
           </div>
         </div>
