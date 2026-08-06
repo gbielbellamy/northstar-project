@@ -6453,28 +6453,28 @@ export const seedState: AppState = {
   "templates": [
     {
       "id": "tp-001",
-      "useCase": "Connection request — peer",
-      "template": "Hi [Name], I'm a Bay Area full-stack developer working with React, Node and PostgreSQL, and I'm researching [role/team] at [Company]. Your path caught my attention. I'd be glad to connect and learn from your experience."
+      "useCase": "Template A",
+      "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     },
     {
       "id": "tp-002",
-      "useCase": "After connection",
-      "template": "Thanks for connecting, [Name]. I'm targeting my first professional engineering role and am especially interested in [Technical Support / Solutions / Full-Stack] at [Company]. Would you be open to a brief 15-minute conversation about what the team values in candidates?"
+      "useCase": "Template B",
+      "template": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
     },
     {
       "id": "tp-003",
-      "useCase": "Hiring manager after applying",
-      "template": "Hi [Name], I applied for the [Role] position and wanted to introduce myself directly. I'm a bootcamp-trained full-stack developer with React/Node/PostgreSQL experience and a production website for a UC Berkeley research lab. I'm strengthening TypeScript through an end-to-end dashboard project. I'd appreciate any guidance on the most important capabilities for this team."
+      "useCase": "Template C",
+      "template": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
     },
     {
       "id": "tp-004",
-      "useCase": "Follow-up after 7-10 days",
-      "template": "Hi [Name], I wanted to follow up once on my earlier note. I remain very interested in how [Company] approaches [specific product/technical problem]. I recently [specific relevant project improvement]. No need to respond if timing is difficult; I appreciate the connection."
+      "useCase": "Template D",
+      "template": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     },
     {
       "id": "tp-005",
-      "useCase": "Referral request — only after conversation",
-      "template": "Thank you again for the advice, [Name]. I found the [Role] opening and believe it aligns with the experience we discussed. After reviewing my portfolio/resume, would you feel comfortable referring me? I completely understand if not."
+      "useCase": "Template E",
+      "template": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam."
     }
   ],
   "reviews": {},
