@@ -109,6 +109,17 @@ export type ApplicationStatus = (typeof APPLICATION_STATUSES)[number];
 export const RESPONDED_STATUSES: ApplicationStatus[] = ['Interviewing', 'Offer', 'Rejected'];
 /** Statuses still live in the funnel. */
 export const ACTIVE_STATUSES: ApplicationStatus[] = ['Interviewing', 'Offer'];
+/**
+ * Statuses where the conversation is over, either way. Nothing here is chased:
+ * a ghosted application has already had its one nudge, and a follow-up still
+ * showing red on it is noise you learn to ignore.
+ */
+export const CLOSED_STATUSES: ApplicationStatus[] = [
+  'Offer',
+  'Rejected',
+  'Withdrawn',
+  'Ghosted',
+];
 
 export const ROLE_FAMILIES = [
   'Full-Stack SWE',

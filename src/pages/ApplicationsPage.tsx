@@ -19,6 +19,7 @@ import { daysSinceApplied, funnel } from '../lib/selectors';
 import { applicationIcon, applicationVariant } from '../lib/ui';
 import {
   APPLICATION_STATUSES,
+  CLOSED_STATUSES,
   ROLE_FAMILIES,
   type Application,
   type ApplicationStatus,
@@ -265,9 +266,7 @@ function ApplicationsPage() {
                 {rows.map((a) => {
                   const age = daysSinceApplied(a, today);
                   const overdue =
-                    a.followup !== '' &&
-                    a.followup <= today &&
-                    !['Offer', 'Rejected', 'Withdrawn'].includes(a.status);
+                    a.followup !== '' && a.followup <= today && !CLOSED_STATUSES.includes(a.status);
                   return (
                     <tr key={a.id}>
                       <td>

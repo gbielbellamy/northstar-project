@@ -1,6 +1,7 @@
 import { daysBetween, todayISO } from './dates';
 import {
   ACTIVE_STATUSES,
+  CLOSED_STATUSES,
   RESPONDED_STATUSES,
   type Application,
   type Contact,
@@ -49,7 +50,7 @@ export function funnel(applications: Application[], today = todayISO()): Funnel 
   const ghosted = applications.filter((a) => a.status === 'Ghosted').length;
   const rejected = applications.filter((a) => a.status === 'Rejected').length;
   const followupsDue = applications.filter(
-    (a) => a.followup !== '' && a.followup <= today && !['Offer', 'Rejected', 'Withdrawn'].includes(a.status),
+    (a) => a.followup !== '' && a.followup <= today && !CLOSED_STATUSES.includes(a.status),
   ).length;
 
   return {

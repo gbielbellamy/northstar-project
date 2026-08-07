@@ -169,7 +169,7 @@ function DashboardPage({ setPage }: Props) {
     const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = `career-os-backup-${today}.json`;
+    a.download = `northstar-backup-${today}.json`;
     a.click();
     URL.revokeObjectURL(a.href);
     setToast('Backup downloaded');
