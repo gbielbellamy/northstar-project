@@ -1,5 +1,7 @@
 # Northstar
 
+**[Live demo →](https://northstar-project-ruby.vercel.app/)**
+
 A single workspace for a career transition: plan the day, ship the project, track the search, and see whether any of it is working.
 
 Built with React 19, TypeScript, Vite, Zustand, Recharts and Framer Motion. All data lives in the browser — no backend, no account, no network requests.
