@@ -1,0 +1,178 @@
+// Data model for the API. Mirrors src/types/index.ts, which stays the source
+// of truth for the client.
+//
+// Dates are stored as ISO strings ("2026-08-03") rather than DATE columns.
+// The domain is a calendar day with no time and no timezone, and a Postgres
+// DATE round-trips through the driver as a JS Date at UTC midnight, which
+// shifts the day west of Greenwich. ISO strings also sort chronologically,
+// so ordering and range queries still work.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String        @id @default(cuid())
+  email        String        @unique
+  passwordHash String
+  // Throwaway accounts from the "try it without signing up" button. Pruned by
+  // age, so they need to be distinguishable from real ones.
+  isGuest      Boolean       @default(false)
+  createdAt    DateTime      @default(now())
+  companies    Company[]
+  contacts     Contact[]
+  applications Application[]
+
+  @@index([isGuest, createdAt])
+}
+
+model Company {
+  id             String          @id @default(cuid())
+  userId         String
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name           String
+  sector         String          @default("")
+  size           String          @default("")
+  location       String          @default("")
+  workMode       String          @default("")
+  priority       CompanyPriority @default(B)
+  fitScore       Int             @default(70)
+  primaryRoles   String          @default("")
+  secondaryRoles String          @default("")
+  whyItFits      String          @default("")
+  stack          String          @default("")
+  careersUrl     String          @default("")
+  linkedinUrl    String          @default("")
+  nextAction     String          @default("")
+  status         CompanyStatus   @default(RESEARCHING)
+  lastReviewed   String          @default("")
+  notes          String          @default("")
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  contacts       Contact[]
+
+  // One list per user, and no duplicate companies within it.
+  @@unique([userId, name])
+  @@index([userId])
+}
+
+model Contact {
+  id            String        @id @default(cuid())
+  userId        String
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  companyId     String?
+  companyRef    Company?      @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  company       String
+  person        String        @default("")
+  targetProfile String        @default("")
+  contactType   ContactType   @default(PEER_CONTACT)
+  status        ContactStatus @default(NOT_CONTACTED)
+  searchUrl     String        @default("")
+  companyUrl    String        @default("")
+  link          String        @default("")
+  angle         String        @default("")
+  week          Int?
+  lastContact   String        @default("")
+  dateSent      String        @default("")
+  followup      String        @default("")
+  meeting       String        @default("")
+  nextAction    String        @default("")
+  notes         String        @default("")
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([userId])
+  @@index([companyId])
+}
+
+model Application {
+  id             String            @id @default(cuid())
+  userId         String
+  user           User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  company        String
+  role           String
+  family         RoleFamily?
+  status         ApplicationStatus @default(SAVED)
+  url            String            @default("")
+  location       String            @default("")
+  salary         String            @default("")
+  week           Int?
+  dateFound      String            @default("")
+  deadline       String            @default("")
+  dateApplied    String            @default("")
+  followup       String            @default("")
+  interviewStage String            @default("")
+  resumeVersion  String            @default("")
+  contact        String            @default("")
+  nextAction     String            @default("")
+  result         String            @default("")
+  notes          String            @default("")
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  @@index([userId])
+  // The dashboard reads follow-ups due for the signed-in user constantly.
+  @@index([userId, followup])
+}
+
+// The @map values are what is stored in the database, and they match the
+// strings the client already uses. Prisma's generated client still refers to
+// the members by identifier, so api/_lib/enums.ts converts between the two.
+
+enum ApplicationStatus {
+  SAVED        @map("Saved")
+  PREPARING    @map("Preparing")
+  APPLIED      @map("Applied")
+  INTERVIEWING @map("Interviewing")
+  OFFER        @map("Offer")
+  REJECTED     @map("Rejected")
+  GHOSTED      @map("Ghosted")
+  WITHDRAWN    @map("Withdrawn")
+}
+
+enum RoleFamily {
+  FULL_STACK_SWE          @map("Full-Stack SWE")
+  FRONTEND_SWE            @map("Frontend SWE")
+  TECHNICAL_SUPPORT       @map("Technical Support")
+  SOLUTIONS_ENGINEER      @map("Solutions Engineer")
+  IMPLEMENTATION_ENGINEER @map("Implementation Engineer")
+  QA_AUTOMATION           @map("QA Automation")
+  CUSTOMER_ENGINEER       @map("Customer Engineer")
+}
+
+enum ContactStatus {
+  NOT_CONTACTED     @map("Not contacted")
+  DRAFTED           @map("Drafted")
+  SENT              @map("Sent")
+  CONNECTED         @map("Connected")
+  REPLIED           @map("Replied")
+  MEETING_SCHEDULED @map("Meeting scheduled")
+  FOLLOW_UP_DUE     @map("Follow-up due")
+  NO_RESPONSE       @map("No response")
+}
+
+enum ContactType {
+  PEER_CONTACT      @map("Peer contact")
+  HIRING_INFLUENCER @map("Hiring influencer")
+  RECRUITER         @map("Recruiter")
+}
+
+enum CompanyPriority {
+  A
+  B
+  C
+}
+
+enum CompanyStatus {
+  RESEARCHING   @map("Researching")
+  APPLYING      @map("Applying")
+  APPLIED       @map("Applied")
+  INTERVIEWING  @map("Interviewing")
+  REJECTED      @map("Rejected")
+  OFFER         @map("Offer")
+  DEPRIORITIZED @map("Deprioritized")
+}
