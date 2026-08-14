@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { createSession, hashPassword, prisma, setSessionCookie } from '../_lib/auth';
-import { isInvalid, readCredentials } from '../_lib/validate';
+import { createSession, hashPassword, prisma, setSessionCookie } from '../_lib/auth.js';
+import { isInvalid, readCredentials } from '../_lib/validate.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {

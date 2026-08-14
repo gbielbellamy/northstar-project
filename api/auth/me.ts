@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { currentUserId, prisma } from '../_lib/auth';
+import { currentUserId, prisma } from '../_lib/auth.js';
 
 /** Who am I? Returns 200 with the user, or 200 with null — not an error. */
 export default async function handler(req: VercelRequest, res: VercelResponse) {

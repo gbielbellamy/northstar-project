@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { clearSessionCookie, prisma, withUser } from '../_lib/auth';
+import { clearSessionCookie, prisma, withUser } from '../_lib/auth.js';
 
 /**
  * Deletes the signed-in account and everything in it.

@@ -1,4 +1,4 @@
-import type { AppState } from '../types';
+import type { AppState } from '../types/index.js';
 
 /* Seed data. Everything here is editable in the app; this is only the starting point. */
 export const seedState: AppState = {

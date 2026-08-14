@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import bcrypt from 'bcryptjs';
 import { SignJWT, jwtVerify } from 'jose';
-import { prisma } from './prisma';
+import { prisma } from './prisma.js';
 
 const COOKIE = 'northstar_session';
 const MAX_AGE_SECONDS = 60 * 60 * 24 * 7;

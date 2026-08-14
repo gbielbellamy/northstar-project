@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { $Enums } from '../../generated/prisma';
-import * as enums from './enums';
+import { $Enums } from '../../generated/prisma/index.js';
+import * as enums from './enums.js';
 
 /**
  * The identifiers are derived, not typed out, so this checks the derivation

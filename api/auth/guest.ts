@@ -1,8 +1,8 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { randomUUID } from 'node:crypto';
-import { createSession, hashPassword, prisma, setSessionCookie } from '../_lib/auth';
-import * as enums from '../_lib/enums';
-import { seedState } from '../../src/data/seed';
+import { createSession, hashPassword, prisma, setSessionCookie } from '../_lib/auth.js';
+import * as enums from '../_lib/enums.js';
+import { seedState } from '../../src/data/seed.js';
 
 /**
  * Creates a throwaway account, already filled with the sample content, and
