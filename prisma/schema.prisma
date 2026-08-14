@@ -9,6 +9,10 @@
 
 generator client {
   provider = "prisma-client-js"
+  // Generated into the project rather than node_modules: the serverless
+  // bundler traces the source tree, and the WASM query compiler was being
+  // left out when it lived under node_modules/.prisma.
+  output   = "../generated/prisma"
 }
 
 datasource db {

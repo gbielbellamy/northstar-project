@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { $Enums } from '@prisma/client';
+import { $Enums } from '../../generated/prisma';
 import * as enums from './enums';
 
 /**
