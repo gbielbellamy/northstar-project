@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import type { CSSProperties } from 'react';
 
 type Props = {
   value: number;
@@ -21,7 +21,9 @@ function ProgressRing({ value, size = 104, stroke = 9 }: Props) {
         fill="none"
         strokeWidth={stroke}
       />
-      <motion.circle
+      {/* Sweeps from empty to `value`: the animation reads both custom
+          properties, so the arc lands where the dash offset says it should. */}
+      <circle
         className="ring__value"
         cx={size / 2}
         cy={size / 2}
@@ -29,9 +31,13 @@ function ProgressRing({ value, size = 104, stroke = 9 }: Props) {
         fill="none"
         strokeWidth={stroke}
         strokeDasharray={circumference}
-        initial={{ strokeDashoffset: circumference }}
-        animate={{ strokeDashoffset: circumference * (1 - pct / 100) }}
-        transition={{ duration: 0.9, ease: 'easeOut' }}
+        strokeDashoffset={circumference * (1 - pct / 100)}
+        style={
+          {
+            '--ring-length': circumference,
+            '--ring-offset': circumference * (1 - pct / 100),
+          } as CSSProperties
+        }
       />
     </svg>
   );

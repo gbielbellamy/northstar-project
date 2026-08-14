@@ -180,6 +180,27 @@ a { color: inherit; }
   min-width: 0;
   background: var(--bg-soft);
 }
+/* Focus lands nowhere visible by default, so the outline alone would not
+   announce it — it slides into view instead. */
+.skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 60;
+  padding: 9px 14px;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transform: translateY(-160%);
+  transition: transform 0.18s ease-out;
+}
+.skip-link:focus-visible { transform: translateY(0); }
+/* The target is focusable so the skip actually moves the caret, but it should
+   never draw a ring of its own. */
+.layout__main:focus { outline: none; }
 
 .page {
   padding: 28px 32px 64px;
@@ -752,7 +773,13 @@ td.tight { white-space: nowrap; }
   border-radius: 999px;
   overflow: hidden;
 }
-.stat__bar-fill { height: 100%; background: var(--stat); border-radius: 999px; }
+.stat__bar-fill {
+  height: 100%;
+  background: var(--stat);
+  border-radius: 999px;
+  width: var(--bar-width, 0%);
+  animation: bar-fill 0.6s ease-out both;
+}
 .stat__goal-row {
   display: flex;
   align-items: center;
@@ -795,12 +822,18 @@ td.tight { white-space: nowrap; }
   height: 100%;
   border-radius: 999px;
   background: var(--accent);
+  width: var(--bar-width, 0%);
+  animation: bar-fill 0.6s ease-out both;
 }
 .bar--sm { height: 5px; }
 
 .ring { display: block; transform: rotate(-90deg); }
 .ring__track { stroke: var(--border); }
-.ring__value { stroke: var(--accent); stroke-linecap: round; }
+.ring__value {
+  stroke: var(--accent);
+  stroke-linecap: round;
+  animation: ring-fill 0.9s ease-out both;
+}
 
 /* ---------- Hero (dashboard) ---------- */
 
@@ -1473,6 +1506,58 @@ td.tight { white-space: nowrap; }
   .block { grid-template-columns: 1fr; }
   .block__side { grid-column: 1; }
 }
+
+/* ---------- Motion ----------
+   These replace what framer-motion used to do. Everything here is a mount
+   animation or a value transition, which the platform handles on its own —
+   and the reduced-motion rule below neutralises the lot for free. */
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+.rise-in {
+  animation: rise-in 0.35s ease-out both;
+  animation-delay: var(--rise-delay, 0s);
+}
+/* Slightly quicker for stat cards, which arrive as a staggered grid. Only the
+   duration is overridden — the shorthand would reset the delay with it. */
+.rise-in--sm { animation-duration: 0.3s; }
+
+@keyframes bar-fill {
+  from { width: 0; }
+  to   { width: var(--bar-width, 0%); }
+}
+@keyframes ring-fill {
+  from { stroke-dashoffset: var(--ring-length, 0); }
+  to   { stroke-dashoffset: var(--ring-offset, 0); }
+}
+
+@keyframes modal-backdrop-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes modal-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes modal-backdrop-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes modal-out {
+  from { opacity: 1; transform: none; }
+  to   { opacity: 0; transform: translateY(8px) scale(0.98); }
+}
+@keyframes toast-in {
+  from { opacity: 0; transform: translate(-50%, 14px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
+}
+@keyframes toast-out {
+  from { opacity: 1; transform: translate(-50%, 0); }
+  to   { opacity: 0; transform: translate(-50%, 8px); }
+}
+.toast { animation: toast-in 0.18s ease-out both; }
+.toast--closing { animation: toast-out 0.18s ease-in both; }
+
+.modal-backdrop { animation: modal-backdrop-in 0.15s ease-out both; }
+.modal { animation: modal-in 0.18s ease-out both; }
+.modal-backdrop--closing { animation: modal-backdrop-out 0.15s ease-in both; }
+.modal-backdrop--closing .modal { animation: modal-out 0.15s ease-in both; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

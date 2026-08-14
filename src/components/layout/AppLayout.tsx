@@ -21,14 +21,27 @@ function AppLayout({ page, setPage, followupsDue, children }: Props) {
 
   return (
     <div className="layout">
-      <button className="hamburger" onClick={() => setNavOpen((v) => !v)} aria-label="Menu">
+      {/* Nine nav links stand between the keyboard and the page itself. This
+          stays hidden until it is focused, which is the only time it matters. */}
+      <a className="skip-link" href="#main">
+        Skip to content
+      </a>
+      <button
+        className="hamburger"
+        onClick={() => setNavOpen((v) => !v)}
+        aria-label="Menu"
+        aria-expanded={navOpen}
+        aria-controls="sidebar"
+      >
         <Menu size={18} />
       </button>
       {/* Pinned top-right on every page, so it never moves. */}
       <ThemeToggle />
       {navOpen && <div className="overlay" onClick={() => setNavOpen(false)} />}
       <Sidebar page={page} setPage={go} open={navOpen} followupsDue={followupsDue} />
-      <main className="layout__main">{children}</main>
+      <main className="layout__main" id="main" tabIndex={-1}>
+        {children}
+      </main>
     </div>
   );
 }

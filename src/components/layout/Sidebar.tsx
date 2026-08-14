@@ -33,7 +33,7 @@ const NAV: { key: PageKey; label: string; icon: typeof LayoutDashboard }[] = [
 
 function Sidebar({ page, setPage, open, followupsDue }: Props) {
   return (
-    <aside className={`sidebar ${open ? 'sidebar--open' : ''}`.trim()}>
+    <aside id="sidebar" className={`sidebar ${open ? 'sidebar--open' : ''}`.trim()}>
       <div className="sidebar__brand">
         <div className="sidebar__brand-row">
           <span className="sidebar__mark">

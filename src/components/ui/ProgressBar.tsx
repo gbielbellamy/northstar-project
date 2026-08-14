@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import type { CSSProperties } from 'react';
 
 type Props = {
   value: number;
@@ -10,12 +10,14 @@ function ProgressBar({ value, color, small = false }: Props) {
   const pct = Math.max(0, Math.min(100, value));
   return (
     <div className={`bar ${small ? 'bar--sm' : ''}`.trim()}>
-      <motion.div
+      <div
         className="bar__fill"
-        style={color ? { background: color } : undefined}
-        initial={{ width: 0 }}
-        animate={{ width: `${pct}%` }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
+        style={
+          {
+            '--bar-width': `${pct}%`,
+            ...(color ? { background: color } : null),
+          } as CSSProperties
+        }
       />
     </div>
   );

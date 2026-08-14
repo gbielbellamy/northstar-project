@@ -1,18 +1,16 @@
-import type { ReactNode } from 'react';
-import { motion } from 'framer-motion';
+import type { CSSProperties, ReactNode } from 'react';
 
 type Props = { children: ReactNode; delay?: number; className?: string };
 
+/** Fades and lifts its children in on mount. Staggered by `delay` in seconds. */
 function AnimatedSection({ children, delay = 0, className }: Props) {
   return (
-    <motion.div
-      className={className}
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.35, delay, ease: 'easeOut' }}
+    <div
+      className={`rise-in ${className ?? ''}`.trim()}
+      style={delay ? ({ '--rise-delay': `${delay}s` } as CSSProperties) : undefined}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
 

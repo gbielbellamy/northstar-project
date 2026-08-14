@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react';
-import { motion } from 'framer-motion';
 
 type Props = {
   label: string;
@@ -51,12 +50,9 @@ function StatCard({
   const hue = graded ? gradeColour(pct, invert) : color;
 
   return (
-    <motion.div
-      className={`card card--hover stat ${graded ? 'stat--graded' : ''}`.trim()}
-      style={{ ['--stat' as string]: hue }}
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, delay: index * 0.04, ease: 'easeOut' }}
+    <div
+      className={`card card--hover stat rise-in rise-in--sm ${graded ? 'stat--graded' : ''}`.trim()}
+      style={{ ['--stat' as string]: hue, ['--rise-delay' as string]: `${index * 0.04}s` }}
     >
       <div className="stat__top">
         <span className="stat__label">{label}</span>
@@ -68,11 +64,9 @@ function StatCard({
       {graded && (
         <div className="stat__goal">
           <div className="stat__bar">
-            <motion.div
+            <div
               className="stat__bar-fill"
-              initial={{ width: 0 }}
-              animate={{ width: `${pct}%` }}
-              transition={{ duration: 0.6, ease: 'easeOut' }}
+              style={{ ['--bar-width' as string]: `${pct}%` }}
             />
           </div>
           <div className="stat__goal-row">
@@ -85,7 +79,7 @@ function StatCard({
           </div>
         </div>
       )}
-    </motion.div>
+    </div>
   );
 }
 

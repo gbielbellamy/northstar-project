@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react';
+import { Suspense, lazy, useMemo, useRef, useState, type ReactNode } from 'react';
 import {
   AlarmClock,
   ArrowRight,
@@ -29,9 +29,7 @@ import StatCard from '../components/ui/StatCard';
 import ProgressRing from '../components/ui/ProgressRing';
 import AnimatedSection from '../components/ui/AnimatedSection';
 import Toast from '../components/ui/Toast';
-import FunnelChart from '../components/charts/FunnelChart';
-import HoursChart, { type HourSlice } from '../components/charts/HoursChart';
-import WeekProgressChart from '../components/charts/WeekProgressChart';
+import type { HourSlice } from '../components/charts/HoursChart';
 
 const AREA_COLOR: Record<Area, string> = {
   Project: 'var(--area-project)',
@@ -53,6 +51,19 @@ function greeting(): string {
 }
 
 type Props = { setPage: (p: PageKey) => void };
+
+/**
+ * Recharts is the heaviest thing the app depends on, and it is only ever
+ * needed by these three cards. Loading them separately keeps it out of the
+ * first paint; the placeholder holds the same 200px so nothing jumps.
+ */
+const FunnelChart = lazy(() => import('../components/charts/FunnelChart'));
+const HoursChart = lazy(() => import('../components/charts/HoursChart'));
+const WeekProgressChart = lazy(() => import('../components/charts/WeekProgressChart'));
+
+function ChartFrame({ children }: { children: ReactNode }) {
+  return <Suspense fallback={<div style={{ height: 200 }} aria-busy="true" />}>{children}</Suspense>;
+}
 
 function DashboardPage({ setPage }: Props) {
   const state = useStore();
@@ -332,18 +343,18 @@ function DashboardPage({ setPage }: Props) {
                 No applications yet — the chart fills in as you log them.
               </p>
             ) : (
-              <FunnelChart data={f} />
+              <ChartFrame><FunnelChart data={f} /></ChartFrame>
             )}
           </Card>
         </AnimatedSection>
         <AnimatedSection delay={0.1}>
           <Card title={`Where the week goes (${workHours}h + breaks)`}>
-            <HoursChart data={hourSlices} />
+            <ChartFrame><HoursChart data={hourSlices} /></ChartFrame>
           </Card>
         </AnimatedSection>
         <AnimatedSection delay={0.15}>
           <Card title="Completion by week">
-            <WeekProgressChart data={weekPoints} />
+            <ChartFrame><WeekProgressChart data={weekPoints} /></ChartFrame>
           </Card>
         </AnimatedSection>
       </div>
