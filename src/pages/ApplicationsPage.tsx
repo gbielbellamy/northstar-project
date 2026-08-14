@@ -118,14 +118,13 @@ function ApplicationsPage() {
       alert('Company and role are the two things you actually need.');
       return;
     }
-    // Moving to Applied without a date is the commonest way this log goes stale.
+    // Applied without a date is the commonest way this log goes stale.
     const patch = { ...draft };
     if (patch.status === 'Applied' && !patch.dateApplied) patch.dateApplied = today;
     if (editing) update('applications', editing.id, patch);
     else {
       add('applications', patch);
-      // A company you've applied to belongs on the target list, and it isn't
-      // worth tracking without someone to reach out to — so seed both.
+      // An applied-to company belongs on the target list, with contacts.
       const name = patch.company.trim();
       const known = companies.some((c) => c.name.trim().toLowerCase() === name.toLowerCase());
       if (!known) {
@@ -194,7 +193,7 @@ function ApplicationsPage() {
       <div className="toolbar">
         <div className="filters">
           {(['All', ...APPLICATION_STATUSES] as const).map((s) => {
-            // Same icon here as on the row's status control, so the two read as one thing.
+            // Same icon as the row's status control.
             const Icon = s === 'All' ? LayoutList : applicationIcon[s];
             return (
               <Button

@@ -21,8 +21,7 @@ function AppLayout({ page, setPage, followupsDue, children }: Props) {
 
   return (
     <div className="layout">
-      {/* Nine nav links stand between the keyboard and the page itself. This
-          stays hidden until it is focused, which is the only time it matters. */}
+      {/* Skips the nine nav links. Hidden until focused. */}
       <a className="skip-link" href="#main">
         Skip to content
       </a>
@@ -35,7 +34,7 @@ function AppLayout({ page, setPage, followupsDue, children }: Props) {
       >
         <Menu size={18} />
       </button>
-      {/* Pinned top-right on every page, so it never moves. */}
+      {/* Pinned top-right on every page. */}
       <ThemeToggle />
       {navOpen && <div className="overlay" onClick={() => setNavOpen(false)} />}
       <Sidebar page={page} setPage={go} open={navOpen} followupsDue={followupsDue} />

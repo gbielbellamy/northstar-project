@@ -7,11 +7,10 @@ const ICON = { light: Sun, dark: Moon } as const;
 const LABEL = { light: 'Light', dark: 'Dark' } as const;
 
 /**
- * Two states only, sun and moon — no "system" option in the UI. On first
- * load, before you've ever clicked it, the icon reflects the browser's own
- * preference (and stays live if the OS theme changes underneath you). The
- * moment you click, that resolves to an explicit light/dark choice and the
- * button toggles strictly between the two from then on.
+ * Sun/moon toggle, with no "system" option in the UI.
+ *
+ * Until it is clicked the icon follows the browser preference and updates if
+ * the OS theme changes. The first click pins an explicit light or dark choice.
  */
 function ThemeToggle() {
   const theme = useStore((s) => s.settings.theme);
@@ -34,8 +33,8 @@ function ThemeToggle() {
 
   useEffect(() => {
     const root = document.documentElement;
-    // Still on the browser default: leave the attribute unset so the CSS
-    // media query keeps driving it live, rather than pinning today's value.
+    // No explicit choice yet: leave the attribute unset so the CSS media
+    // query keeps driving the theme.
     if (theme === 'light' || theme === 'dark') root.setAttribute('data-theme', theme);
     else root.removeAttribute('data-theme');
   }, [theme]);

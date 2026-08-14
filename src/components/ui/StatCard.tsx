@@ -12,15 +12,12 @@ type Props = {
   progress?: number;
   /** Shown under the bar, e.g. "3 / 10 this week". */
   targetLabel?: string;
-  /** Red rather than green as the number climbs — for follow-ups due. */
+  /** Grade in reverse: a higher number is worse. Used for follow-ups due. */
   invert?: boolean;
   onEditTarget?: () => void;
 };
 
-/**
- * Cold to warm to done, so a glance tells you where you are without reading
- * the number. Inverted cards run the other way: rising is bad.
- */
+/** Maps progress to a colour: red, amber, green. Reversed when inverted. */
 function gradeColour(pct: number, invert: boolean): string {
   if (invert) {
     if (pct <= 0) return 'var(--ok)';

@@ -66,8 +66,8 @@ function RoadmapPage() {
   function openAddWeek() {
     const last = sorted[sorted.length - 1];
     const nextNum = last ? last.week + 1 : 1;
-    // Dates are computed from the schedule template now (see roadmapWeekRange)
-    // — these stored values are only ever used as an initial placeholder.
+    // Dates are computed from the schedule (see roadmapWeekRange). These
+    // stored values are only an initial placeholder.
     const start = last
       ? roadmapWeekRange(schedule, deferrals, settings.programStart, nextNum).start
       : today;
@@ -97,8 +97,7 @@ function RoadmapPage() {
       update('roadmap', weekModal.id, weekDraft);
     } else {
       add('roadmap', weekDraft);
-      // A new week with no goals is a heading with nothing under it.
-      // Seed one goal per area so the schedule has something to show.
+      // Seed one goal per area, so a new week is not an empty heading.
       for (const area of AREAS) {
         add('goals', {
           week: weekDraft.week,

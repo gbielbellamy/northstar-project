@@ -8,8 +8,8 @@ const EXIT_MS = 180;
 
 function Toast({ message }: Props) {
   const { mounted, closing } = useDelayedUnmount(message !== null, EXIT_MS);
-  // The message is already null while the toast animates out, so hold on to
-  // the last one — otherwise it empties before it has finished leaving.
+  // The message is null while the toast animates out, so keep the last one
+  // or it empties mid-exit.
   const shown = useRef('');
   useEffect(() => {
     if (message !== null) shown.current = message;

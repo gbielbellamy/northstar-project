@@ -3,10 +3,8 @@ import { useEffect, useRef, useState } from 'react';
 /**
  * Keeps an element mounted for the length of its exit animation.
  *
- * CSS can animate anything on the way in, but not on the way out: once React
- * removes a node there is nothing left to animate. This holds the node in the
- * tree for `exitMs` and flags it as closing, so a stylesheet rule can play the
- * exit before it goes.
+ * CSS cannot animate an unmounted node, so this keeps it in the tree for
+ * `exitMs` and sets `closing`, which the stylesheet uses to play the exit.
  */
 export function useDelayedUnmount(open: boolean, exitMs: number) {
   const [mounted, setMounted] = useState(open);

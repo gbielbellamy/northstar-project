@@ -1,13 +1,16 @@
 /**
- * Elastic scheduling. A block's weekday slot never moves, but which week's
- * content is current for an area lags behind when sessions are skipped.
- * "Nominal week" is elapsed time and picks the template; "content week" is
- * which goal is actually due and is what falls behind.
+ * Elastic scheduling.
+ *
+ * A block's weekday slot never moves. What shifts is which week's content is
+ * current for an area, which falls behind when sessions are skipped.
+ *
+ * Nominal week = elapsed time. Picks the template.
+ * Content week = which goal is due. Lags behind the nominal week.
  */
 import { addDays, dayKeyOf, isWeekday, weekdaysSince } from './dates';
 import { blockAppliesTo, type Area, type Deferral, type ScheduleBlock } from '../types';
 
-/** Pure elapsed time since the programme began — never affected by any lag. */
+/** Elapsed time since the programme began. Not affected by lag. */
 export function nominalWeek(programStart: string, date: string): number {
   return Math.max(1, Math.ceil(weekdaysSince(programStart, date) / 5));
 }

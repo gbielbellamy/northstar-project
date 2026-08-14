@@ -6,10 +6,8 @@ import { todayISO } from './lib/dates';
 import { funnel } from './lib/selectors';
 
 /**
- * Only the dashboard is bundled up front, since it is where every visit
- * starts. The rest arrive when you first open them — which keeps the icon set
- * behind Resources, and the design-system catalogue behind Components, out of
- * the initial download.
+ * Only the dashboard is in the initial bundle. The rest load on first open,
+ * which keeps the icon set and the component catalogue out of the first load.
  */
 const SchedulePage = lazy(() => import('./pages/SchedulePage'));
 const RoadmapPage = lazy(() => import('./pages/RoadmapPage'));
@@ -42,8 +40,8 @@ function App() {
 
   return (
     <AppLayout page={page} setPage={setPage} followupsDue={followupsDue}>
-      {/* Deliberately blank: on a local network these chunks land in a few
-          milliseconds, and a spinner that flashes reads worse than nothing. */}
+      {/* Blank on purpose: these chunks load in milliseconds, and a spinner
+          that flashes is worse than none. */}
       <Suspense fallback={<div className="page" aria-busy="true" />}>
         {page === 'dashboard' && <DashboardPage setPage={setPage} />}
         {page === 'schedule' && <SchedulePage />}

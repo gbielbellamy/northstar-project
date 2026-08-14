@@ -30,10 +30,7 @@ import StatusSelect from '../components/ui/StatusSelect';
 import EmptyState from '../components/ui/EmptyState';
 import AnimatedSection from '../components/ui/AnimatedSection';
 
-/**
- * The steps, in order. Written as instructions rather than theory, because the
- * part people get wrong is the etiquette, not the code.
- */
+/** The contribution path, in order. Written as instructions, not theory. */
 const STEPS: { title: string; body: string; watch: string }[] = [
   {
     title: '1. Pick projects you actually use',
@@ -134,7 +131,7 @@ function ContributionsPage() {
       return;
     }
     const patch = { ...draft };
-    // Merging is the moment worth dating, so fill it in rather than asking.
+    // Fill in the merge date rather than asking for it.
     if (patch.stage === 'Merged' && !patch.dateMerged) patch.dateMerged = today;
     if (editing) update('oss', editing.id, patch);
     else add('oss', patch);

@@ -7,19 +7,16 @@ type Props<T extends string> = {
   options: readonly T[];
   onChange: (value: T) => void;
   variant: BadgeVariant;
-  /** Icon for the *current* value — pass the right one from the maps in lib/ui. */
+  /** Icon for the current value. Use the maps in lib/ui. */
   icon?: LucideIcon;
   /** Turns a raw value into what the user reads, e.g. "A" -> "Tier A". */
   renderLabel?: (value: T) => string;
   ariaLabel?: string;
-  /** Stretches to the full width of its container — for form fields. */
+  /** Stretch to the container's full width. Used in form fields. */
   block?: boolean;
 };
 
-/**
- * One control instead of two. A native <select> wearing the badge's colours,
- * so the state is picked and displayed in the same place — the text appears once.
- */
+/** A native <select> styled as a status badge, so it shows and sets in one place. */
 function StatusSelect<T extends string>({
   value,
   options,

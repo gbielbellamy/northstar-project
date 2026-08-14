@@ -13,7 +13,7 @@ const STACK: Record<FontChoice, string> = {
   'Space Grotesk': "'Space Grotesk Variable', system-ui, sans-serif",
 };
 
-/** An honest one-line reason to pick each, rather than marketing copy. */
+/** One-line description of each typeface. */
 const NOTE: Record<FontChoice, string> = {
   System:
     'Whatever your OS uses. Fastest, and invisible in a good way — but it looks different on every machine, so a recruiter may not see what you see.',
@@ -29,10 +29,7 @@ const NOTE: Record<FontChoice, string> = {
     'Technical, slightly quirky, with unusual letterforms. The most memorable of the six — and the most opinionated, so it can tire the eye in dense tables.',
 };
 
-/**
- * Applies the choice to <html> so every screen updates at once, then lets you
- * compare the six side by side in their own typeface.
- */
+/** Sets the choice on <html>, and previews each option in its own typeface. */
 function FontPicker() {
   const font = useStore((s) => s.settings.font);
   const setSettings = useStore((s) => s.setSettings);

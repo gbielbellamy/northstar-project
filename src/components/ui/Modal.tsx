@@ -25,8 +25,7 @@ function Modal({ open, title, subtitle, onClose, children, actions }: Props) {
   useEffect(() => {
     if (!open) return;
 
-    // Remember where focus came from, so closing puts it back on the control
-    // that opened the dialog rather than dumping it at the top of the page.
+    // Remember where focus came from, so closing can restore it.
     returnTo.current = document.activeElement as HTMLElement | null;
     const first = dialog.current?.querySelector<HTMLElement>(FOCUSABLE);
     (first ?? dialog.current)?.focus();
@@ -37,8 +36,7 @@ function Modal({ open, title, subtitle, onClose, children, actions }: Props) {
         return;
       }
       if (e.key !== 'Tab' || !dialog.current) return;
-      // Keep Tab inside the dialog: a modal you can tab out of is a modal
-      // screen-reader users get lost behind.
+      // Trap Tab inside the dialog.
       const items = Array.from(dialog.current.querySelectorAll<HTMLElement>(FOCUSABLE));
       if (items.length === 0) return;
       const firstItem = items[0];

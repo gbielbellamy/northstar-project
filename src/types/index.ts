@@ -105,15 +105,11 @@ export const APPLICATION_STATUSES = [
 ] as const;
 export type ApplicationStatus = (typeof APPLICATION_STATUSES)[number];
 
-/** Statuses that prove the company came back to you — the response-rate numerator. */
+/** The company replied. Numerator of the response rate. */
 export const RESPONDED_STATUSES: ApplicationStatus[] = ['Interviewing', 'Offer', 'Rejected'];
 /** Statuses still live in the funnel. */
 export const ACTIVE_STATUSES: ApplicationStatus[] = ['Interviewing', 'Offer'];
-/**
- * Statuses where the conversation is over, either way. Nothing here is chased:
- * a ghosted application has already had its one nudge, and a follow-up still
- * showing red on it is noise you learn to ignore.
- */
+/** Statuses where the conversation is over. Excluded from follow-ups due. */
 export const CLOSED_STATUSES: ApplicationStatus[] = [
   'Offer',
   'Rejected',
@@ -328,7 +324,7 @@ export type Skill = {
    * brand has no icon in the set, and the badge letters are used instead.
    */
   icon: string;
-  /** Not part of the weekday plan — pick these up at the weekend if you want to. */
+  /** Optional: not part of the weekday plan. */
   optional: boolean;
 };
 
@@ -404,7 +400,7 @@ export type Settings = {
   /** ISO date the programme actually began. */
   programStart: string;
   currentWeek: number;
-  /** Overrides the real clock, for testing a different "today". */
+  /** Overrides the real clock. Used to test a different "today". */
   todayOverride: string | null;
   theme: Theme;
   font: FontChoice;
@@ -425,7 +421,7 @@ export const EXCEPTION_KINDS = [
 ] as const;
 export type ExceptionKind = (typeof EXCEPTION_KINDS)[number];
 
-/** A day the plan didn't happen. The hours are owed; this records where they come back. */
+/** A day the plan was displaced. Records the hours owed and when they are made up. */
 export type DayException = {
   id: string;
   /** ISO date the plan was displaced. */
@@ -434,7 +430,7 @@ export type DayException = {
   note: string;
   /** Hours owed. Defaults to the day's planned work, but you can do half a day. */
   hoursOwed: number;
-  /** ISO date you'll make them up — a weekend day, or extra time midweek. */
+  /** ISO date the hours are made up. */
   recoverOn: string;
   recovered: boolean;
 };
@@ -443,8 +439,8 @@ export type DayException = {
 export type DailyLog = Record<string, Record<string, boolean>>;
 
 /**
- * A skipped occurrence. The slot stays put; its content slides to that area's
- * next occurrence. Lag is always derived from this list, never stored.
+ * A skipped occurrence. The slot stays put; its content moves to the area's
+ * next occurrence. Lag is derived from this list rather than stored.
  */
 export type Deferral = {
   id: string;

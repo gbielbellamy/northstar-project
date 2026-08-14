@@ -1,9 +1,6 @@
 type Props = { size?: number; className?: string };
 
-/**
- * The mark: a four-point star inside a compass ring, with the north point
- * drawn longer than the rest. A star you steer by, not just a sparkle.
- */
+/** Four-point star inside a compass ring, with a longer north point. */
 function NorthstarMark({ size = 20, className }: Props) {
   return (
     <svg

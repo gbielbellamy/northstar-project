@@ -70,9 +70,8 @@ function SchedulePage() {
   const [exDraft, setExDraft] = useState<Omit<DayException, 'id'> | null>(null);
 
   const rw = roadmap.find((r) => r.week === week);
-  // The theme/definition-of-done for week N still come straight off the
-  // roadmap entry; only the calendar dates are computed, since Project's lag
-  // is what stretches the whole ten-week plan.
+  // Theme and definition of done come from the roadmap entry. Only the dates
+  // are computed, since Project's lag stretches the whole plan.
   const weekRange = useMemo(
     () => roadmapWeekRange(schedule, deferrals, settings.programStart, week),
     [schedule, deferrals, settings.programStart, week],
@@ -172,10 +171,8 @@ function SchedulePage() {
       update('exceptions', exEditing.id, exDraft);
     } else {
       add('exceptions', exDraft);
-      // Cancelling a whole day defers every area-block scheduled on it in one
-      // go, instead of clicking Skip on each block individually. Only on
-      // create — re-saving an existing exception shouldn't re-defer blocks
-      // that may since have been marked done or already skipped.
+      // Cancelling a day defers every area block on it at once. Only on
+      // create: re-saving must not re-defer blocks already done or skipped.
       const dayBlocks = byDay.get(dayKeyOf(exDraft.date)) ?? [];
       for (const b of dayBlocks) {
         if (!b.area) continue;
@@ -203,8 +200,7 @@ function SchedulePage() {
         </div>
       </div>
 
-      {/* Pinned beside the theme toggle: this page runs seven days long, and
-          jumping back to now shouldn't mean scrolling to the top first. */}
+      {/* Pinned, because the page is seven days long. */}
       <button
         type="button"
         className="page-action"
@@ -227,8 +223,8 @@ function SchedulePage() {
               {[...roadmap]
                 .sort((a, b) => a.week - b.week)
                 .map((r) => {
-                  // Each option needs its own computed range — later weeks
-                  // stretch further out the more the plan has slipped.
+                  // Each option needs its own range: later weeks shift further
+                  // out as the plan slips.
                   const range = roadmapWeekRange(schedule, deferrals, settings.programStart, r.week);
                   return (
                     <option key={r.id} value={r.week}>
@@ -363,8 +359,8 @@ function SchedulePage() {
                       </div>
                     );
                   }
-                  // Which week's goal is actually due here — falls behind the
-                  // page's selected week if this area has unrecovered skips.
+                  // Which week's goal is due here. Behind the selected week if
+                  // this area has unrecovered skips.
                   const activeWeek = contentWeek(
                     schedule,
                     deferrals,
@@ -394,8 +390,7 @@ function SchedulePage() {
                           <span className="area-dot" />
                           {b.label}
                         </div>
-                        {/* Only this sitting's task. The week's goal and its full
-                            detail belong in Roadmap. */}
+                        {/* This sitting's task only. The week's goal is in Roadmap. */}
                         <div className="block__title">
                           {b.sessionDone ?? goal?.title ?? `No goal set for ${b.area}`}
                         </div>

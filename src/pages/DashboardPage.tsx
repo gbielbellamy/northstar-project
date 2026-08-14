@@ -53,9 +53,8 @@ function greeting(): string {
 type Props = { setPage: (p: PageKey) => void };
 
 /**
- * Recharts is the heaviest thing the app depends on, and it is only ever
- * needed by these three cards. Loading them separately keeps it out of the
- * first paint; the placeholder holds the same 200px so nothing jumps.
+ * Recharts is the heaviest dependency and only these three cards use it, so
+ * it loads separately. The placeholder is 200px to avoid a layout shift.
  */
 const FunnelChart = lazy(() => import('../components/charts/FunnelChart'));
 const HoursChart = lazy(() => import('../components/charts/HoursChart'));
@@ -88,9 +87,9 @@ function DashboardPage({ setPage }: Props) {
   const weekPct = completionPct(goals, week);
 
   /**
-   * The timetable changes partway through the programme — open source takes
-   * over a slot in week 5 — so only count the blocks that apply to the week
-   * being shown. Summing every block double-counts the swapped slot.
+   * The timetable can change partway through the programme, so count only the
+   * blocks that apply to the week shown. Summing all of them double-counts a
+   * slot that was swapped.
    */
   const weekBlocks = useMemo(
     () => schedule.filter((b) => blockAppliesTo(b, week)),

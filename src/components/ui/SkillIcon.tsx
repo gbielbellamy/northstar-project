@@ -42,9 +42,9 @@ type Props = {
 };
 
 /**
- * Named imports rather than a namespace lookup: simple-icons ships 3,400+
- * icons, and importing the module wholesale put 5MB of unused paths in the
- * bundle. Adding a technology means adding it here too.
+ * Named imports, not a namespace import: simple-icons ships 3,400+ icons and
+ * importing the module wholesale added 5MB of unused paths to the bundle.
+ * A new technology has to be added here too.
  */
 const BRAND: Record<string, SimpleIcon> = {
   anthropic: siAnthropic,
@@ -79,8 +79,8 @@ const BRAND: Record<string, SimpleIcon> = {
 };
 
 /**
- * Local overrides for brands simple-icons doesn't carry — Playwright, VS Code,
- * Zustand. Drop a file into assets/logos named after the slug and it wins.
+ * Local logos for brands simple-icons does not carry. A file in assets/logos
+ * named after the slug takes precedence.
  */
 const LOCAL: Record<string, string> = Object.fromEntries(
   Object.entries(
@@ -103,8 +103,8 @@ function SkillIcon({ icon, badge, colour, size = 38 }: Props) {
       style={{ ['--tech' as string]: hue, width: size, height: size }}
     >
       {local ? (
-        // A supplied PNG or JPEG carries its own colours and, for JPEG, its own
-        // opaque background — so it fills the tile instead of sitting on a tint.
+        // A PNG or JPEG brings its own colours and background, so it fills the
+        // tile rather than sitting on a tint.
         <img src={local} alt="" width={size} height={size} />
       ) : brand ? (
         <svg
