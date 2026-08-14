@@ -1,9 +1,11 @@
-import { Suspense, lazy, useMemo, useState } from 'react';
+import { Suspense, lazy, useEffect, useMemo, useState } from 'react';
 import AppLayout from './components/layout/AppLayout';
 import DashboardPage from './pages/DashboardPage';
+import SignInPage from './pages/SignInPage';
 import { useStore } from './store/useStore';
 import { todayISO } from './lib/dates';
 import { funnel } from './lib/selectors';
+import { auth, type User } from './lib/api';
 
 /**
  * Only the dashboard is in the initial bundle. The rest load on first open,
@@ -31,12 +33,27 @@ export type PageKey =
 
 function App() {
   const [page, setPage] = useState<PageKey>('dashboard');
+  const [user, setUser] = useState<User | null>(null);
+  // Undecided until /me answers, so the app does not flash the sign-in screen
+  // at someone who is already signed in.
+  const [checked, setChecked] = useState(false);
+
+  useEffect(() => {
+    auth
+      .me()
+      .then((r) => setUser(r.user))
+      .catch(() => setUser(null))
+      .finally(() => setChecked(true));
+  }, []);
 
   const applications = useStore((s) => s.applications);
   const override = useStore((s) => s.settings.todayOverride);
   const today = todayISO(override);
 
   const followupsDue = useMemo(() => funnel(applications, today).followupsDue, [applications, today]);
+
+  if (!checked) return <div className="auth" aria-busy="true" />;
+  if (!user) return <SignInPage onSignedIn={setUser} />;
 
   return (
     <AppLayout page={page} setPage={setPage} followupsDue={followupsDue}>
