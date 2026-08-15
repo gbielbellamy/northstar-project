@@ -3,6 +3,7 @@ import { randomUUID } from 'node:crypto';
 import {
   clearSessionCookie,
   createSession,
+  currentUser,
   currentUserId,
   hashPassword,
   prisma,
@@ -64,7 +65,7 @@ async function register(req: VercelRequest, res: VercelResponse) {
   const withPlan = (req.body as { withPlan?: unknown }).withPlan !== false;
   await seedAccount(user.id, { withPlan, withSampleRecords: false });
 
-  setSessionCookie(res, await createSession(user.id));
+  setSessionCookie(res, await createSession(user.id, user.email));
   res.status(201).json({ id: user.id, email: user.email });
 }
 
@@ -87,7 +88,7 @@ async function login(req: VercelRequest, res: VercelResponse) {
     return;
   }
 
-  setSessionCookie(res, await createSession(user.id));
+  setSessionCookie(res, await createSession(user.id, user.email));
   res.status(200).json({ id: user.id, email: user.email });
 }
 
@@ -106,7 +107,7 @@ async function guest(req: VercelRequest, res: VercelResponse) {
 
   await seedAccount(user.id, { withPlan: true, withSampleRecords: true });
 
-  setSessionCookie(res, await createSession(user.id));
+  setSessionCookie(res, await createSession(user.id, user.email));
   res.status(201).json({ id: user.id, email: user.email, isGuest: true });
 }
 
@@ -119,18 +120,10 @@ async function logout(req: VercelRequest, res: VercelResponse) {
 /** Who am I? Returns 200 with the user, or 200 with null — not an error. */
 async function me(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'GET') return methodNotAllowed(res);
-
-  const userId = await currentUserId(req);
-  if (!userId) {
-    res.status(200).json({ user: null });
-    return;
-  }
-
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    select: { id: true, email: true },
-  });
-  res.status(200).json({ user });
+  // Answered from the token alone: this runs on every page load, and waking
+  // the database just to repeat what the cookie already says is a slow start
+  // for nothing.
+  res.status(200).json({ user: await currentUser(req) });
 }
 
 /**

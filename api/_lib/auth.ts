@@ -27,9 +27,16 @@ export function verifyPassword(plain: string, hash: string): Promise<boolean> {
   return bcrypt.compare(plain, hash);
 }
 
-/** Signs a session token carrying nothing but the user id. */
-export async function createSession(userId: string): Promise<string> {
-  return new SignJWT({ sub: userId })
+/**
+ * Signs a session token.
+ *
+ * It carries the email as well as the id so that answering "who am I?" is
+ * pure signature checking, with no database round trip on every page load.
+ * The trade-off is that the email in a live token is whatever it was when the
+ * token was signed — fine while there is no way to change it.
+ */
+export async function createSession(userId: string, email?: string): Promise<string> {
+  return new SignJWT({ sub: userId, email })
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
     .setExpirationTime(`${MAX_AGE_SECONDS}s`)
@@ -72,17 +79,24 @@ function readCookie(req: VercelRequest, name: string): string | null {
   return null;
 }
 
-/** The signed-in user's id, or null. Never trusts anything but the signature. */
-export async function currentUserId(req: VercelRequest): Promise<string | null> {
+/** The signed-in user, or null. Never trusts anything but the signature. */
+export async function currentUser(
+  req: VercelRequest,
+): Promise<{ id: string; email: string } | null> {
   const token = readCookie(req, COOKIE);
   if (!token) return null;
   try {
     const { payload } = await jwtVerify(token, secret());
-    return typeof payload.sub === 'string' ? payload.sub : null;
+    if (typeof payload.sub !== 'string') return null;
+    return { id: payload.sub, email: typeof payload.email === 'string' ? payload.email : '' };
   } catch {
     // Expired, tampered with, or signed by a different secret.
     return null;
   }
+}
+
+export async function currentUserId(req: VercelRequest): Promise<string | null> {
+  return (await currentUser(req))?.id ?? null;
 }
 
 /**

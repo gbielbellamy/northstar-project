@@ -1,4 +1,4 @@
-import { Suspense, lazy, useMemo, useRef, useState, type ReactNode } from 'react';
+import { Suspense, lazy, useMemo, useState, type ReactNode } from 'react';
 import {
   AlarmClock,
   ArrowRight,
@@ -7,23 +7,17 @@ import {
   Circle,
   CircleCheck,
   MessageSquare,
-  Download,
-  LogOut,
-  Trash2,
-  Upload,
   Send,
   Target,
   TrendingUp,
 } from 'lucide-react';
 import { useStore } from '../store/useStore';
-import { api } from '../lib/api';
 import { completionPct, funnel, goalsForWeek, outreachStats } from '../lib/selectors';
 import { dayKeyOf, fmtLong, fmtRange, hoursBetween, todayISO } from '../lib/dates';
 import { currentRoadmapWeek, roadmapWeekRange } from '../lib/pacing';
 import { areaClass } from '../lib/ui';
-import { blockAppliesTo, type AppState, type Area } from '../types';
+import { blockAppliesTo, type Area } from '../types';
 import type { PageKey } from '../App';
-import Toast from '../components/ui/Toast';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import Modal from '../components/ui/Modal';
@@ -52,11 +46,7 @@ function greeting(): string {
   return 'Good evening';
 }
 
-type Props = {
-  setPage: (p: PageKey) => void;
-  onSignOut: () => void;
-  onDeleteAccount: () => void;
-};
+type Props = { setPage: (p: PageKey) => void };
 
 /**
  * Recharts is the heaviest dependency and only these three cards use it, so
@@ -70,7 +60,7 @@ function ChartFrame({ children }: { children: ReactNode }) {
   return <Suspense fallback={<div style={{ height: 200 }} aria-busy="true" />}>{children}</Suspense>;
 }
 
-function DashboardPage({ setPage, onSignOut, onDeleteAccount }: Props) {
+function DashboardPage({ setPage }: Props) {
   const state = useStore();
   const { roadmap, goals, schedule, deferrals, applications, contacts, companies, dailyLog, settings } =
     state;
@@ -156,53 +146,6 @@ function DashboardPage({ setPage, onSignOut, onDeleteAccount }: Props) {
       contacts: contacts.filter((c) => inRange(c.dateSent)).length,
     };
   }, [applications, contacts, rw]);
-
-  const fileRef = useRef<HTMLInputElement>(null);
-  const [toast, setToast] = useState<string | null>(null);
-  const reload = useStore((s) => s.load);
-
-  function say(message: string) {
-    setToast(message);
-    setTimeout(() => setToast(null), 2400);
-  }
-
-  function exportBackup() {
-    const payload: AppState = {
-      roadmap: state.roadmap,
-      goals: state.goals,
-      schedule: state.schedule,
-      exceptions: state.exceptions,
-      deferrals: state.deferrals,
-      oss: state.oss,
-      applications: state.applications,
-      contacts: state.contacts,
-      companies: state.companies,
-      skills: state.skills,
-      templates: state.templates,
-      reviews: state.reviews,
-      dailyLog: state.dailyLog,
-      settings: state.settings,
-    };
-    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = `northstar-backup-${today}.json`;
-    a.click();
-    URL.revokeObjectURL(a.href);
-    say('Backup downloaded');
-  }
-
-  async function importBackup(file: File) {
-    try {
-      const parsed = JSON.parse(await file.text()) as AppState;
-      await api.import(parsed);
-      // The ids all changed, so take the state fresh rather than guessing.
-      await reload();
-      say('Backup restored');
-    } catch (e) {
-      say(e instanceof Error ? e.message : "That file isn't a Northstar backup");
-    }
-  }
 
   const t = settings.targets;
   const applicationTarget = t.directApplicationsPerWeek + t.bridgeApplicationsPerWeek;
@@ -415,52 +358,7 @@ function DashboardPage({ setPage, onSignOut, onDeleteAccount }: Props) {
         )}
       </div>
 
-      <div className="section">
-        <h2>Your account</h2>
-      </div>
-      <Card>
-        <p className="muted" style={{ marginBottom: 12 }}>
-          Everything you record is stored in your account, so it follows you between browsers and
-          machines. Export a copy any time — the file restores straight back, and it is yours to keep
-          wherever you like.
-        </p>
-        <div className="row">
-          <Button onClick={exportBackup}>
-            <Download size={14} /> Export backup
-          </Button>
-          <Button onClick={() => fileRef.current?.click()}>
-            <Upload size={14} /> Import backup
-          </Button>
-          <input
-            ref={fileRef}
-            type="file"
-            accept="application/json"
-            hidden
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file) void importBackup(file);
-              e.target.value = '';
-            }}
-          />
-          <Button onClick={onSignOut}>
-            <LogOut size={14} /> Sign out
-          </Button>
-          <Button
-            variant="danger"
-            onClick={() => {
-              if (
-                confirm(
-                  'Delete your account? Every application, company and contact in it goes too. This cannot be undone.',
-                )
-              ) {
-                onDeleteAccount();
-              }
-            }}
-          >
-            <Trash2 size={14} /> Delete account
-          </Button>
-        </div>
-      </Card>
+
 
       <Modal
         open={targetsOpen}
@@ -544,7 +442,6 @@ function DashboardPage({ setPage, onSignOut, onDeleteAccount }: Props) {
         </div>
       </Modal>
 
-      <Toast message={toast} />
     </div>
   );
 }

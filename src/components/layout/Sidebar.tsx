@@ -11,12 +11,19 @@ import {
 } from 'lucide-react';
 import type { PageKey } from '../../App';
 import NorthstarMark from '../ui/NorthstarMark';
+import AccountMenu from './AccountMenu';
 
 type Props = {
   page: PageKey;
   setPage: (p: PageKey) => void;
   open: boolean;
   followupsDue: number;
+  email: string;
+  isGuest: boolean;
+  onExport: () => void;
+  onImport: (file: File) => void;
+  onSignOut: () => void;
+  onDeleteAccount: () => void;
 };
 
 const NAV: { key: PageKey; label: string; icon: typeof LayoutDashboard }[] = [
@@ -31,7 +38,18 @@ const NAV: { key: PageKey; label: string; icon: typeof LayoutDashboard }[] = [
   { key: 'components', label: 'Components', icon: Palette },
 ];
 
-function Sidebar({ page, setPage, open, followupsDue }: Props) {
+function Sidebar({
+  page,
+  setPage,
+  open,
+  followupsDue,
+  email,
+  isGuest,
+  onExport,
+  onImport,
+  onSignOut,
+  onDeleteAccount,
+}: Props) {
   return (
     <aside id="sidebar" className={`sidebar ${open ? 'sidebar--open' : ''}`.trim()}>
       <div className="sidebar__brand">
@@ -64,6 +82,15 @@ function Sidebar({ page, setPage, open, followupsDue }: Props) {
           </button>
         ))}
       </nav>
+
+      <AccountMenu
+        email={email}
+        isGuest={isGuest}
+        onExport={onExport}
+        onImport={onImport}
+        onSignOut={onSignOut}
+        onDeleteAccount={onDeleteAccount}
+      />
     </aside>
   );
 }
