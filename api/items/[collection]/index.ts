@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { withUser } from '../_lib/auth.js';
-import { collection, isCollection } from '../_lib/collections.js';
+import { withUser } from '../../_lib/auth.js';
+import { collection, isCollection } from '../../_lib/collections.js';
 
 /** Creates one row in a collection, owned by the signed-in user. */
 export default withUser(async (req: VercelRequest, res: VercelResponse, userId: string) => {
