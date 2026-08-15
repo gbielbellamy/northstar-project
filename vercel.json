@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/prune-guests",
+      "schedule": "0 4 * * *"
+    }
+  ]
+}
