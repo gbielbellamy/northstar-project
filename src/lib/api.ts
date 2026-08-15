@@ -85,15 +85,15 @@ export const api = {
     request<void>(`/api/items/${collection}/${id}`, { method: 'DELETE' }),
 
   settings: (patch: Partial<Settings>) =>
-    request<Settings>('/api/settings', { method: 'PATCH', body: JSON.stringify(patch) }),
+    request<Settings>('/api/user/settings', { method: 'PATCH', body: JSON.stringify(patch) }),
 
   review: (week: number, review: WeeklyReview) =>
-    request<void>('/api/reviews', { method: 'PUT', body: JSON.stringify({ week, review }) }),
+    request<void>('/api/user/reviews', { method: 'PUT', body: JSON.stringify({ week, review }) }),
 
   /** Replaces everything in the account with an exported backup. */
   import: (state: AppState) =>
-    request<void>('/api/import', { method: 'PUT', body: JSON.stringify(state) }),
+    request<void>('/api/state', { method: 'PUT', body: JSON.stringify(state) }),
 
   log: (date: string, blockId: string, done: boolean) =>
-    request<void>('/api/log', { method: 'PUT', body: JSON.stringify({ date, blockId, done }) }),
+    request<void>('/api/user/log', { method: 'PUT', body: JSON.stringify({ date, blockId, done }) }),
 };
