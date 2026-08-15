@@ -1,5 +1,7 @@
 /** The one place that talks to the API. Nothing else calls fetch. */
 
+import type { AppState, Settings, WeeklyReview } from '../types';
+
 export type User = { id: string; email: string; isGuest?: boolean };
 
 export class ApiError extends Error {
@@ -50,4 +52,48 @@ export const auth = {
   logout: () => request<void>('/api/auth/logout', { method: 'POST' }),
 
   deleteAccount: () => request<void>('/api/auth/account', { method: 'DELETE' }),
+};
+
+/** The collections that are edited row by row. */
+export type Collection =
+  | 'roadmap'
+  | 'goals'
+  | 'schedule'
+  | 'skills'
+  | 'templates'
+  | 'oss'
+  | 'applications'
+  | 'contacts'
+  | 'companies'
+  | 'exceptions'
+  | 'deferrals';
+
+export const api = {
+  /** Everything the user has, in one request. */
+  state: () => request<AppState>('/api/state'),
+
+  create: <T>(collection: Collection, item: unknown) =>
+    request<T>(`/api/items/${collection}`, { method: 'POST', body: JSON.stringify(item) }),
+
+  update: <T>(collection: Collection, id: string, patch: unknown) =>
+    request<T>(`/api/items/${collection}/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(patch),
+    }),
+
+  remove: (collection: Collection, id: string) =>
+    request<void>(`/api/items/${collection}/${id}`, { method: 'DELETE' }),
+
+  settings: (patch: Partial<Settings>) =>
+    request<Settings>('/api/settings', { method: 'PATCH', body: JSON.stringify(patch) }),
+
+  review: (week: number, review: WeeklyReview) =>
+    request<void>('/api/reviews', { method: 'PUT', body: JSON.stringify({ week, review }) }),
+
+  /** Replaces everything in the account with an exported backup. */
+  import: (state: AppState) =>
+    request<void>('/api/import', { method: 'PUT', body: JSON.stringify(state) }),
+
+  log: (date: string, blockId: string, done: boolean) =>
+    request<void>('/api/log', { method: 'PUT', body: JSON.stringify({ date, blockId, done }) }),
 };

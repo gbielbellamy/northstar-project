@@ -6,21 +6,24 @@ import {
   CalendarCheck,
   Circle,
   CircleCheck,
-  Download,
   MessageSquare,
-  RotateCcw,
+  Download,
+  LogOut,
+  Trash2,
+  Upload,
   Send,
   Target,
   TrendingUp,
-  Upload,
 } from 'lucide-react';
 import { useStore } from '../store/useStore';
+import { api } from '../lib/api';
 import { completionPct, funnel, goalsForWeek, outreachStats } from '../lib/selectors';
 import { dayKeyOf, fmtLong, fmtRange, hoursBetween, todayISO } from '../lib/dates';
 import { currentRoadmapWeek, roadmapWeekRange } from '../lib/pacing';
 import { areaClass } from '../lib/ui';
 import { blockAppliesTo, type AppState, type Area } from '../types';
 import type { PageKey } from '../App';
+import Toast from '../components/ui/Toast';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import Modal from '../components/ui/Modal';
@@ -28,7 +31,6 @@ import Field from '../components/ui/Field';
 import StatCard from '../components/ui/StatCard';
 import ProgressRing from '../components/ui/ProgressRing';
 import AnimatedSection from '../components/ui/AnimatedSection';
-import Toast from '../components/ui/Toast';
 import type { HourSlice } from '../components/charts/HoursChart';
 
 const AREA_COLOR: Record<Area, string> = {
@@ -50,7 +52,11 @@ function greeting(): string {
   return 'Good evening';
 }
 
-type Props = { setPage: (p: PageKey) => void };
+type Props = {
+  setPage: (p: PageKey) => void;
+  onSignOut: () => void;
+  onDeleteAccount: () => void;
+};
 
 /**
  * Recharts is the heaviest dependency and only these three cards use it, so
@@ -64,18 +70,14 @@ function ChartFrame({ children }: { children: ReactNode }) {
   return <Suspense fallback={<div style={{ height: 200 }} aria-busy="true" />}>{children}</Suspense>;
 }
 
-function DashboardPage({ setPage }: Props) {
+function DashboardPage({ setPage, onSignOut, onDeleteAccount }: Props) {
   const state = useStore();
   const { roadmap, goals, schedule, deferrals, applications, contacts, companies, dailyLog, settings } =
     state;
-  const replaceAll = useStore((s) => s.replaceAll);
-  const reset = useStore((s) => s.reset);
   const toggleLog = useStore((s) => s.toggleLog);
   const setSettings = useStore((s) => s.setSettings);
 
-  const [toast, setToast] = useState<string | null>(null);
   const [targetsOpen, setTargetsOpen] = useState(false);
-  const fileRef = useRef<HTMLInputElement>(null);
 
   const today = todayISO(settings.todayOverride);
   const week = currentRoadmapWeek(schedule, deferrals, settings.programStart, today);
@@ -155,9 +157,14 @@ function DashboardPage({ setPage }: Props) {
     };
   }, [applications, contacts, rw]);
 
-  const t = settings.targets;
-  const applicationTarget = t.directApplicationsPerWeek + t.bridgeApplicationsPerWeek;
-  const pct = (done: number, target: number) => (target > 0 ? (done / target) * 100 : 0);
+  const fileRef = useRef<HTMLInputElement>(null);
+  const [toast, setToast] = useState<string | null>(null);
+  const reload = useStore((s) => s.load);
+
+  function say(message: string) {
+    setToast(message);
+    setTimeout(() => setToast(null), 2400);
+  }
 
   function exportBackup() {
     const payload: AppState = {
@@ -182,25 +189,24 @@ function DashboardPage({ setPage }: Props) {
     a.download = `northstar-backup-${today}.json`;
     a.click();
     URL.revokeObjectURL(a.href);
-    setToast('Backup downloaded');
-    setTimeout(() => setToast(null), 1800);
+    say('Backup downloaded');
   }
 
-  function importBackup(file: File) {
-    const reader = new FileReader();
-    reader.onload = () => {
-      try {
-        const parsed = JSON.parse(String(reader.result)) as AppState;
-        if (!parsed.roadmap || !parsed.goals) throw new Error('missing keys');
-        replaceAll(parsed);
-        setToast('Backup restored');
-      } catch {
-        setToast("That file isn't a Career OS backup");
-      }
-      setTimeout(() => setToast(null), 2200);
-    };
-    reader.readAsText(file);
+  async function importBackup(file: File) {
+    try {
+      const parsed = JSON.parse(await file.text()) as AppState;
+      await api.import(parsed);
+      // The ids all changed, so take the state fresh rather than guessing.
+      await reload();
+      say('Backup restored');
+    } catch (e) {
+      say(e instanceof Error ? e.message : "That file isn't a Northstar backup");
+    }
   }
+
+  const t = settings.targets;
+  const applicationTarget = t.directApplicationsPerWeek + t.bridgeApplicationsPerWeek;
+  const pct = (done: number, target: number) => (target > 0 ? (done / target) * 100 : 0);
 
   return (
     <div className="page">
@@ -410,12 +416,13 @@ function DashboardPage({ setPage }: Props) {
       </div>
 
       <div className="section">
-        <h2>Your data</h2>
+        <h2>Your account</h2>
       </div>
       <Card>
         <p className="muted" style={{ marginBottom: 12 }}>
-          Everything lives in this browser only — nothing is sent anywhere. Export a backup before clearing
-          site data or switching machines.
+          Everything you record is stored in your account, so it follows you between browsers and
+          machines. Export a copy any time — the file restores straight back, and it is yours to keep
+          wherever you like.
         </p>
         <div className="row">
           <Button onClick={exportBackup}>
@@ -431,21 +438,26 @@ function DashboardPage({ setPage }: Props) {
             hidden
             onChange={(e) => {
               const file = e.target.files?.[0];
-              if (file) importBackup(file);
+              if (file) void importBackup(file);
               e.target.value = '';
             }}
           />
+          <Button onClick={onSignOut}>
+            <LogOut size={14} /> Sign out
+          </Button>
           <Button
             variant="danger"
             onClick={() => {
-              if (confirm('Reset everything back to the starting data? Your logged work will be lost.')) {
-                reset();
-                setToast('Reset to seed data');
-                setTimeout(() => setToast(null), 1800);
+              if (
+                confirm(
+                  'Delete your account? Every application, company and contact in it goes too. This cannot be undone.',
+                )
+              ) {
+                onDeleteAccount();
               }
             }}
           >
-            <RotateCcw size={14} /> Reset
+            <Trash2 size={14} /> Delete account
           </Button>
         </div>
       </Card>
