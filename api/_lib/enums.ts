@@ -82,3 +82,58 @@ export const companyStatus = mapper([
   'Offer',
   'Deprioritized',
 ] as const);
+
+export const area = mapper([
+  'Project',
+  'Learning',
+  'Algorithms',
+  'Job Search',
+  'Networking',
+  'Contributions',
+  'Interview Prep',
+  'Portfolio',
+  'Review',
+] as const);
+
+export const status = mapper(['Not started', 'In progress', 'Blocked', 'Done'] as const);
+
+export const priority = mapper(['Critical', 'High', 'Medium', 'Low'] as const);
+
+export const dayKey = mapper(['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] as const);
+
+export const exceptionKind = mapper([
+  'Networking event',
+  'Interview',
+  'Technical blocker',
+  'Personal',
+  'Sick',
+  'Holiday',
+] as const);
+
+export const ossStage = mapper([
+  'Shortlisted',
+  'Running locally',
+  'Issue claimed',
+  'PR open',
+  'Changes requested',
+  'Merged',
+  'Closed',
+] as const);
+
+export const ossKind = mapper(['Docs', 'Tests', 'Bug fix', 'Feature', 'Triage'] as const);
+
+export const skillCategory = mapper([
+  'Foundations',
+  'Styling',
+  'Frontend framework',
+  'State management',
+  'Backend',
+  'Data',
+  'Testing',
+  'Delivery',
+  'Hosting',
+  'Tooling',
+  'AI-assisted work',
+  'Career craft',
+  'Weekend & extras',
+] as const);

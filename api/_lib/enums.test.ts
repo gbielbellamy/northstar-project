@@ -36,6 +36,14 @@ describe('enum mapping', () => {
   check('ContactType', enums.contactType, $Enums.ContactType);
   check('CompanyPriority', enums.companyPriority, $Enums.CompanyPriority);
   check('CompanyStatus', enums.companyStatus, $Enums.CompanyStatus);
+  check('Area', enums.area, $Enums.Area);
+  check('Status', enums.status, $Enums.Status);
+  check('Priority', enums.priority, $Enums.Priority);
+  check('DayKey', enums.dayKey, $Enums.DayKey);
+  check('ExceptionKind', enums.exceptionKind, $Enums.ExceptionKind);
+  check('OssStage', enums.ossStage, $Enums.OssStage);
+  check('OssKind', enums.ossKind, $Enums.OssKind);
+  check('SkillCategory', enums.skillCategory, $Enums.SkillCategory);
 
   it('rejects a value that is not in the set', () => {
     expect(enums.applicationStatus.has('Nonsense')).toBe(false);

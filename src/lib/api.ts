@@ -33,10 +33,10 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 export const auth = {
   me: () => request<{ user: User | null }>('/api/auth/me'),
 
-  register: (email: string, password: string) =>
+  register: (email: string, password: string, withPlan: boolean) =>
     request<User>('/api/auth/register', {
       method: 'POST',
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email, password, withPlan }),
     }),
 
   login: (email: string, password: string) =>

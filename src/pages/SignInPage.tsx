@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import { ArrowRight, Loader2, LogIn, UserPlus } from 'lucide-react';
 import { auth, type User } from '../lib/api';
+import Checkbox from '../components/ui/Checkbox';
 import NorthstarMark from '../components/ui/NorthstarMark';
 import Button from '../components/ui/Button';
 import Field from '../components/ui/Field';
@@ -12,6 +13,7 @@ function SignInPage({ onSignedIn }: Props) {
   const [mode, setMode] = useState<Mode>('signin');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [withPlan, setWithPlan] = useState(true);
   const [busy, setBusy] = useState<'form' | 'guest' | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -30,7 +32,10 @@ function SignInPage({ onSignedIn }: Props) {
     e.preventDefault();
     if (busy) return;
     run(
-      () => (mode === 'signin' ? auth.login(email, password) : auth.register(email, password)),
+      () =>
+        mode === 'signin'
+          ? auth.login(email, password)
+          : auth.register(email, password, withPlan),
       'form',
     );
   }
@@ -106,6 +111,21 @@ function SignInPage({ onSignedIn }: Props) {
               onChange={(e) => setPassword(e.target.value)}
             />
           </Field>
+
+          {mode === 'signup' && (
+            <Checkbox
+              checked={withPlan}
+              onChange={setWithPlan}
+              label="Start with the ten-week plan"
+            />
+          )}
+          {mode === 'signup' && (
+            <p className="auth__hint">
+              {withPlan
+                ? 'A roadmap, a timetable and the skill paths, ready to edit. No sample companies or applications.'
+                : 'An empty app. You build the roadmap and the timetable yourself.'}
+            </p>
+          )}
 
           {error && (
             <p className="auth__error" role="alert">
