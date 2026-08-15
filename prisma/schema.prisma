@@ -30,6 +30,19 @@ model User {
   companies    Company[]
   contacts     Contact[]
   applications Application[]
+  roadmap      RoadmapWeek[]
+  goals        WeeklyGoal[]
+  schedule     ScheduleBlock[]
+  skills       Skill[]
+  templates    MessageTemplate[]
+  oss          OssContribution[]
+  exceptions   DayException[]
+  deferrals    Deferral[]
+  reviews      WeeklyReview[]
+  dailyLog     DailyLogEntry[]
+  // Theme, targets, programme start. Read and written as one document, so a
+  // column per field would buy nothing.
+  settings     Json              @default("{}")
 
   @@index([isGuest, createdAt])
 }
@@ -179,4 +192,252 @@ enum CompanyStatus {
   REJECTED      @map("Rejected")
   OFFER         @map("Offer")
   DEPRIORITIZED @map("Deprioritized")
+}
+
+model RoadmapWeek {
+  id               String   @id @default(cuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  week             Int
+  start            String
+  end              String
+  theme            String   @default("")
+  projectDirection String   @default("")
+  definitionOfDone String   @default("")
+  status           Status   @default(NOT_STARTED)
+  notes            String   @default("")
+
+  @@unique([userId, week])
+  @@index([userId])
+}
+
+model WeeklyGoal {
+  id               String   @id @default(cuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  week             Int
+  area             Area
+  title            String   @default("")
+  detail           String   @default("")
+  definitionOfDone String   @default("")
+  status           Status   @default(NOT_STARTED)
+  priority         Priority @default(MEDIUM)
+  plannedHours     Float    @default(0)
+  evidenceUrl      String   @default("")
+  notes            String   @default("")
+
+  @@index([userId])
+  @@index([userId, week])
+}
+
+model ScheduleBlock {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  day         DayKey
+  start       String
+  end         String
+  // Null for lunch and other untracked blocks.
+  area        Area?
+  label       String   @default("")
+  optional    Boolean  @default(false)
+  sessionDone String?
+  steps       String[] @default([])
+  fromWeek    Int?
+  toWeek      Int?
+
+  @@index([userId])
+}
+
+model Skill {
+  id             String        @id @default(cuid())
+  userId         String
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  skill          String
+  currentLevel   String        @default("")
+  target         String        @default("")
+  priority       Priority      @default(MEDIUM)
+  evidence       String        @default("")
+  action         String        @default("")
+  why            String        @default("")
+  miniProject    String        @default("")
+  miniProjectDod String        @default("")
+  category       SkillCategory @default(FOUNDATIONS)
+  badge          String        @default("")
+  colour         String        @default("")
+  icon           String        @default("")
+  optional       Boolean       @default(false)
+  // Ordered lists that are only ever read and written with their skill.
+  resources      Json          @default("[]")
+  sessions       Json          @default("[]")
+
+  @@index([userId])
+}
+
+model MessageTemplate {
+  id       String @id @default(cuid())
+  userId   String
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  useCase  String
+  template String @default("")
+
+  @@index([userId])
+}
+
+model OssContribution {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project      String
+  repoUrl      String   @default("")
+  title        String   @default("")
+  kind         OssKind  @default(DOCS)
+  stage        OssStage @default(SHORTLISTED)
+  issueUrl     String   @default("")
+  prUrl        String   @default("")
+  why          String   @default("")
+  reviewLesson String   @default("")
+  dateStarted  String   @default("")
+  dateMerged   String   @default("")
+  notes        String   @default("")
+
+  @@index([userId])
+}
+
+model DayException {
+  id        String        @id @default(cuid())
+  userId    String
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date      String
+  kind      ExceptionKind @default(PERSONAL)
+  note      String        @default("")
+  hoursOwed Float         @default(0)
+  recoverOn String        @default("")
+  recovered Boolean       @default(false)
+
+  @@index([userId])
+}
+
+model Deferral {
+  id      String @id @default(cuid())
+  userId  String
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date    String
+  blockId String
+  area    Area
+
+  @@index([userId])
+}
+
+model WeeklyReview {
+  id                String  @id @default(cuid())
+  userId            String
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  week              Int
+  shipped           String  @default("")
+  evidenceUrls      String  @default("")
+  applicationsSent  Int     @default(0)
+  messagesSent      Int     @default(0)
+  callsMeetups      Int     @default(0)
+  interviewPrepDone Boolean @default(false)
+  technicalLesson   String  @default("")
+  mainBlocker       String  @default("")
+  changeNextWeek    String  @default("")
+  energyFocus       Int?
+  weekComplete      Boolean @default(false)
+
+  @@unique([userId, week])
+  @@index([userId])
+}
+
+model DailyLogEntry {
+  id      String  @id @default(cuid())
+  userId  String
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date    String
+  blockId String
+  done    Boolean @default(false)
+
+  // Ticking a block is an upsert on this pair.
+  @@unique([userId, date, blockId])
+  @@index([userId])
+}
+
+enum Area {
+  PROJECT        @map("Project")
+  LEARNING       @map("Learning")
+  ALGORITHMS     @map("Algorithms")
+  JOB_SEARCH     @map("Job Search")
+  NETWORKING     @map("Networking")
+  CONTRIBUTIONS  @map("Contributions")
+  INTERVIEW_PREP @map("Interview Prep")
+  PORTFOLIO      @map("Portfolio")
+  REVIEW         @map("Review")
+}
+
+enum Status {
+  NOT_STARTED @map("Not started")
+  IN_PROGRESS @map("In progress")
+  BLOCKED     @map("Blocked")
+  DONE        @map("Done")
+}
+
+enum Priority {
+  CRITICAL @map("Critical")
+  HIGH     @map("High")
+  MEDIUM   @map("Medium")
+  LOW      @map("Low")
+}
+
+enum DayKey {
+  MON @map("Mon")
+  TUE @map("Tue")
+  WED @map("Wed")
+  THU @map("Thu")
+  FRI @map("Fri")
+  SAT @map("Sat")
+  SUN @map("Sun")
+}
+
+enum ExceptionKind {
+  NETWORKING_EVENT  @map("Networking event")
+  INTERVIEW         @map("Interview")
+  TECHNICAL_BLOCKER @map("Technical blocker")
+  PERSONAL          @map("Personal")
+  SICK              @map("Sick")
+  HOLIDAY           @map("Holiday")
+}
+
+enum OssStage {
+  SHORTLISTED       @map("Shortlisted")
+  RUNNING_LOCALLY   @map("Running locally")
+  ISSUE_CLAIMED     @map("Issue claimed")
+  PR_OPEN           @map("PR open")
+  CHANGES_REQUESTED @map("Changes requested")
+  MERGED            @map("Merged")
+  CLOSED            @map("Closed")
+}
+
+enum OssKind {
+  DOCS    @map("Docs")
+  TESTS   @map("Tests")
+  BUG_FIX @map("Bug fix")
+  FEATURE @map("Feature")
+  TRIAGE  @map("Triage")
+}
+
+enum SkillCategory {
+  FOUNDATIONS       @map("Foundations")
+  STYLING           @map("Styling")
+  FRONTEND_FRAMEWORK @map("Frontend framework")
+  STATE_MANAGEMENT  @map("State management")
+  BACKEND           @map("Backend")
+  DATA              @map("Data")
+  TESTING           @map("Testing")
+  DELIVERY          @map("Delivery")
+  HOSTING           @map("Hosting")
+  TOOLING           @map("Tooling")
+  AI_ASSISTED_WORK  @map("AI-assisted work")
+  CAREER_CRAFT      @map("Career craft")
+  WEEKEND_EXTRAS    @map("Weekend & extras")
 }
