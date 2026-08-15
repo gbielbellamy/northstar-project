@@ -4,37 +4,53 @@
 
 A single workspace for a career transition: plan the day, ship the project, track the search, and see whether any of it is working.
 
-Built with React 19, TypeScript, Vite, Zustand, Recharts and Framer Motion. All data lives in the browser — no backend, no account, no network requests.
+React 19, TypeScript and Vite on the front; serverless functions, Prisma and PostgreSQL behind them. One deployment, one domain.
 
-The app ships with sample content — an example roadmap, example schedule steps, and fictional companies, contacts and applications — so every screen has something to show on a first run. All of it is editable, and none of it is real.
+**You do not need an account to look at it.** The demo button on the sign-in screen creates a private throwaway account, already filled with fictional companies and applications, and signs you straight in. Creating a real account gives you the ten-week plan and none of the invented data.
 
 ## Getting started
 
 ```bash
 npm install
-npm run dev
+cp .env.example .env      # then set DATABASE_URL and SESSION_SECRET
+npx prisma migrate deploy
+npx vercel dev
 ```
 
 Then open `http://localhost:5174`.
 
+`vercel dev` rather than `npm run dev`: the API is serverless functions, and Vite alone serves only the frontend.
+
 ```bash
-npm run build     # typecheck + production build
-npm run preview   # serve the production build locally
+npm run build     # generate the client, typecheck, build
+npm test          # unit tests
 ```
 
-Node 20.19+ or 22.12+ is required.
+Node 20.19+ or 22.12+ is required. `DATABASE_URL` can point at any PostgreSQL database; the deployment uses Neon.
 
 ## Project structure
 
 ```
+api/                 Serverless functions — the whole API is five of them
+├── auth/[action]    Register, sign in, sign out, session, guest, delete
+├── items/           Create, edit and delete rows in any collection
+├── user/[part]      Settings, weekly reviews, daily log
+├── state.ts         The whole account in one request; PUT restores a backup
+└── _lib/            Prisma client, sessions, validation, enum mapping
+
+prisma/
+├── schema.prisma    The data model
+└── migrations/      Versioned, so the schema rebuilds from scratch
+
 src/
 ├── main.tsx       Entry point
-├── App.tsx        Routing
+├── App.tsx        Routing and the session gate
 ├── index.css      Design system — tokens, dark mode, typefaces, components
 ├── types/         The domain model, and the single source of truth for it
-├── data/seed.ts   Starting data, editable in the app once loaded
-├── store/         Zustand store: persistence, migration, plan-version merge
+├── data/seed.ts   The starting plan, and the demo content
+├── store/         Zustand store, backed by the API
 ├── lib/           Pure logic, no React
+│   ├── api.ts         The only place that talks to the API
 │   ├── dates.ts       One definition of "today"; local-midnight parsing
 │   ├── pacing.ts      Elastic scheduling — how skipped sessions shift the plan
 │   ├── selectors.ts   Funnel maths, response rate, completion
@@ -51,7 +67,9 @@ src/
 
 `types/` defines the domain; everything else imports from it. `data/seed.ts` is one object matching that shape.
 
-`store/` holds all state and persists it to `localStorage`. On load it merges what's saved with the seed: the plan — roadmap, goals, schedule, skill paths — is replaced whenever the seed's `planVersion` moves ahead, while anything you recorded yourself is left untouched.
+`store/` holds a copy of the account's state so the interface stays instant. Every change is applied locally first and sent afterwards; a failed write says so and reloads from the server, rather than leaving the screen showing something that was never saved.
+
+The API reads in one request and writes row by row. Every write is scoped by the session's user as well as by row id, so a guessed id matches nothing.
 
 `lib/` is where the logic lives, as plain functions with no React and no store access. Pages read state from the store, call into `lib/` for anything computed, and render components. Nothing in `components/` reaches into the store — data arrives as props.
 
@@ -59,7 +77,7 @@ src/
 
 | Section | What it's for |
 | --- | --- |
-| **Dashboard** | The funnel at a glance against your own targets, today's blocks, weekly progress, and where the week's hours go. Export and import the whole state as JSON. |
+| **Dashboard** | The funnel at a glance against your own targets, today's blocks, weekly progress, and where the week's hours go. Export a backup, restore one, or delete the account. |
 | **Schedule** | The working day, block by block, with optional step-by-step guidance. Skip a session and its content slides to that area's next slot, stretching the plan rather than losing it. |
 | **Roadmap** | Ten weeks, each with a theme, a definition of done and per-area goals. Editable and extensible, with a weekly review form. |
 | **Applications** | Every application, with status, age and follow-up date. Applying to an unknown company adds it to Companies and seeds its outreach targets. |
@@ -71,9 +89,11 @@ src/
 
 ## Data
 
-Everything is stored in `localStorage`, scoped to the origin you open the app from. Nothing is transmitted anywhere. That means data is per browser and per device, and clearing site data erases it — **export a backup from the Dashboard regularly.**
+Everything lives in your account in PostgreSQL. The session is a signed token in an `HttpOnly`, `Secure`, `SameSite=Lax` cookie, so no script can read it and no other site can borrow it. Passwords are hashed with bcrypt.
 
-The dev port is fixed in `vite.config.ts` for the same reason: `localStorage` is scoped to the origin, so a moving port would mean a moving data store.
+Deleting your account deletes everything in it — the schema cascades, so erasure is a property of the data model rather than code that can be forgotten.
+
+Backups export as JSON from the Dashboard and restore into the account in a single transaction.
 
 ## Design system
 
