@@ -6,7 +6,7 @@ A single workspace for a career transition: plan the day, ship the project, trac
 
 React 19, TypeScript and Vite on the front; serverless functions, Prisma and PostgreSQL behind them. One deployment, one domain.
 
-**You do not need an account to look at it.** The demo button on the sign-in screen creates a private throwaway account, already filled with fictional companies and applications, and signs you straight in. Creating a real account gives you the ten-week plan and none of the invented data.
+**You do not need an account to look at it.** The demo button on the sign-in screen creates a private throwaway account, already filled with fictional companies and applications, and signs you straight in. Creating a real account gives you a starter plan and none of the invented data.
 
 ## Getting started
 
@@ -79,7 +79,7 @@ The API reads in one request and writes row by row. Every write is scoped by the
 | --- | --- |
 | **Dashboard** | The funnel at a glance against your own targets, today's blocks, weekly progress, and where the week's hours go. Export a backup, restore one, or delete the account. |
 | **Schedule** | The working day, block by block, with optional step-by-step guidance. Skip a session and its content slides to that area's next slot, stretching the plan rather than losing it. |
-| **Roadmap** | Ten weeks, each with a theme, a definition of done and per-area goals. Editable and extensible, with a weekly review form. |
+| **Roadmap** | Weeks, each with a theme, a definition of done and per-area goals. Editable and extensible, with a weekly review form. |
 | **Applications** | Every application, with status, age and follow-up date. Applying to an unknown company adds it to Companies and seeds its outreach targets. |
 | **Networking** | Outreach targets and their status, sorted by company. |
 | **Companies** | The target list, ranked by fit and tiered A/B/C. |

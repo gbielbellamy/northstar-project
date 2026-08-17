@@ -20,7 +20,7 @@ function NoPlan({ what }: { what: string }) {
       <EmptyState
         icon={<Route size={19} />}
         title={`No plan yet, so there is no ${what}`}
-        text="You created this account without one. Load the ten-week plan and edit it from there, or build your own week by week."
+        text="You created this account without one. Load the starter plan and edit it from there, or build your own week by week."
       />
       <div className="row" style={{ justifyContent: 'center', marginTop: 14 }}>
         <Button
@@ -32,7 +32,7 @@ function NoPlan({ what }: { what: string }) {
           }}
         >
           {busy ? <Loader2 size={14} className="spin" /> : <Route size={14} />}
-          Load the ten-week plan
+          Load the starter plan
         </Button>
       </div>
     </div>

@@ -198,9 +198,9 @@ function SchedulePage() {
           <div>
             <h1>Schedule</h1>
             <p className="page__sub">
-              09:00–17:45, eight hours of work. Mornings are Job Search; afternoons alternate Project and
-              Contributions; evenings alternate Skills roadmap and algorithms, with English to close.
-              Saturday morning is portfolio and the weekly review. Sunday is off.
+              Your working week, block by block. Each block says what finishing that one sitting looks
+              like; the week's target lives in Roadmap. Skip a session and its content moves to that
+              area's next slot instead of being lost.
             </p>
           </div>
         </div>
