@@ -6,7 +6,9 @@ A single workspace for a career transition: plan the day, ship the project, trac
 
 React 19, TypeScript and Vite on the front; serverless functions, Prisma and PostgreSQL behind them. One deployment, one domain.
 
-**You do not need an account to look at it.** The demo button on the sign-in screen creates a private throwaway account, already filled with fictional companies and applications, and signs you straight in. Creating a real account gives you a starter plan and none of the invented data.
+**You do not need an account to look at it.** The demo button on the sign-in screen creates a private throwaway account and signs you straight in. It arrives four weeks into a plan, with sessions logged, a couple pushed back and a day displaced, so the charts have something to show. Leaving the demo deletes it.
+
+Creating a real account gives you the starter plan with nothing done yet, and none of the invented data.
 
 ## Getting started
 
@@ -22,8 +24,8 @@ Then open `http://localhost:5174`.
 `vercel dev` rather than `npm run dev`: the API is serverless functions, and Vite alone serves only the frontend.
 
 ```bash
-npm run build     # generate the client, typecheck, build
-npm test          # unit tests
+npm run build     # generate the client, run migrations, typecheck, build
+npm test          # 110 unit tests, no browser and no database needed
 ```
 
 Node 20.19+ or 22.12+ is required. `DATABASE_URL` can point at any PostgreSQL database; the deployment uses Neon.
@@ -77,7 +79,7 @@ The API reads in one request and writes row by row. Every write is scoped by the
 
 | Section | What it's for |
 | --- | --- |
-| **Dashboard** | The funnel at a glance against your own targets, today's blocks, weekly progress, and where the week's hours go. Export a backup, restore one, or delete the account. |
+| **Dashboard** | The funnel at a glance against your own targets, today's blocks, weekly progress, and where the week's hours go. |
 | **Schedule** | The working day, block by block, with optional step-by-step guidance. Skip a session and its content slides to that area's next slot, stretching the plan rather than losing it. |
 | **Roadmap** | Weeks, each with a theme, a definition of done and per-area goals. Editable and extensible, with a weekly review form. |
 | **Applications** | Every application, with status, age and follow-up date. Applying to an unknown company adds it to Companies and seeds its outreach targets. |
@@ -93,7 +95,9 @@ Everything lives in your account in PostgreSQL. The session is a signed token in
 
 Deleting your account deletes everything in it — the schema cascades, so erasure is a property of the data model rather than code that can be forgotten.
 
-Backups export as JSON from the Dashboard and restore into the account in a single transaction.
+Backups export as JSON from the account menu, at the foot of the sidebar, and restore in a single transaction — a malformed file cannot leave an account half-wiped.
+
+Demo accounts are real accounts, seeded at sign-up rather than stored, which is why every feature works on one without a special case anywhere in the code. Leaving one deletes it, and a daily job clears out any that were abandoned.
 
 ## Design system
 
