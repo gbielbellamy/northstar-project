@@ -168,3 +168,38 @@ describe('todayISO', () => {
     expect(todayISO(null)).toMatch(/^\d{4}-\d{2}-\d{2}$/);
   });
 });
+
+describe('weekdaysSince, against a plain count', () => {
+  /** The obvious, slow version — the arithmetic one must agree with it. */
+  function bruteForce(startISO: string, dateISO: string): number {
+    let count = 0;
+    let d = parseISO(startISO);
+    const end = parseISO(dateISO);
+    while (d.getTime() <= end.getTime()) {
+      const dow = d.getDay();
+      if (dow !== 0 && dow !== 6) count++;
+      d = new Date(d.getTime());
+      d.setDate(d.getDate() + 1);
+    }
+    return count;
+  }
+
+  it('agrees for every start day and every length up to a year', () => {
+    // Seven starts covers every weekday the programme could begin on.
+    for (let s = 0; s < 7; s++) {
+      const start = addDays('2026-08-03', s);
+      for (const span of [0, 1, 2, 3, 4, 5, 6, 7, 13, 30, 89, 200, 365]) {
+        const end = addDays(start, span);
+        expect({ start, end, n: weekdaysSince(start, end) }).toEqual({
+          start,
+          end,
+          n: bruteForce(start, end),
+        });
+      }
+    }
+  });
+
+  it('is zero when the end is before the start', () => {
+    expect(weekdaysSince('2026-08-10', '2026-08-03')).toBe(0);
+  });
+});

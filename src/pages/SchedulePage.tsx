@@ -42,6 +42,7 @@ import Modal from '../components/ui/Modal';
 import Field from '../components/ui/Field';
 import Checkbox from '../components/ui/Checkbox';
 import AnimatedSection from '../components/ui/AnimatedSection';
+import NoPlan from '../components/ui/NoPlan';
 
 const EMPTY: Omit<ScheduleBlock, 'id'> = {
   day: 'Mon',
@@ -69,7 +70,11 @@ function SchedulePage() {
   const [exEditing, setExEditing] = useState<DayException | null>(null);
   const [exDraft, setExDraft] = useState<Omit<DayException, 'id'> | null>(null);
 
-  const rw = roadmap.find((r) => r.week === week);
+  // Falls back to the nearest week rather than showing nothing: the computed
+  // week can run past the end of a roadmap that has been shortened.
+  const rw =
+    roadmap.find((r) => r.week === week) ??
+    [...roadmap].sort((a, b) => Math.abs(a.week - week) - Math.abs(b.week - week))[0];
   // Theme and definition of done come from the roadmap entry. Only the dates
   // are computed, since Project's lag stretches the whole plan.
   const weekRange = useMemo(
@@ -107,7 +112,8 @@ function SchedulePage() {
     return { workHours: work, breakHours: brk };
   }, [schedule]);
 
-  if (!rw) return <div className="page">No week selected.</div>;
+  // An account created without a plan has no weeks to show.
+  if (roadmap.length === 0) return <NoPlan what="timetable" />;
 
   /** Hours displaced this week and not yet made up. */
   const hoursOwed = exceptions

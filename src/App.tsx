@@ -23,14 +23,27 @@ import type { AppState } from './types';
  * Only the dashboard is in the initial bundle. The rest load on first open,
  * which keeps the icon set and the component catalogue out of the first load.
  */
-const SchedulePage = lazy(() => import('./pages/SchedulePage'));
-const RoadmapPage = lazy(() => import('./pages/RoadmapPage'));
-const ApplicationsPage = lazy(() => import('./pages/ApplicationsPage'));
-const NetworkingPage = lazy(() => import('./pages/NetworkingPage'));
-const CompaniesPage = lazy(() => import('./pages/CompaniesPage'));
-const ContributionsPage = lazy(() => import('./pages/ContributionsPage'));
-const ResourcesPage = lazy(() => import('./pages/ResourcesPage'));
-const ComponentsPage = lazy(() => import('./pages/ComponentsPage'));
+const LOADERS = [
+  () => import('./pages/SchedulePage'),
+  () => import('./pages/RoadmapPage'),
+  () => import('./pages/ApplicationsPage'),
+  () => import('./pages/NetworkingPage'),
+  () => import('./pages/CompaniesPage'),
+  () => import('./pages/ContributionsPage'),
+  () => import('./pages/ResourcesPage'),
+  () => import('./pages/ComponentsPage'),
+] as const;
+
+const [
+  SchedulePage,
+  RoadmapPage,
+  ApplicationsPage,
+  NetworkingPage,
+  CompaniesPage,
+  ContributionsPage,
+  ResourcesPage,
+  ComponentsPage,
+] = LOADERS.map((load) => lazy(load));
 
 export type PageKey =
   | 'dashboard'
@@ -81,6 +94,16 @@ function App() {
     if (signedInAs) void loadState();
     else clearState();
   }, [signedInAs, checked, loadState, clearState]);
+
+  // Fetch the other pages once the first one is up. They are 8–16 kB each, and
+  // waiting for one on the click is what makes switching section feel dead.
+  useEffect(() => {
+    if (!ready) return;
+    const idle =
+      window.requestIdleCallback ?? ((fn: () => void) => window.setTimeout(fn, 400));
+    const handle = idle(() => LOADERS.forEach((load) => void load()));
+    return () => window.cancelIdleCallback?.(handle as number);
+  }, [ready]);
 
   // A failed write can happen on any page, so the message lives here.
   useEffect(() => {
@@ -160,9 +183,9 @@ function App() {
       onSignOut={signOut}
       onDeleteAccount={deleteAccount}
     >
-      {/* Blank on purpose: these chunks load in milliseconds, and a spinner
-          that flashes is worse than none. */}
-      <Suspense fallback={<div className="page" aria-busy="true" />}>
+      {/* Rarely seen: the pages are prefetched above. It only shows if you
+          click one before its chunk has arrived. */}
+      <Suspense fallback={<Splash />}>
         {page === 'dashboard' && (
           <DashboardPage setPage={setPage} />
         )}

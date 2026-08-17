@@ -41,6 +41,8 @@ export type Store = AppState & {
   error: string | null;
 
   load: () => Promise<void>;
+  /** For an account created without one. */
+  addStandardPlan: () => Promise<void>;
   clear: () => void;
   clearError: () => void;
 
@@ -119,6 +121,11 @@ export const useStore = create<Store>()((set, get) => {
     load: async () => {
       const state = await api.state();
       set({ ...state, ready: true, error: null });
+    },
+
+    addStandardPlan: async () => {
+      await api.loadStandardPlan();
+      await get().load();
     },
 
     clear: () => set({ ...blankState(), ready: false, error: null }),

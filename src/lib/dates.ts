@@ -89,16 +89,25 @@ export function isWeekday(iso: string): boolean {
   return dow !== 0 && dow !== 6;
 }
 
-/** Weekdays elapsed from `startISO` to `dateISO` inclusive of both ends. */
+/**
+ * Weekdays elapsed from `startISO` to `dateISO`, counting both ends.
+ *
+ * Arithmetic rather than a day-by-day walk: this is called from inside loops
+ * that themselves walk the calendar, and counting one day at a time made the
+ * schedule quadratic in how long the programme has been running.
+ */
 export function weekdaysSince(startISO: string, dateISO: string): number {
-  let count = 0;
-  let d = parseISO(startISO);
-  const end = parseISO(dateISO);
-  while (d.getTime() <= end.getTime()) {
-    const dow = d.getDay();
-    if (dow !== 0 && dow !== 6) count++;
-    d = new Date(d.getTime());
-    d.setDate(d.getDate() + 1);
+  const days = daysBetween(startISO, dateISO) + 1;
+  if (days <= 0) return 0;
+
+  // Monday = 0, so the weekend is always positions 5 and 6.
+  const startDow = (parseISO(startISO).getDay() + 6) % 7;
+  const whole = Math.floor(days / 7);
+  const rest = days % 7;
+
+  let count = whole * 5;
+  for (let i = 0; i < rest; i++) {
+    if ((startDow + i) % 7 < 5) count++;
   }
   return count;
 }

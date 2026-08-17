@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { prisma, withUser } from './_lib/auth.js';
 import { collection, type CollectionName } from './_lib/collections.js';
-import { loadState } from './_lib/state.js';
+import { loadState, seedAccount } from './_lib/state.js';
 
 const COLLECTIONS: CollectionName[] = [
   'roadmap',
@@ -19,18 +19,36 @@ const COLLECTIONS: CollectionName[] = [
 
 /**
  * GET returns everything the user has, in one request.
- * PUT replaces it with an exported backup.
+ * POST fills an empty account with the standard plan.
+ * PUT replaces everything with an exported backup.
  */
 export default withUser(async (req: VercelRequest, res: VercelResponse, userId: string) => {
   if (req.method === 'GET') {
     res.status(200).json(await loadState(userId));
     return;
   }
+  if (req.method === 'POST') {
+    return addStandardPlan(res, userId);
+  }
   if (req.method === 'PUT') {
     return restore(req, res, userId);
   }
   res.status(405).json({ error: 'Method not allowed' });
 });
+
+/**
+ * For an account that started empty and now wants the plan after all. Refuses
+ * if there is one already, rather than seeding a second copy on top.
+ */
+async function addStandardPlan(res: VercelResponse, userId: string) {
+  const existing = await prisma.roadmapWeek.count({ where: { userId } });
+  if (existing > 0) {
+    res.status(409).json({ error: 'This account already has a plan' });
+    return;
+  }
+  await seedAccount(userId, { withPlan: true, withSampleRecords: false });
+  res.status(204).end();
+}
 
 /**
  * A replace rather than a merge: restoring a backup should leave exactly what

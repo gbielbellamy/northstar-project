@@ -90,6 +90,9 @@ export const api = {
   review: (week: number, review: WeeklyReview) =>
     request<void>('/api/user/reviews', { method: 'PUT', body: JSON.stringify({ week, review }) }),
 
+  /** Fills an empty account with the standard ten-week plan. */
+  loadStandardPlan: () => request<void>('/api/state', { method: 'POST' }),
+
   /** Replaces everything in the account with an exported backup. */
   import: (state: AppState) =>
     request<void>('/api/state', { method: 'PUT', body: JSON.stringify(state) }),
