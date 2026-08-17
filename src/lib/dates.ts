@@ -1,4 +1,4 @@
-import type { DayKey, RoadmapWeek } from '../types';
+import type { DayKey, RoadmapWeek } from '../types/index.js';
 
 export const DAY_KEYS: DayKey[] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 

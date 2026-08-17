@@ -6,63 +6,63 @@ export const seedState: AppState = {
     {
       "id": "rw-001",
       "week": 1,
-      "start": "2026-08-03",
-      "end": "2026-08-09",
+      "start": "2026-07-13",
+      "end": "2026-07-19",
       "theme": "Get the basics in order",
       "projectDirection": "A CV you would send today, a profile that matches it, and a first list of places worth applying to.",
       "definitionOfDone": "The CV and the profile say the same thing, and there are at least ten names on the list.",
-      "status": "Not started",
+      "status": "Done",
       "notes": ""
     },
     {
       "id": "rw-002",
       "week": 2,
-      "start": "2026-08-10",
-      "end": "2026-08-16",
+      "start": "2026-07-20",
+      "end": "2026-07-26",
       "theme": "Start applying",
       "projectDirection": "Turn the list into applications, tailored one at a time rather than sent in a batch.",
       "definitionOfDone": "Every application logged, each with a follow-up date.",
-      "status": "Not started",
+      "status": "Done",
       "notes": ""
     },
     {
       "id": "rw-003",
       "week": 3,
-      "start": "2026-08-17",
-      "end": "2026-08-23",
+      "start": "2026-07-27",
+      "end": "2026-08-02",
       "theme": "Reach out to people",
       "projectDirection": "Find someone at each place you applied to, and write to them.",
       "definitionOfDone": "A message sent for most of the applications, and every reply answered.",
-      "status": "Not started",
+      "status": "Done",
       "notes": ""
     },
     {
       "id": "rw-004",
       "week": 4,
-      "start": "2026-08-24",
-      "end": "2026-08-30",
+      "start": "2026-08-03",
+      "end": "2026-08-09",
       "theme": "Practise interviewing",
       "projectDirection": "Rehearse the questions that come up every time, out loud, and record them.",
       "definitionOfDone": "Answers to the three commonest questions, delivered without reading.",
-      "status": "Not started",
+      "status": "Done",
       "notes": ""
     },
     {
       "id": "rw-005",
       "week": 5,
-      "start": "2026-08-31",
-      "end": "2026-09-06",
+      "start": "2026-08-10",
+      "end": "2026-08-16",
       "theme": "Widen the search",
       "projectDirection": "Look at adjacent roles and places you dismissed too early, and see what the numbers say.",
       "definitionOfDone": "The response rate compared between role types, and the search adjusted.",
-      "status": "Not started",
+      "status": "In progress",
       "notes": ""
     },
     {
       "id": "rw-006",
       "week": 6,
-      "start": "2026-09-07",
-      "end": "2026-09-13",
+      "start": "2026-08-17",
+      "end": "2026-08-23",
       "theme": "Review and decide",
       "projectDirection": "What worked, what did not, and what changes for the next six weeks.",
       "definitionOfDone": "A written decision about what to do differently, not a vague intention.",
@@ -78,10 +78,10 @@ export const seedState: AppState = {
       "title": "Search and apply",
       "detail": "Time set aside each morning to look for openings and apply to the ones worth it. Quality over quantity: one application shaped to the role is worth more than several sent as they are. No quota — what matters is that the time is used.",
       "definitionOfDone": "The mornings were used for it, and everything applied to is logged with a follow-up date.",
-      "status": "Not started",
+      "status": "Done",
       "priority": "Critical",
       "plannedHours": 10.0,
-      "evidenceUrl": "",
+      "evidenceUrl": "https://example.com/evidence",
       "notes": ""
     },
     {
@@ -91,10 +91,10 @@ export const seedState: AppState = {
       "title": "Rehearse one answer",
       "detail": "One question a week, answered out loud and recorded, until it comes out without effort.",
       "definitionOfDone": "One take you would be happy for an interviewer to hear.",
-      "status": "Not started",
+      "status": "Done",
       "priority": "High",
       "plannedHours": 1.25,
-      "evidenceUrl": "",
+      "evidenceUrl": "https://example.com/evidence",
       "notes": ""
     },
     {
@@ -104,10 +104,10 @@ export const seedState: AppState = {
       "title": "Meet people in the field",
       "detail": "Time for the part of a search that is not a form: looking for events worth going to, and finding people whose work you would like to understand. No target number — a conversation that goes somewhere beats a dozen that do not.",
       "definitionOfDone": "Whatever came of it is written down, so next week starts from something.",
-      "status": "Not started",
+      "status": "Done",
       "priority": "High",
       "plannedHours": 1.25,
-      "evidenceUrl": "",
+      "evidenceUrl": "https://example.com/evidence",
       "notes": ""
     },
     {
@@ -117,10 +117,10 @@ export const seedState: AppState = {
       "title": "One session from the skill path",
       "detail": "The next unfinished session, with the exercise written rather than only read.",
       "definitionOfDone": "One session ticked off, with something you wrote.",
-      "status": "Not started",
+      "status": "Done",
       "priority": "Medium",
       "plannedHours": 1.25,
-      "evidenceUrl": "",
+      "evidenceUrl": "https://example.com/evidence",
       "notes": ""
     },
     {
@@ -130,10 +130,10 @@ export const seedState: AppState = {
       "title": "Keep the public version current",
       "detail": "Profile, links and anything you have finished this week.",
       "definitionOfDone": "Nothing out of date that a stranger would see.",
-      "status": "Not started",
+      "status": "Done",
       "priority": "Medium",
       "plannedHours": 1.25,
-      "evidenceUrl": "",
+      "evidenceUrl": "https://example.com/evidence",
       "notes": ""
     },
     {
@@ -143,10 +143,10 @@ export const seedState: AppState = {
       "title": "Close the week honestly",
       "detail": "The counts, the blocker, and one thing that changes.",
       "definitionOfDone": "Saved, with a real blocker written down.",
-      "status": "Not started",
+      "status": "Done",
       "priority": "High",
       "plannedHours": 1.25,
-      "evidenceUrl": "",
+      "evidenceUrl": "https://example.com/evidence",
       "notes": ""
     },
     {
@@ -156,10 +156,10 @@ export const seedState: AppState = {
       "title": "Search and apply",
       "detail": "Time set aside each morning to look for openings and apply to the ones worth it. Quality over quantity: one application shaped to the role is worth more than several sent as they are. No quota — what matters is that the time is used.",
       "definitionOfDone": "The mornings were used for it, and everything applied to is logged with a follow-up date.",
-      "status": "Not started",
+      "status": "Done",
       "priority": "Critical",
       "plannedHours": 10.0,
-      "evidenceUrl": "",
+      "evidenceUrl": "https://example.com/evidence",
       "notes": ""
     },
     {
@@ -169,10 +169,10 @@ export const seedState: AppState = {
       "title": "Rehearse one answer",
       "detail": "One question a week, answered out loud and recorded, until it comes out without effort.",
       "definitionOfDone": "One take you would be happy for an interviewer to hear.",
-      "status": "Not started",
+      "status": "Done",
       "priority": "High",
       "plannedHours": 1.25,
-      "evidenceUrl": "",
+      "evidenceUrl": "https://example.com/evidence",
       "notes": ""
     },
     {
@@ -182,10 +182,10 @@ export const seedState: AppState = {
       "title": "Meet people in the field",
       "detail": "Time for the part of a search that is not a form: looking for events worth going to, and finding people whose work you would like to understand. No target number — a conversation that goes somewhere beats a dozen that do not.",
       "definitionOfDone": "Whatever came of it is written down, so next week starts from something.",
-      "status": "Not started",
+      "status": "Done",
       "priority": "High",
       "plannedHours": 1.25,
-      "evidenceUrl": "",
+      "evidenceUrl": "https://example.com/evidence",
       "notes": ""
     },
     {
@@ -195,10 +195,10 @@ export const seedState: AppState = {
       "title": "One session from the skill path",
       "detail": "The next unfinished session, with the exercise written rather than only read.",
       "definitionOfDone": "One session ticked off, with something you wrote.",
-      "status": "Not started",
+      "status": "Done",
       "priority": "Medium",
       "plannedHours": 1.25,
-      "evidenceUrl": "",
+      "evidenceUrl": "https://example.com/evidence",
       "notes": ""
     },
     {
@@ -208,10 +208,10 @@ export const seedState: AppState = {
       "title": "Keep the public version current",
       "detail": "Profile, links and anything you have finished this week.",
       "definitionOfDone": "Nothing out of date that a stranger would see.",
-      "status": "Not started",
+      "status": "Done",
       "priority": "Medium",
       "plannedHours": 1.25,
-      "evidenceUrl": "",
+      "evidenceUrl": "https://example.com/evidence",
       "notes": ""
     },
     {
@@ -221,7 +221,7 @@ export const seedState: AppState = {
       "title": "Close the week honestly",
       "detail": "The counts, the blocker, and one thing that changes.",
       "definitionOfDone": "Saved, with a real blocker written down.",
-      "status": "Not started",
+      "status": "In progress",
       "priority": "High",
       "plannedHours": 1.25,
       "evidenceUrl": "",
@@ -234,10 +234,10 @@ export const seedState: AppState = {
       "title": "Search and apply",
       "detail": "Time set aside each morning to look for openings and apply to the ones worth it. Quality over quantity: one application shaped to the role is worth more than several sent as they are. No quota — what matters is that the time is used.",
       "definitionOfDone": "The mornings were used for it, and everything applied to is logged with a follow-up date.",
-      "status": "Not started",
+      "status": "Done",
       "priority": "Critical",
       "plannedHours": 10.0,
-      "evidenceUrl": "",
+      "evidenceUrl": "https://example.com/evidence",
       "notes": ""
     },
     {
@@ -247,10 +247,10 @@ export const seedState: AppState = {
       "title": "Rehearse one answer",
       "detail": "One question a week, answered out loud and recorded, until it comes out without effort.",
       "definitionOfDone": "One take you would be happy for an interviewer to hear.",
-      "status": "Not started",
+      "status": "Done",
       "priority": "High",
       "plannedHours": 1.25,
-      "evidenceUrl": "",
+      "evidenceUrl": "https://example.com/evidence",
       "notes": ""
     },
     {
@@ -260,10 +260,10 @@ export const seedState: AppState = {
       "title": "Meet people in the field",
       "detail": "Time for the part of a search that is not a form: looking for events worth going to, and finding people whose work you would like to understand. No target number — a conversation that goes somewhere beats a dozen that do not.",
       "definitionOfDone": "Whatever came of it is written down, so next week starts from something.",
-      "status": "Not started",
+      "status": "Done",
       "priority": "High",
       "plannedHours": 1.25,
-      "evidenceUrl": "",
+      "evidenceUrl": "https://example.com/evidence",
       "notes": ""
     },
     {
@@ -273,10 +273,10 @@ export const seedState: AppState = {
       "title": "One session from the skill path",
       "detail": "The next unfinished session, with the exercise written rather than only read.",
       "definitionOfDone": "One session ticked off, with something you wrote.",
-      "status": "Not started",
+      "status": "Done",
       "priority": "Medium",
       "plannedHours": 1.25,
-      "evidenceUrl": "",
+      "evidenceUrl": "https://example.com/evidence",
       "notes": ""
     },
     {
@@ -286,10 +286,10 @@ export const seedState: AppState = {
       "title": "Keep the public version current",
       "detail": "Profile, links and anything you have finished this week.",
       "definitionOfDone": "Nothing out of date that a stranger would see.",
-      "status": "Not started",
+      "status": "Done",
       "priority": "Medium",
       "plannedHours": 1.25,
-      "evidenceUrl": "",
+      "evidenceUrl": "https://example.com/evidence",
       "notes": ""
     },
     {
@@ -299,10 +299,10 @@ export const seedState: AppState = {
       "title": "Close the week honestly",
       "detail": "The counts, the blocker, and one thing that changes.",
       "definitionOfDone": "Saved, with a real blocker written down.",
-      "status": "Not started",
+      "status": "Done",
       "priority": "High",
       "plannedHours": 1.25,
-      "evidenceUrl": "",
+      "evidenceUrl": "https://example.com/evidence",
       "notes": ""
     },
     {
@@ -312,10 +312,10 @@ export const seedState: AppState = {
       "title": "Search and apply",
       "detail": "Time set aside each morning to look for openings and apply to the ones worth it. Quality over quantity: one application shaped to the role is worth more than several sent as they are. No quota — what matters is that the time is used.",
       "definitionOfDone": "The mornings were used for it, and everything applied to is logged with a follow-up date.",
-      "status": "Not started",
+      "status": "Done",
       "priority": "Critical",
       "plannedHours": 10.0,
-      "evidenceUrl": "",
+      "evidenceUrl": "https://example.com/evidence",
       "notes": ""
     },
     {
@@ -325,10 +325,10 @@ export const seedState: AppState = {
       "title": "Rehearse one answer",
       "detail": "One question a week, answered out loud and recorded, until it comes out without effort.",
       "definitionOfDone": "One take you would be happy for an interviewer to hear.",
-      "status": "Not started",
+      "status": "Done",
       "priority": "High",
       "plannedHours": 1.25,
-      "evidenceUrl": "",
+      "evidenceUrl": "https://example.com/evidence",
       "notes": ""
     },
     {
@@ -338,10 +338,10 @@ export const seedState: AppState = {
       "title": "Meet people in the field",
       "detail": "Time for the part of a search that is not a form: looking for events worth going to, and finding people whose work you would like to understand. No target number — a conversation that goes somewhere beats a dozen that do not.",
       "definitionOfDone": "Whatever came of it is written down, so next week starts from something.",
-      "status": "Not started",
+      "status": "Done",
       "priority": "High",
       "plannedHours": 1.25,
-      "evidenceUrl": "",
+      "evidenceUrl": "https://example.com/evidence",
       "notes": ""
     },
     {
@@ -351,10 +351,10 @@ export const seedState: AppState = {
       "title": "One session from the skill path",
       "detail": "The next unfinished session, with the exercise written rather than only read.",
       "definitionOfDone": "One session ticked off, with something you wrote.",
-      "status": "Not started",
+      "status": "Done",
       "priority": "Medium",
       "plannedHours": 1.25,
-      "evidenceUrl": "",
+      "evidenceUrl": "https://example.com/evidence",
       "notes": ""
     },
     {
@@ -364,7 +364,7 @@ export const seedState: AppState = {
       "title": "Keep the public version current",
       "detail": "Profile, links and anything you have finished this week.",
       "definitionOfDone": "Nothing out of date that a stranger would see.",
-      "status": "Not started",
+      "status": "In progress",
       "priority": "Medium",
       "plannedHours": 1.25,
       "evidenceUrl": "",
@@ -377,7 +377,7 @@ export const seedState: AppState = {
       "title": "Close the week honestly",
       "detail": "The counts, the blocker, and one thing that changes.",
       "definitionOfDone": "Saved, with a real blocker written down.",
-      "status": "Not started",
+      "status": "Blocked",
       "priority": "High",
       "plannedHours": 1.25,
       "evidenceUrl": "",
@@ -390,10 +390,10 @@ export const seedState: AppState = {
       "title": "Search and apply",
       "detail": "Time set aside each morning to look for openings and apply to the ones worth it. Quality over quantity: one application shaped to the role is worth more than several sent as they are. No quota — what matters is that the time is used.",
       "definitionOfDone": "The mornings were used for it, and everything applied to is logged with a follow-up date.",
-      "status": "Not started",
+      "status": "Done",
       "priority": "Critical",
       "plannedHours": 10.0,
-      "evidenceUrl": "",
+      "evidenceUrl": "https://example.com/evidence",
       "notes": ""
     },
     {
@@ -403,10 +403,10 @@ export const seedState: AppState = {
       "title": "Rehearse one answer",
       "detail": "One question a week, answered out loud and recorded, until it comes out without effort.",
       "definitionOfDone": "One take you would be happy for an interviewer to hear.",
-      "status": "Not started",
+      "status": "Done",
       "priority": "High",
       "plannedHours": 1.25,
-      "evidenceUrl": "",
+      "evidenceUrl": "https://example.com/evidence",
       "notes": ""
     },
     {
@@ -416,7 +416,7 @@ export const seedState: AppState = {
       "title": "Meet people in the field",
       "detail": "Time for the part of a search that is not a form: looking for events worth going to, and finding people whose work you would like to understand. No target number — a conversation that goes somewhere beats a dozen that do not.",
       "definitionOfDone": "Whatever came of it is written down, so next week starts from something.",
-      "status": "Not started",
+      "status": "In progress",
       "priority": "High",
       "plannedHours": 1.25,
       "evidenceUrl": "",
@@ -1922,1132 +1922,584 @@ export const seedState: AppState = {
   ],
   "skills": [
     {
-      "id": "sk-js",
-      "skill": "JavaScript",
+      "id": "sk-001",
+      "skill": "Spreadsheets",
+      "currentLevel": "Formulas and sorting",
+      "target": "Pivot tables and lookups without help",
+      "priority": "High",
+      "evidence": "",
+      "action": "",
+      "why": "Still where most analysis starts, and where most data arrives. Being fast here saves hours before anything else does.",
+      "miniProject": "Turn a messy export into a one-page summary.",
+      "miniProjectDod": "A sheet someone else can open and understand without you.",
       "category": "Foundations",
-      "badge": "JS",
-      "colour": "#f7df1e",
-      "currentLevel": "Can build with it, shaky on the why",
-      "target": "Can explain async, closures and the event loop under interview pressure",
-      "priority": "Critical",
-      "evidence": "Written explanations plus refactors in this repo's commit history",
-      "action": "One concept per session, each proved by code you wrote yourself.",
-      "why": "This is the language every other skill sits on top of, and it is what junior screens actually test — closures, async and what `this` does, not framework trivia.",
-      "miniProject": "Write a small typed data-fetching layer for this app: retry with exponential backoff, request cancellation, and a debounced search box — no libraries.",
-      "miniProjectDod": "The search debounces, a slow request can be cancelled, a failing request retries three times, and you can explain every line out loud.",
+      "badge": "SH",
+      "colour": "#0f9d58",
+      "icon": "googlesheets",
+      "optional": false,
       "resources": [
         {
-          "id": "r-js-1",
-          "title": "javascript.info",
-          "url": "https://javascript.info/",
+          "id": "r-1-1",
+          "title": "Google Sheets training",
+          "url": "https://support.google.com/a/users/answer/9282959",
           "kind": "Course",
-          "note": "The best free deep explanation of the language. Parts 1 and 2 are what matter."
+          "note": "Official and free. Do the pivot table section twice."
         },
         {
-          "id": "r-js-2",
-          "title": "MDN — JavaScript reference",
-          "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
+          "id": "r-1-2",
+          "title": "Excel functions reference",
+          "url": "https://support.microsoft.com/en-us/office/excel-functions-by-category-5f91f4e9-7b42-46d2-9bd1-63f26a86c0eb",
           "kind": "Reference",
-          "note": "Go here for the exact behaviour of a method. The examples are trustworthy."
-        },
-        {
-          "id": "r-js-3",
-          "title": "You Don't Know JS Yet (free online)",
-          "url": "https://github.com/getify/You-Dont-Know-JS",
-          "kind": "Article",
-          "note": "Read 'Scope & Closures'. It makes closures stop being magic."
-        },
-        {
-          "id": "r-js-4",
-          "title": "Loupe — event loop visualiser",
-          "url": "http://latentflip.com/loupe/",
-          "kind": "Practice",
-          "note": "Paste a setTimeout example and watch the call stack. Beats an hour of reading."
-        },
-        {
-          "id": "r-js-5",
-          "title": "JavaScript questions quiz",
-          "url": "https://github.com/lydiahallie/javascript-questions",
-          "kind": "Practice",
-          "note": "Every question has an explanation. Excellent for finding what you half know."
+          "note": "Look things up here rather than guessing."
         }
       ],
       "sessions": [
         {
-          "id": "s-js-1",
+          "id": "s-1-1",
           "order": 1,
-          "title": "Scope, closures and why they matter",
-          "goal": "Explain a closure with an example you wrote, not a definition you memorised.",
-          "exercise": "Write debounce and once from scratch, without looking at an implementation.",
-          "resourceUrl": "https://javascript.info/closure",
-          "minutes": 90,
+          "title": "Clean a messy export",
+          "goal": "Get inconsistent data into a usable shape.",
+          "exercise": "Take a public CSV and fix the columns by hand.",
+          "resourceUrl": "https://support.google.com/a/users/answer/9282959",
+          "minutes": 45,
           "done": false
         },
         {
-          "id": "s-js-2",
+          "id": "s-1-2",
           "order": 2,
-          "title": "The event loop",
-          "goal": "Predict the output order of any mix of setTimeout, promises and sync code.",
-          "exercise": "Write five snippets, predict the output, run them, investigate every miss.",
-          "resourceUrl": "http://latentflip.com/loupe/",
-          "minutes": 75,
-          "done": false
-        },
-        {
-          "id": "s-js-3",
-          "order": 3,
-          "title": "Promises and async/await properly",
-          "goal": "Know Promise.all, allSettled, race and any, and when each is right.",
-          "exercise": "Write a fetch wrapper with a timeout using AbortController and Promise.race.",
-          "resourceUrl": "https://javascript.info/async",
-          "minutes": 90,
-          "done": false
-        },
-        {
-          "id": "s-js-4",
-          "order": 4,
-          "title": "Arrays and objects without loops",
-          "goal": "Fluent map, filter and reduce — and knowing when reduce is the wrong answer.",
-          "exercise": "Rewrite funnel() in lib/selectors.ts a second way, then keep the clearer one.",
-          "resourceUrl": "https://javascript.info/array-methods",
-          "minutes": 60,
-          "done": false
-        },
-        {
-          "id": "s-js-5",
-          "order": 5,
-          "title": "this, prototypes and classes",
-          "goal": "Explain what `this` refers to in any of the four call patterns.",
-          "exercise": "Do the quiz repo's `this` questions and write down why each answer is what it is.",
-          "resourceUrl": "https://javascript.info/object-methods",
-          "minutes": 75,
-          "done": false
-        },
-        {
-          "id": "s-js-6",
-          "order": 6,
-          "title": "References and immutability",
-          "goal": "Understand value versus reference, shallow versus deep copy, and why state updates break.",
-          "exercise": "Find a place in this app where a mutation could bite, and prove it with a test.",
-          "resourceUrl": "https://javascript.info/object-copy",
-          "minutes": 60,
+          "title": "Pivot tables",
+          "goal": "Summarise without writing formulas.",
+          "exercise": "Answer three questions about the same data with pivots.",
+          "resourceUrl": "",
+          "minutes": 45,
           "done": false
         }
-      ],
-      "icon": "javascript",
-      "optional": false
+      ]
     },
     {
-      "id": "sk-ts",
-      "skill": "TypeScript",
-      "category": "Foundations",
-      "badge": "TS",
-      "colour": "#3178c6",
-      "currentLevel": "Basic",
-      "target": "Comfortable building and debugging a typed full-stack app",
-      "priority": "Critical",
-      "evidence": "Strict mode on with no `any` in src",
-      "action": "Use it in the main project, not in tutorials only.",
-      "why": "Almost every posting worth targeting lists it. More practically, it is what lets you refactor this project confidently instead of hoping nothing broke.",
-      "miniProject": "Type the API layer end to end: shared request and response types between server and client, with no `any` and no type assertions.",
-      "miniProjectDod": "tsc --noEmit passes with strict on, there is no `any` in src, and changing a server field surfaces an error in the client.",
-      "resources": [
-        {
-          "id": "r-ts-1",
-          "title": "TypeScript Handbook",
-          "url": "https://www.typescriptlang.org/docs/handbook/intro.html",
-          "kind": "Docs",
-          "note": "Official and readable. 'Everyday Types' and 'Narrowing' are the core."
-        },
-        {
-          "id": "r-ts-2",
-          "title": "Total TypeScript — Essentials (free)",
-          "url": "https://www.totaltypescript.com/books/total-typescript-essentials",
-          "kind": "Course",
-          "note": "Practical and exercise-driven. The best free structured path."
-        },
-        {
-          "id": "r-ts-3",
-          "title": "React TypeScript Cheatsheet",
-          "url": "https://react-typescript-cheatsheet.netlify.app/",
-          "kind": "Reference",
-          "note": "Answers the props/children/events questions without guesswork."
-        },
-        {
-          "id": "r-ts-4",
-          "title": "Type Challenges",
-          "url": "https://github.com/type-challenges/type-challenges",
-          "kind": "Practice",
-          "note": "Do the 'easy' set only. Beyond that it stops being useful for job interviews."
-        },
-        {
-          "id": "r-ts-5",
-          "title": "tsconfig reference",
-          "url": "https://www.typescriptlang.org/tsconfig",
-          "kind": "Reference",
-          "note": "Read what strict actually turns on. A common interview follow-up."
-        }
-      ],
-      "sessions": [
-        {
-          "id": "s-ts-1",
-          "order": 1,
-          "title": "Narrowing and union types",
-          "goal": "Model 'one of these shapes' properly instead of reaching for optional fields.",
-          "exercise": "Refactor one loose type in src/types to a discriminated union and follow the errors.",
-          "resourceUrl": "https://www.typescriptlang.org/docs/handbook/2/narrowing.html",
-          "minutes": 90,
-          "done": false
-        },
-        {
-          "id": "s-ts-2",
-          "order": 2,
-          "title": "Generics you'd actually write",
-          "goal": "Read and write a generic function without copying a pattern.",
-          "exercise": "Study the generic add/update/remove in useStore.ts, then write your own typed helper.",
-          "resourceUrl": "https://www.typescriptlang.org/docs/handbook/2/generics.html",
-          "minutes": 90,
-          "done": false
-        },
-        {
-          "id": "s-ts-3",
-          "order": 3,
-          "title": "Utility types",
-          "goal": "Use Partial, Pick, Omit, Record and ReturnType to stop repeating yourself.",
-          "exercise": "Find three duplicated type definitions in this repo and derive them instead.",
-          "resourceUrl": "https://www.typescriptlang.org/docs/handbook/utility-types.html",
-          "minutes": 60,
-          "done": false
-        },
-        {
-          "id": "s-ts-4",
-          "order": 4,
-          "title": "Typing React properly",
-          "goal": "Type props, children, events and refs without fighting the compiler.",
-          "exercise": "Remove every remaining type assertion in src/components honestly.",
-          "resourceUrl": "https://react-typescript-cheatsheet.netlify.app/",
-          "minutes": 90,
-          "done": false
-        },
-        {
-          "id": "s-ts-5",
-          "order": 5,
-          "title": "Types at the boundary",
-          "goal": "Understand why network data is not really typed until you validate it.",
-          "exercise": "Parse one API response with Zod and derive the TypeScript type from the schema.",
-          "resourceUrl": "https://zod.dev/",
-          "minutes": 75,
-          "done": false
-        }
-      ],
-      "icon": "typescript",
-      "optional": false
-    },
-    {
-      "id": "sk-css",
-      "skill": "CSS & layout",
-      "category": "Styling",
-      "badge": "CS",
-      "colour": "#663399",
-      "currentLevel": "Can style, layout still feels like guesswork",
-      "target": "Reaches for the right layout tool first and can debug any spacing bug",
-      "priority": "Critical",
-      "evidence": "The Components page, responsive from 375px up, with documented tokens",
-      "action": "One layout concept per session, applied to a real screen the same day.",
-      "why": "Layout confidence separates a portfolio that looks built from one that looks templated. It is also the fastest visible improvement you can make to everything you show a recruiter.",
-      "miniProject": "Make every page work at 375px with no horizontal scrollbar, and document the real spacing and colour tokens on the Components page.",
-      "miniProjectDod": "No page scrolls sideways at 375px, wide tables scroll inside their own container, and the Components page shows the tokens the app actually uses.",
-      "resources": [
-        {
-          "id": "r-css-1",
-          "title": "Josh Comeau — CSS for JS Developers (free articles)",
-          "url": "https://www.joshwcomeau.com/css/",
-          "kind": "Article",
-          "note": "The stacking-context and centring articles alone will fix half your confusion."
-        },
-        {
-          "id": "r-css-2",
-          "title": "web.dev — Learn CSS",
-          "url": "https://web.dev/learn/css",
-          "kind": "Course",
-          "note": "Free and thorough. Do layout, flexbox and grid in order."
-        },
-        {
-          "id": "r-css-3",
-          "title": "CSS-Tricks — Guide to Flexbox",
-          "url": "https://css-tricks.com/snippets/css/a-guide-to-flexbox/",
-          "kind": "Reference",
-          "note": "You will look up align-items versus justify-content for years. Bookmark it."
-        },
-        {
-          "id": "r-css-4",
-          "title": "Flexbox Froggy",
-          "url": "https://flexboxfroggy.com/",
-          "kind": "Practice",
-          "note": "Twenty minutes of play that makes flexbox stick better than reading does."
-        },
-        {
-          "id": "r-css-5",
-          "title": "Grid Garden",
-          "url": "https://cssgridgarden.com/",
-          "kind": "Practice",
-          "note": "Same idea for Grid. Do it right before the grid session."
-        },
-        {
-          "id": "r-css-6",
-          "title": "Every Layout",
-          "url": "https://every-layout.dev/",
-          "kind": "Reference",
-          "note": "Layouts that adapt without media queries. Read Stack and Sidebar."
-        }
-      ],
-      "sessions": [
-        {
-          "id": "s-css-1",
-          "order": 1,
-          "title": "The box model and why spacing lies",
-          "goal": "Understand box-sizing, margin collapse, and why your padding 'doesn't work'.",
-          "exercise": "Find one spacing bug in this app, explain the cause in a comment, then fix it.",
-          "resourceUrl": "https://web.dev/learn/css/box-model",
-          "minutes": 60,
-          "done": false
-        },
-        {
-          "id": "s-css-2",
-          "order": 2,
-          "title": "Flexbox until it's boring",
-          "goal": "Reach for direction, wrap, grow and gap without looking them up.",
-          "exercise": "Play Flexbox Froggy, then rebuild the toolbar row from scratch.",
-          "resourceUrl": "https://flexboxfroggy.com/",
-          "minutes": 75,
-          "done": false
-        },
-        {
-          "id": "s-css-3",
-          "order": 3,
-          "title": "Grid for two-dimensional problems",
-          "goal": "Know when grid beats flexbox, and how auto-fill with minmax gives free responsiveness.",
-          "exercise": "Rebuild stat-grid and tpl-grid in grid, with no media query.",
-          "resourceUrl": "https://cssgridgarden.com/",
-          "minutes": 75,
-          "done": false
-        },
-        {
-          "id": "s-css-4",
-          "order": 4,
-          "title": "Custom properties and theming",
-          "goal": "Understand how CSS variables cascade and how this app's dark mode works.",
-          "exercise": "Add a third accent theme using only variables, switched with one attribute.",
-          "resourceUrl": "https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties",
-          "minutes": 75,
-          "done": false
-        },
-        {
-          "id": "s-css-5",
-          "order": 5,
-          "title": "Responsive without guessing",
-          "goal": "Use relative units and clamp instead of stacking breakpoints.",
-          "exercise": "Take every page to 375px and fix what breaks.",
-          "resourceUrl": "https://every-layout.dev/",
-          "minutes": 90,
-          "done": false
-        },
-        {
-          "id": "s-css-6",
-          "order": 6,
-          "title": "Hierarchy, contrast, motion",
-          "goal": "Know why a screen feels unfinished and which three changes fix it fastest.",
-          "exercise": "Check every text/background pair for WCAG AA contrast and fix the failures.",
-          "resourceUrl": "https://webaim.org/resources/contrastchecker/",
-          "minutes": 60,
-          "done": false
-        }
-      ],
-      "icon": "css",
-      "optional": false
-    },
-    {
-      "id": "sk-react",
-      "skill": "React",
-      "category": "Frontend framework",
-      "badge": "RE",
-      "colour": "#61dafb",
-      "currentLevel": "Builds components, fuzzy on re-renders and effects",
-      "target": "Can explain rendering, effects and composition without hand-waving",
-      "priority": "Critical",
-      "evidence": "This app, plus a written explanation of one performance fix",
-      "action": "Every Project block is React practice — make the learning deliberate.",
-      "why": "It is the framework behind most of the roles you are applying to, and 'why did this re-render' is one of the most common technical interview questions for a frontend or full-stack junior.",
-      "miniProject": "Profile this app, find one genuinely unnecessary re-render, fix it, and write down how you found it and what the fix cost.",
-      "miniProjectDod": "A before/after profile recording and a paragraph explaining the cause, not just the fix.",
-      "resources": [
-        {
-          "id": "r-re-1",
-          "title": "react.dev — Learn",
-          "url": "https://react.dev/learn",
-          "kind": "Course",
-          "note": "The official tutorial, rewritten and genuinely good. 'Thinking in React' is essential."
-        },
-        {
-          "id": "r-re-2",
-          "title": "react.dev — You Might Not Need an Effect",
-          "url": "https://react.dev/learn/you-might-not-need-an-effect",
-          "kind": "Article",
-          "note": "The single most useful page. Most useEffect bugs are effects that shouldn't exist."
-        },
-        {
-          "id": "r-re-3",
-          "title": "react.dev — Reference",
-          "url": "https://react.dev/reference/react",
-          "kind": "Reference",
-          "note": "Hook semantics, in detail, from the source of truth."
-        },
-        {
-          "id": "r-re-4",
-          "title": "React DevTools Profiler",
-          "url": "https://react.dev/learn/react-developer-tools",
-          "kind": "Practice",
-          "note": "Stop guessing about performance. Record, look, then change one thing."
-        },
-        {
-          "id": "r-re-5",
-          "title": "A Complete Guide to useEffect",
-          "url": "https://overreacted.io/a-complete-guide-to-useeffect/",
-          "kind": "Article",
-          "note": "Long, but it is the article that makes effects click."
-        }
-      ],
-      "sessions": [
-        {
-          "id": "s-re-1",
-          "order": 1,
-          "title": "Rendering and state",
-          "goal": "Know what triggers a render and what state actually belongs in a component.",
-          "exercise": "List every useState in this app and mark the ones that could be derived instead.",
-          "resourceUrl": "https://react.dev/learn/thinking-in-react",
-          "minutes": 75,
-          "done": false
-        },
-        {
-          "id": "s-re-2",
-          "order": 2,
-          "title": "Effects, and doing without them",
-          "goal": "Recognise when an effect is the wrong tool.",
-          "exercise": "Audit every useEffect here against the official checklist. Delete or justify each.",
-          "resourceUrl": "https://react.dev/learn/you-might-not-need-an-effect",
-          "minutes": 90,
-          "done": false
-        },
-        {
-          "id": "s-re-3",
-          "order": 3,
-          "title": "Composition over configuration",
-          "goal": "Use children and composition instead of boolean prop explosions.",
-          "exercise": "Refactor one component that has more than four boolean props.",
-          "resourceUrl": "https://react.dev/learn/passing-props-to-a-component",
-          "minutes": 75,
-          "done": false
-        },
-        {
-          "id": "s-re-4",
-          "order": 4,
-          "title": "Re-renders and the profiler",
-          "goal": "Read a profile and know whether memo would help or just add noise.",
-          "exercise": "Profile the Roadmap page, find the slowest commit, and fix one cause.",
-          "resourceUrl": "https://react.dev/learn/react-developer-tools",
-          "minutes": 90,
-          "done": false
-        },
-        {
-          "id": "s-re-5",
-          "order": 5,
-          "title": "Forms and controlled inputs",
-          "goal": "Know the trade-off between controlled and uncontrolled, ready for React Hook Form.",
-          "exercise": "Convert one modal to uncontrolled inputs and compare the re-render count.",
-          "resourceUrl": "https://react.dev/reference/react-dom/components/input",
-          "minutes": 60,
-          "done": false
-        }
-      ],
-      "icon": "react",
-      "optional": false
-    },
-    {
-      "id": "sk-node",
-      "skill": "Node.js",
-      "category": "Backend",
-      "badge": "ND",
-      "colour": "#5fa04e",
-      "currentLevel": "Basic",
-      "target": "Comfortable with the runtime, modules, streams and async patterns",
-      "priority": "Critical",
-      "evidence": "The this project API running on it, with a documented startup path",
-      "action": "Learn the runtime, not just Express on top of it.",
-      "why": "Express is a thin layer; the questions that separate candidates are about the runtime underneath — the event loop, modules, environment, streams and error handling in async code.",
-      "miniProject": "Write a small CLI in Node that exports your job-search data to CSV, using streams rather than building the whole string in memory.",
-      "miniProjectDod": "It handles a large export without memory spikes, and you can explain why streaming matters here.",
-      "resources": [
-        {
-          "id": "r-nd-1",
-          "title": "Node.js — Learn",
-          "url": "https://nodejs.org/en/learn",
-          "kind": "Course",
-          "note": "The official guides. Start with modules, then async, then streams."
-        },
-        {
-          "id": "r-nd-2",
-          "title": "Node.js — API reference",
-          "url": "https://nodejs.org/docs/latest/api/",
-          "kind": "Reference",
-          "note": "fs, path, process and stream are the ones you'll actually open."
-        },
-        {
-          "id": "r-nd-3",
-          "title": "Node.js best practices",
-          "url": "https://github.com/goldbergyoni/nodebestpractices",
-          "kind": "Reference",
-          "note": "Skim project structure and error handling. Cite one and you sound experienced."
-        },
-        {
-          "id": "r-nd-4",
-          "title": "Node.js — ESM vs CommonJS",
-          "url": "https://nodejs.org/api/esm.html",
-          "kind": "Docs",
-          "note": "The source of a lot of confusing errors. Worth thirty focused minutes."
-        }
-      ],
-      "sessions": [
-        {
-          "id": "s-nd-1",
-          "order": 1,
-          "title": "Modules and the runtime",
-          "goal": "Understand ESM versus CommonJS and why imports sometimes explode.",
-          "exercise": "Convert a small script both ways and read the errors carefully.",
-          "resourceUrl": "https://nodejs.org/api/esm.html",
-          "minutes": 60,
-          "done": false
-        },
-        {
-          "id": "s-nd-2",
-          "order": 2,
-          "title": "Async patterns and error handling",
-          "goal": "Handle rejections properly, including in code that isn't awaited.",
-          "exercise": "Add a top-level unhandled-rejection handler and prove it fires.",
-          "resourceUrl": "https://nodejs.org/en/learn/asynchronous-work/understanding-processnexttick",
-          "minutes": 75,
-          "done": false
-        },
-        {
-          "id": "s-nd-3",
-          "order": 3,
-          "title": "Files, paths and environment",
-          "goal": "Read configuration and touch the filesystem without surprises.",
-          "exercise": "Write the CSV export CLI reading config from environment variables.",
-          "resourceUrl": "https://nodejs.org/en/learn/manipulating-files/reading-files-with-nodejs",
-          "minutes": 75,
-          "done": false
-        },
-        {
-          "id": "s-nd-4",
-          "order": 4,
-          "title": "Streams",
-          "goal": "Know when streaming beats loading it all into memory.",
-          "exercise": "Rewrite the export using a stream and compare memory use on a big file.",
-          "resourceUrl": "https://nodejs.org/en/learn/modules/how-to-use-streams",
-          "minutes": 90,
-          "done": false
-        }
-      ],
-      "icon": "nodedotjs",
-      "optional": false
-    },
-    {
-      "id": "sk-postgres",
-      "skill": "PostgreSQL & Prisma",
+      "id": "sk-002",
+      "skill": "SQL",
+      "currentLevel": "SELECT and WHERE",
+      "target": "Joins and grouping without looking them up",
+      "priority": "High",
+      "evidence": "",
+      "action": "",
+      "why": "The one skill every data job asks for. Everything else sits on top of being able to ask the database a question.",
+      "miniProject": "Answer five real questions about a public dataset.",
+      "miniProjectDod": "Five queries saved, each with the question it answers written above it.",
       "category": "Data",
-      "badge": "PG",
-      "colour": "#4169E1",
-      "currentLevel": "Intermediate-beginner",
-      "target": "Confident joins, schema design, migrations and indexes",
-      "priority": "Critical",
-      "evidence": "A normalised this project database with an ER diagram you can talk through",
-      "action": "Use it in the deployed app; write ten representative queries by hand.",
-      "why": "Data modelling is what most obviously separates candidates in a junior take-home, and 'can you write a join' is still asked constantly. It is also the foundation of week 1.",
-      "miniProject": "The schema for this app: normalised tables, foreign keys, sensible indexes, and an ER diagram you can walk someone through.",
-      "miniProjectDod": "The database can be dropped and rebuilt from migrations plus a seed, and you can explain every foreign key and index out loud.",
-      "resources": [
-        {
-          "id": "r-pg-1",
-          "title": "PostgreSQL Tutorial (official)",
-          "url": "https://www.postgresql.org/docs/current/tutorial.html",
-          "kind": "Docs",
-          "note": "Short and authoritative. Do it in psql, not a GUI, so the commands stick."
-        },
-        {
-          "id": "r-pg-2",
-          "title": "PG Exercises",
-          "url": "https://pgexercises.com/",
-          "kind": "Practice",
-          "note": "The best way to get fluent at joins and aggregates. Do the joins set twice."
-        },
-        {
-          "id": "r-pg-3",
-          "title": "Use The Index, Luke!",
-          "url": "https://use-the-index-luke.com/",
-          "kind": "Course",
-          "note": "Makes indexes stop being folklore. The first three chapters are enough."
-        },
-        {
-          "id": "r-pg-4",
-          "title": "Prisma — Data model",
-          "url": "https://www.prisma.io/docs/orm/prisma-schema/data-model",
-          "kind": "Docs",
-          "note": "How schema.prisma maps to real SQL. Read it beside the generated migration."
-        },
-        {
-          "id": "r-pg-5",
-          "title": "Prisma — Migrate",
-          "url": "https://www.prisma.io/docs/orm/prisma-migrate",
-          "kind": "Docs",
-          "note": "What a migration is, and why editing an applied one is dangerous."
-        },
-        {
-          "id": "r-pg-6",
-          "title": "PostgreSQL — Constraints",
-          "url": "https://www.postgresql.org/docs/current/ddl-constraints.html",
-          "kind": "Reference",
-          "note": "Constraints are how the database defends itself. Learn them before trusting app code."
-        }
-      ],
-      "sessions": [
-        {
-          "id": "s-pg-1",
-          "order": 1,
-          "title": "psql and the basics",
-          "goal": "Create a database, a table and rows from the command line.",
-          "exercise": "Build a scratch database by hand, then drop it. Repeat until it's muscle memory.",
-          "resourceUrl": "https://www.postgresql.org/docs/current/tutorial.html",
-          "minutes": 60,
-          "done": false
-        },
-        {
-          "id": "s-pg-2",
-          "order": 2,
-          "title": "Joins until they're automatic",
-          "goal": "Write inner, left and aggregate joins without thinking about syntax.",
-          "exercise": "Complete the PG Exercises joins section. Redo any you needed the answer for.",
-          "resourceUrl": "https://pgexercises.com/questions/joins/",
-          "minutes": 90,
-          "done": false
-        },
-        {
-          "id": "s-pg-3",
-          "order": 3,
-          "title": "Schema design and constraints",
-          "goal": "Model this app's domain with the right keys, types and NOT NULL choices.",
-          "exercise": "Draw the ER diagram for applications, contacts and companies before writing Prisma.",
-          "resourceUrl": "https://www.postgresql.org/docs/current/ddl-constraints.html",
-          "minutes": 90,
-          "done": false
-        },
-        {
-          "id": "s-pg-4",
-          "order": 4,
-          "title": "Migrations you can trust",
-          "goal": "Understand what a migration file is and when it is safe to change.",
-          "exercise": "Run prisma migrate dev, read the SQL line by line, then reset and re-run it.",
-          "resourceUrl": "https://www.prisma.io/docs/orm/prisma-migrate",
-          "minutes": 75,
-          "done": false
-        },
-        {
-          "id": "s-pg-5",
-          "order": 5,
-          "title": "Indexes and EXPLAIN",
-          "goal": "Read a query plan and know when an index will help.",
-          "exercise": "Run EXPLAIN ANALYZE on your slowest filter, add an index, compare the plans.",
-          "resourceUrl": "https://use-the-index-luke.com/",
-          "minutes": 90,
-          "done": false
-        }
-      ],
+      "badge": "SQL",
+      "colour": "#336791",
       "icon": "postgresql",
-      "optional": false
-    },
-    {
-      "id": "sk-vitest",
-      "skill": "Vitest & unit testing",
-      "category": "Testing",
-      "badge": "VT",
-      "colour": "#6DA544",
-      "currentLevel": "Not used yet",
-      "target": "Writes tests that survive a refactor and catch real bugs",
-      "priority": "Critical",
-      "evidence": "A green suite in CI covering the date and selector helpers",
-      "action": "Test the logic that would embarrass you if it broke.",
-      "why": "A repository with real tests is rare in a junior portfolio and immediately signals professional habits. It also lets you say 'I know it works' rather than 'I think it works'.",
-      "miniProject": "Unit tests for lib/dates and lib/selectors, including the edge cases: month boundaries, empty lists, division by zero in the response rate.",
-      "miniProjectDod": "Break one of those functions on purpose and a test goes red with a message that tells you what broke.",
+      "optional": false,
       "resources": [
         {
-          "id": "r-vt-1",
-          "title": "Vitest — Getting started",
-          "url": "https://vitest.dev/guide/",
+          "id": "r-2-1",
+          "title": "SQLBolt",
+          "url": "https://sqlbolt.com/",
+          "kind": "Practice",
+          "note": "Short, interactive, and you can finish it in a weekend."
+        },
+        {
+          "id": "r-2-2",
+          "title": "PostgreSQL tutorial",
+          "url": "https://www.postgresqltutorial.com/",
           "kind": "Docs",
-          "note": "The natural fit for a Vite project. Setup is genuinely five minutes."
-        },
-        {
-          "id": "r-vt-2",
-          "title": "Testing Library — Guiding principles",
-          "url": "https://testing-library.com/docs/guiding-principles/",
-          "kind": "Article",
-          "note": "One page that reframes what to test. Quote it in an interview and it lands."
-        },
-        {
-          "id": "r-vt-3",
-          "title": "React Testing Library",
-          "url": "https://testing-library.com/docs/react-testing-library/intro/",
-          "kind": "Docs",
-          "note": "Query by what a user sees, not by class name."
-        },
-        {
-          "id": "r-vt-4",
-          "title": "Write tests. Not too many. Mostly integration.",
-          "url": "https://kentcdodds.com/blog/write-tests",
-          "kind": "Article",
-          "note": "The clearest argument for where to spend limited testing effort."
-        },
-        {
-          "id": "r-vt-5",
-          "title": "Vitest — Mocking",
-          "url": "https://vitest.dev/guide/mocking.html",
-          "kind": "Reference",
-          "note": "Read this to learn how little you should mock."
+          "note": "Go here for the exact behaviour of a function."
         }
       ],
       "sessions": [
         {
-          "id": "s-vt-1",
+          "id": "s-2-1",
           "order": 1,
-          "title": "First tests",
-          "goal": "Set up Vitest and understand what makes a test worth writing.",
-          "exercise": "Test parseISO across a month boundary and currentWeekNumber outside the range.",
-          "resourceUrl": "https://vitest.dev/guide/",
-          "minutes": 75,
+          "title": "SELECT and filtering",
+          "goal": "Get exactly the rows you meant.",
+          "exercise": "Ten queries against a sample database.",
+          "resourceUrl": "https://sqlbolt.com/",
+          "minutes": 45,
           "done": false
         },
         {
-          "id": "s-vt-2",
+          "id": "s-2-2",
           "order": 2,
-          "title": "Testing logic, not implementation",
-          "goal": "Write tests that survive a refactor.",
-          "exercise": "Test funnel() and outreachStats(), including the empty and zero cases.",
-          "resourceUrl": "https://testing-library.com/docs/guiding-principles/",
-          "minutes": 75,
-          "done": false
-        },
-        {
-          "id": "s-vt-3",
-          "order": 3,
-          "title": "Component tests",
-          "goal": "Test what a user can see and do, not internal state.",
-          "exercise": "Test that StatusSelect calls onChange with the right value.",
-          "resourceUrl": "https://testing-library.com/docs/react-testing-library/intro/",
-          "minutes": 90,
-          "done": false
-        },
-        {
-          "id": "s-vt-4",
-          "order": 4,
-          "title": "Make it prove itself",
-          "goal": "Know that a suite catching nothing is worse than no suite.",
-          "exercise": "Break something deliberately. If nothing fails, write the test that should have.",
-          "resourceUrl": "https://kentcdodds.com/blog/write-tests",
+          "title": "Joins",
+          "goal": "Combine tables without duplicating rows by accident.",
+          "exercise": "Join three tables and check the row count is what you expected.",
+          "resourceUrl": "https://sqlbolt.com/",
           "minutes": 60,
           "done": false
-        }
-      ],
-      "icon": "vitest",
-      "optional": false
-    },
-    {
-      "id": "sk-git",
-      "skill": "Git & GitHub",
-      "category": "Delivery",
-      "badge": "GH",
-      "colour": "#f05033",
-      "currentLevel": "Commits and pushes; rebase and conflicts are scary",
-      "target": "Works confidently with branches, rebases, conflicts and reviews",
-      "priority": "Critical",
-      "evidence": "A readable commit history and pull requests with real descriptions",
-      "action": "Every change goes through a branch and a pull request, even alone.",
-      "why": "Every team works this way, and a hiring manager can read your git history before they ever talk to you. Conventional Commits and a clear PR description make a solo project look like team work.",
-      "miniProject": "Adopt Conventional Commits and pull requests for the rest of this programme, and write one PR description with context, approach and how you tested.",
-      "miniProjectDod": "Your last ten commits read as deliberate work, and a stranger can follow one PR without asking you anything.",
-      "resources": [
-        {
-          "id": "r-gh-1",
-          "title": "Pro Git (free book)",
-          "url": "https://git-scm.com/book/en/v2",
-          "kind": "Course",
-          "note": "Chapters 2, 3 and 7. The branching chapter is the one that removes the fear."
         },
         {
-          "id": "r-gh-2",
+          "id": "s-2-3",
+          "order": 3,
+          "title": "Grouping and aggregates",
+          "goal": "Answer \"how many\" and \"on average\" questions.",
+          "exercise": "Write five grouped queries and sanity-check each total.",
+          "resourceUrl": "",
+          "minutes": 45,
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "sk-003",
+      "skill": "Python",
+      "currentLevel": "Reading it",
+      "target": "Writing a script that runs unattended",
+      "priority": "High",
+      "evidence": "",
+      "action": "",
+      "why": "Where analysis goes when a spreadsheet stops coping. Also the language most data tooling is written in.",
+      "miniProject": "A script that downloads a file and produces a summary.",
+      "miniProjectDod": "It runs from the command line and someone else could run it too.",
+      "category": "Foundations",
+      "badge": "PY",
+      "colour": "#3776ab",
+      "icon": "python",
+      "optional": false,
+      "resources": [
+        {
+          "id": "r-3-1",
+          "title": "Python for Everybody",
+          "url": "https://www.py4e.com/",
+          "kind": "Course",
+          "note": "Free, thorough, and aimed at people who are not developers."
+        },
+        {
+          "id": "r-3-2",
+          "title": "Official tutorial",
+          "url": "https://docs.python.org/3/tutorial/",
+          "kind": "Docs",
+          "note": "Dry but correct. Good once the basics are in place."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-3-1",
+          "order": 1,
+          "title": "Variables and types",
+          "goal": "Stop being surprised by what a value is.",
+          "exercise": "Write ten lines that print what you predicted.",
+          "resourceUrl": "https://www.py4e.com/",
+          "minutes": 40,
+          "done": false
+        },
+        {
+          "id": "s-3-2",
+          "order": 2,
+          "title": "Loops and files",
+          "goal": "Read a file and do something per row.",
+          "exercise": "Count something in a CSV without pandas.",
+          "resourceUrl": "https://www.py4e.com/",
+          "minutes": 50,
+          "done": false
+        },
+        {
+          "id": "s-3-3",
+          "order": 3,
+          "title": "Functions",
+          "goal": "Write something you can reuse tomorrow.",
+          "exercise": "Turn the counting script into a function with an argument.",
+          "resourceUrl": "",
+          "minutes": 40,
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "sk-004",
+      "skill": "pandas",
+      "currentLevel": "Copying snippets",
+      "target": "Doing a full clean-and-summarise unaided",
+      "priority": "High",
+      "evidence": "",
+      "action": "",
+      "why": "The working tool for anything too big or too repetitive for a spreadsheet.",
+      "miniProject": "Reproduce your spreadsheet summary in twenty lines.",
+      "miniProjectDod": "Same numbers as the sheet, and it reruns on new data.",
+      "category": "Data",
+      "badge": "PD",
+      "colour": "#150458",
+      "icon": "pandas",
+      "optional": false,
+      "resources": [
+        {
+          "id": "r-4-1",
+          "title": "pandas: 10 minutes",
+          "url": "https://pandas.pydata.org/docs/user_guide/10min.html",
+          "kind": "Docs",
+          "note": "The official quick tour. Type it out rather than reading it."
+        },
+        {
+          "id": "r-4-2",
+          "title": "Pandas cookbook",
+          "url": "https://pandas.pydata.org/docs/user_guide/cookbook.html",
+          "kind": "Reference",
+          "note": "Recipes for the things you will actually hit."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-4-1",
+          "order": 1,
+          "title": "DataFrames",
+          "goal": "Load data and look at it properly.",
+          "exercise": "Load a CSV and describe it in five lines.",
+          "resourceUrl": "https://pandas.pydata.org/docs/user_guide/10min.html",
+          "minutes": 45,
+          "done": false
+        },
+        {
+          "id": "s-4-2",
+          "order": 2,
+          "title": "Cleaning",
+          "goal": "Handle missing and wrong values on purpose.",
+          "exercise": "Decide what to do with every null in one dataset, and say why.",
+          "resourceUrl": "",
+          "minutes": 50,
+          "done": false
+        },
+        {
+          "id": "s-4-3",
+          "order": 3,
+          "title": "Grouping",
+          "goal": "The same questions as SQL, in Python.",
+          "exercise": "Reproduce one of your SQL answers with groupby.",
+          "resourceUrl": "",
+          "minutes": 45,
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "sk-005",
+      "skill": "Statistics that matter",
+      "currentLevel": "Averages",
+      "target": "Knowing when an average is the wrong summary",
+      "priority": "High",
+      "evidence": "",
+      "action": "",
+      "why": "Enough to avoid saying something confidently wrong. Most analysis mistakes are not code mistakes.",
+      "miniProject": "Explain one finding, and one reason it might be wrong.",
+      "miniProjectDod": "A short write-up that names its own weakness.",
+      "category": "Data",
+      "badge": "ST",
+      "colour": "#c0392b",
+      "icon": "",
+      "optional": false,
+      "resources": [
+        {
+          "id": "r-5-1",
+          "title": "Seeing Theory",
+          "url": "https://seeing-theory.brown.edu/",
+          "kind": "Practice",
+          "note": "Visual and free. The first two chapters are the ones that pay off."
+        },
+        {
+          "id": "r-5-2",
+          "title": "Think Stats",
+          "url": "https://greenteapress.com/thinkstats2/",
+          "kind": "Course",
+          "note": "Statistics written for people who can program."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-5-1",
+          "order": 1,
+          "title": "Distributions",
+          "goal": "See why the average can mislead.",
+          "exercise": "Find a dataset where the mean and median disagree, and explain it.",
+          "resourceUrl": "https://seeing-theory.brown.edu/",
+          "minutes": 45,
+          "done": false
+        },
+        {
+          "id": "s-5-2",
+          "order": 2,
+          "title": "Correlation is not cause",
+          "goal": "Say what a relationship does and does not show.",
+          "exercise": "Write two sentences about a correlation without overclaiming.",
+          "resourceUrl": "",
+          "minutes": 30,
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "sk-006",
+      "skill": "Charts that explain",
+      "currentLevel": "Default charts",
+      "target": "Choosing the chart the question needs",
+      "priority": "High",
+      "evidence": "",
+      "action": "",
+      "why": "A chart is an argument. Most are decoration, and the difference is whether someone can act on it.",
+      "miniProject": "One chart that answers one question, with no decoration.",
+      "miniProjectDod": "Someone reads it and says the answer out loud.",
+      "category": "Delivery",
+      "badge": "CH",
+      "colour": "#3b82f6",
+      "icon": "plotly",
+      "optional": false,
+      "resources": [
+        {
+          "id": "r-6-1",
+          "title": "Financial Times visual vocabulary",
+          "url": "https://github.com/Financial-Times/chart-doctor/tree/main/visual-vocabulary",
+          "kind": "Reference",
+          "note": "Which chart for which question, on one page."
+        },
+        {
+          "id": "r-6-2",
+          "title": "Plotly Express",
+          "url": "https://plotly.com/python/plotly-express/",
+          "kind": "Docs",
+          "note": "Quickest route from a DataFrame to a chart."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-6-1",
+          "order": 1,
+          "title": "Pick the right chart",
+          "goal": "Match the shape to the question.",
+          "exercise": "Draw the same data three ways and say which wins.",
+          "resourceUrl": "https://github.com/Financial-Times/chart-doctor/tree/main/visual-vocabulary",
+          "minutes": 40,
+          "done": false
+        },
+        {
+          "id": "s-6-2",
+          "order": 2,
+          "title": "Strip it back",
+          "goal": "Remove everything that is not the point.",
+          "exercise": "Take a busy chart and delete half of it.",
+          "resourceUrl": "",
+          "minutes": 30,
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "sk-007",
+      "skill": "Notebooks",
+      "currentLevel": "Running cells",
+      "target": "A notebook someone else can follow top to bottom",
+      "priority": "High",
+      "evidence": "",
+      "action": "",
+      "why": "Where the work happens, and where it becomes something you can hand over.",
+      "miniProject": "Rewrite one analysis so it reads as an argument.",
+      "miniProjectDod": "It runs from a clean kernel, in order, with no dead cells.",
+      "category": "Tooling",
+      "badge": "NB",
+      "colour": "#f37626",
+      "icon": "jupyter",
+      "optional": false,
+      "resources": [
+        {
+          "id": "r-7-1",
+          "title": "Jupyter docs",
+          "url": "https://docs.jupyter.org/en/latest/",
+          "kind": "Docs",
+          "note": "Start with the interface tour."
+        },
+        {
+          "id": "r-7-2",
+          "title": "Notebook best practices",
+          "url": "https://goodresearch.dev/",
+          "kind": "Article",
+          "note": "How to keep a notebook from becoming a mess."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-7-1",
+          "order": 1,
+          "title": "Run it clean",
+          "goal": "Prove the notebook actually works.",
+          "exercise": "Restart the kernel and run all. Fix what breaks.",
+          "resourceUrl": "",
+          "minutes": 30,
+          "done": false
+        },
+        {
+          "id": "s-7-2",
+          "order": 2,
+          "title": "Write between the code",
+          "goal": "Make it readable by someone else.",
+          "exercise": "Add a sentence above each section saying why it is there.",
+          "resourceUrl": "",
+          "minutes": 30,
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "sk-008",
+      "skill": "Version control",
+      "currentLevel": "Saving files by hand",
+      "target": "Branching and committing without fear",
+      "priority": "High",
+      "evidence": "",
+      "action": "",
+      "why": "Not just for developers: it is how you stop having analysis_final_v3_REAL.ipynb.",
+      "miniProject": "Put one analysis in a repository, with a README.",
+      "miniProjectDod": "Someone can clone it and understand what it does.",
+      "category": "Delivery",
+      "badge": "GIT",
+      "colour": "#f05032",
+      "icon": "git",
+      "optional": false,
+      "resources": [
+        {
+          "id": "r-8-1",
+          "title": "Git handbook",
+          "url": "https://docs.github.com/en/get-started/using-git/about-git",
+          "kind": "Docs",
+          "note": "Short and official."
+        },
+        {
+          "id": "r-8-2",
           "title": "Learn Git Branching",
           "url": "https://learngitbranching.js.org/",
           "kind": "Practice",
-          "note": "Visual and interactive. The fastest way to understand rebase."
-        },
-        {
-          "id": "r-gh-3",
-          "title": "Conventional Commits",
-          "url": "https://www.conventionalcommits.org/",
-          "kind": "Reference",
-          "note": "A five-minute read that makes your history look intentional."
-        },
-        {
-          "id": "r-gh-4",
-          "title": "GitHub — Pull requests",
-          "url": "https://docs.github.com/en/pull-requests",
-          "kind": "Docs",
-          "note": "Forks, branches, reviews. Know this before your first open-source PR."
-        },
-        {
-          "id": "r-gh-5",
-          "title": "Oh Shit, Git!?!",
-          "url": "https://ohshitgit.com/",
-          "kind": "Reference",
-          "note": "The page you'll want at the exact moment something goes wrong."
+          "note": "Visual. Do the first sequence and branching stops being scary."
         }
       ],
       "sessions": [
         {
-          "id": "s-gh-1",
+          "id": "s-8-1",
           "order": 1,
-          "title": "Branching without fear",
-          "goal": "Understand what a branch actually is and why it's cheap.",
-          "exercise": "Play Learn Git Branching through the main sequence.",
+          "title": "Commits",
+          "goal": "Save work in steps you can return to.",
+          "exercise": "Commit an analysis in five sensible pieces.",
           "resourceUrl": "https://learngitbranching.js.org/",
-          "minutes": 75,
+          "minutes": 40,
           "done": false
         },
         {
-          "id": "s-gh-2",
+          "id": "s-8-2",
           "order": 2,
-          "title": "Rebase, merge and history",
-          "goal": "Know the difference and when each is appropriate.",
-          "exercise": "Rebase a feature branch onto main and resolve a conflict on purpose.",
-          "resourceUrl": "https://git-scm.com/book/en/v2/Git-Branching-Rebasing",
-          "minutes": 90,
-          "done": false
-        },
-        {
-          "id": "s-gh-3",
-          "order": 3,
-          "title": "Commits that explain themselves",
-          "goal": "Write history someone else can read.",
-          "exercise": "Adopt Conventional Commits and rewrite your last five messages on a branch.",
-          "resourceUrl": "https://www.conventionalcommits.org/",
-          "minutes": 60,
-          "done": false
-        },
-        {
-          "id": "s-gh-4",
-          "order": 4,
-          "title": "Pull requests and review",
-          "goal": "Present a change so it's easy to say yes to.",
-          "exercise": "Open a PR with context, approach and testing. Review it yourself a day later.",
-          "resourceUrl": "https://docs.github.com/en/pull-requests",
-          "minutes": 60,
-          "done": false
-        },
-        {
-          "id": "s-gh-5",
-          "order": 5,
-          "title": "Undoing things safely",
-          "goal": "Recover from mistakes without panic — reflog, revert, reset.",
-          "exercise": "Delete a commit on a scratch branch, then recover it with reflog.",
-          "resourceUrl": "https://ohshitgit.com/",
-          "minutes": 60,
+          "title": "Branches",
+          "goal": "Try something without breaking what works.",
+          "exercise": "Branch, change something, merge it back.",
+          "resourceUrl": "https://learngitbranching.js.org/",
+          "minutes": 40,
           "done": false
         }
-      ],
-      "icon": "git",
-      "optional": false
+      ]
     },
     {
-      "id": "sk-english",
-      "skill": "English — job interviews",
+      "id": "sk-009",
+      "skill": "Explaining findings",
+      "currentLevel": "Showing the chart",
+      "target": "Leading with the answer",
+      "priority": "High",
+      "evidence": "",
+      "action": "",
+      "why": "The analysis is worth nothing if the person who decides cannot follow it. This is the skill that gets analysts promoted.",
+      "miniProject": "Summarise one analysis in five sentences.",
+      "miniProjectDod": "The first sentence is the answer, not the method.",
       "category": "Career craft",
-      "badge": "EN",
-      "colour": "#0ea5e9",
-      "currentLevel": "Understands well, hesitates and loses structure under pressure",
-      "target": "Can run a full interview loop — intro, behavioural, technical — in fluent, connected English",
-      "priority": "Critical",
-      "evidence": "Weekly recordings answering real interview questions, plus one full mock per programme",
-      "action": "Forty-five minutes a day, on camera, answering as if the interviewer is real. Never just reading — every session ends with you speaking, unscripted, on the topic you just practised.",
-      "why": "Your technical level already clears the bar for the roles you're targeting; the interview is the one place all of that has to come out live, in English, under pressure. A perfect CV that can't defend itself in the room doesn't get the offer. This is the highest-leverage item you own.",
-      "miniProject": "A full mock interview, recorded start to finish: introduction, two behavioural questions, one technical walkthrough of this project, one moment of defending a decision under pushback, and two questions you ask back.",
-      "miniProjectDod": "You complete it in one sitting without stopping the recording, using at least three connectors naturally, and a native speaker who watches it says they'd move you to the next round.",
+      "badge": "EX",
+      "colour": "#8b5cf6",
+      "icon": "",
+      "optional": false,
       "resources": [
         {
-          "id": "r-en-1",
-          "title": "Big Interview — question bank by category",
-          "url": "https://biginterview.com/blog/2013/07/list-of-behavioral-interview-questions.html",
-          "kind": "Reference",
-          "note": "Behavioural questions grouped by what they're actually testing — teamwork, failure, conflict, leadership."
+          "id": "r-9-1",
+          "title": "Google technical writing",
+          "url": "https://developers.google.com/tech-writing",
+          "kind": "Course",
+          "note": "Free, short, and it changes how you write."
         },
         {
-          "id": "r-en-2",
-          "title": "Tech Interview Handbook — behavioural interview",
-          "url": "https://www.techinterviewhandbook.org/behavioral-interview/",
-          "kind": "Reference",
-          "note": "The question bank to rehearse against, plus how US tech interviews are structured."
-        },
-        {
-          "id": "r-en-3",
-          "title": "The STAR method",
-          "url": "https://www.themuse.com/advice/star-interview-method",
+          "id": "r-9-2",
+          "title": "The Pyramid Principle, summarised",
+          "url": "https://en.wikipedia.org/wiki/Barbara_Minto",
           "kind": "Article",
-          "note": "Gives your answers a shape — exactly what you need when the words are harder."
-        },
-        {
-          "id": "r-en-4",
-          "title": "Grammarly — 40 linking words for coherent speech",
-          "url": "https://www.grammarly.com/blog/linking-words/",
-          "kind": "Reference",
-          "note": "The connectors that make an answer sound structured instead of a list of facts: however, as a result, that said, on top of that."
-        },
-        {
-          "id": "r-en-5",
-          "title": "YouGlish",
-          "url": "https://youglish.com/",
-          "kind": "Practice",
-          "note": "Search any phrase and hear real speakers use it in context. The best pronunciation tool there is."
-        },
-        {
-          "id": "r-en-6",
-          "title": "Pramp — free peer mock interviews",
-          "url": "https://www.pramp.com/",
-          "kind": "Practice",
-          "note": "Free, in English, with a stranger. Uncomfortable and therefore the most useful hour you'll spend."
-        },
-        {
-          "id": "r-en-7",
-          "title": "Glassdoor — real interview questions by company",
-          "url": "https://www.glassdoor.com/Interview/index.htm",
-          "kind": "Reference",
-          "note": "Search the actual companies on your Tier A list. What was asked there, verbatim, from people who sat it."
-        },
-        {
-          "id": "r-en-8",
-          "title": "Exponent — system design and behavioural mocks",
-          "url": "https://www.tryexponent.com/questions",
-          "kind": "Practice",
-          "note": "Structured practice questions with example answers, closer to a real loop than generic lists."
-        },
-        {
-          "id": "r-en-9",
-          "title": "Anki",
-          "url": "https://apps.ankiweb.net/",
-          "kind": "Practice",
-          "note": "One deck of connectors and phrases you personally stumble on — not a generic vocabulary list."
+          "note": "Answer first, reasons after."
         }
       ],
       "sessions": [
         {
-          "id": "s-en-1",
+          "id": "s-9-1",
           "order": 1,
-          "title": "Tell me about yourself — and why this move",
-          "goal": "Deliver a 90-second answer that ends on why you're moving into engineering, without hesitating.",
-          "exercise": "Record it. Listen back, note every filler and every place you lost the thread. Record again. Keep the best take.",
-          "resourceUrl": "https://www.techinterviewhandbook.org/behavioral-interview/",
-          "minutes": 45,
+          "title": "Answer first",
+          "goal": "Stop burying the finding.",
+          "exercise": "Rewrite a summary so the answer is the first line.",
+          "resourceUrl": "https://developers.google.com/tech-writing",
+          "minutes": 40,
           "done": false
         },
         {
-          "id": "s-en-2",
+          "id": "s-9-2",
           "order": 2,
-          "title": "Connectors: making an answer sound structured",
-          "goal": "Use however, as a result, that said and on top of that inside a real answer, not as isolated phrases.",
-          "exercise": "Take yesterday's answer and rewrite it inserting five connectors from the Grammarly list. Record the new version.",
-          "resourceUrl": "https://www.grammarly.com/blog/linking-words/",
+          "title": "Cut it in half",
+          "goal": "Say the same thing in half the words.",
+          "exercise": "Take your five sentences down to three.",
+          "resourceUrl": "",
+          "minutes": 30,
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "sk-010",
+      "skill": "Interview practice",
+      "currentLevel": "Answering off the cuff",
+      "target": "Three answers ready without sounding rehearsed",
+      "priority": "High",
+      "evidence": "",
+      "action": "",
+      "why": "The questions repeat. Rehearsing them is the cheapest improvement available before any technical study.",
+      "miniProject": "Record the three commonest questions and watch them back.",
+      "miniProjectDod": "One take of each you would be happy for an interviewer to hear.",
+      "category": "Career craft",
+      "badge": "IV",
+      "colour": "#ec4899",
+      "icon": "",
+      "optional": false,
+      "resources": [
+        {
+          "id": "r-10-1",
+          "title": "Interview question bank",
+          "url": "https://www.themuse.com/advice/interview-questions-and-answers",
+          "kind": "Reference",
+          "note": "Pick three and stop reading the rest."
+        },
+        {
+          "id": "r-10-2",
+          "title": "STAR method",
+          "url": "https://www.themuse.com/advice/star-interview-method",
+          "kind": "Article",
+          "note": "A shape for the answers that need a story."
+        }
+      ],
+      "sessions": [
+        {
+          "id": "s-10-1",
+          "order": 1,
+          "title": "Tell me about yourself",
+          "goal": "Ninety seconds, ending on why this role.",
+          "exercise": "Record it, watch it, record it again.",
+          "resourceUrl": "",
           "minutes": 45,
           "done": false
         },
         {
-          "id": "s-en-3",
-          "order": 3,
-          "title": "Behavioural: teamwork and conflict",
-          "goal": "Answer 'tell me about a conflict with a teammate' and 'tell me about working with someone difficult' using STAR.",
-          "exercise": "Write both as STAR, then deliver each from memory on camera, under two minutes.",
+          "id": "s-10-2",
+          "order": 2,
+          "title": "A time something went wrong",
+          "goal": "A real example, without blaming anyone.",
+          "exercise": "Write the situation, action and result in three lines, then say it.",
           "resourceUrl": "https://www.themuse.com/advice/star-interview-method",
           "minutes": 45,
           "done": false
-        },
-        {
-          "id": "s-en-4",
-          "order": 4,
-          "title": "Behavioural: failure and feedback",
-          "goal": "Answer 'tell me about a time you failed' and 'tell me about difficult feedback you received' without sounding rehearsed or defensive.",
-          "exercise": "Write both as STAR. Say them once flat, then again with the connectors from session 2.",
-          "resourceUrl": "https://biginterview.com/blog/2013/07/list-of-behavioral-interview-questions.html",
-          "minutes": 45,
-          "done": false
-        },
-        {
-          "id": "s-en-5",
-          "order": 5,
-          "title": "Technical: narrating a decision",
-          "goal": "Explain one real decision from this project — what you chose, what you rejected, why — as a two-minute answer.",
-          "exercise": "Pick one ADR-worthy decision from the repo. Record yourself explaining it as if a technical interviewer just asked 'walk me through this'.",
-          "resourceUrl": "https://youglish.com/",
-          "minutes": 45,
-          "done": false
-        },
-        {
-          "id": "s-en-6",
-          "order": 6,
-          "title": "Defending a choice under pushback",
-          "goal": "Hold your position when the interviewer disagrees or asks 'why not X instead', without getting flustered or caving instantly.",
-          "exercise": "Have someone (or play both parts yourself) push back on the decision from session 5 twice. Answer each pushback in one breath, not three.",
-          "resourceUrl": "https://www.techinterviewhandbook.org/behavioral-interview/",
-          "minutes": 45,
-          "done": false
-        },
-        {
-          "id": "s-en-7",
-          "order": 7,
-          "title": "The vocabulary of architecture",
-          "goal": "Say middleware, schema, authentication, deploy, trade-off and scale without effort, mid-sentence.",
-          "exercise": "Look up ten terms on YouGlish, repeat each five times, add the ones you stumble on to Anki.",
-          "resourceUrl": "https://youglish.com/",
-          "minutes": 45,
-          "done": false
-        },
-        {
-          "id": "s-en-8",
-          "order": 8,
-          "title": "Buying time without going silent",
-          "goal": "Have phrases ready for when you need a moment, instead of freezing or saying 'um' for five seconds.",
-          "exercise": "Rehearse and use on camera: 'That's a good question, let me think for a second', 'Just to make sure I understood correctly...'",
-          "resourceUrl": "https://www.techinterviewhandbook.org/behavioral-interview/",
-          "minutes": 45,
-          "done": false
-        },
-        {
-          "id": "s-en-9",
-          "order": 9,
-          "title": "Questions for them, delivered well",
-          "goal": "Ask two prepared questions about the team or the role fluently, not read off a note.",
-          "exercise": "Write three questions specific to a real Tier A company. Practise asking them out loud until they don't sound memorised.",
-          "resourceUrl": "https://www.glassdoor.com/Interview/index.htm",
-          "minutes": 45,
-          "done": false
-        },
-        {
-          "id": "s-en-10",
-          "order": 10,
-          "title": "A real mock interview, full loop",
-          "goal": "Survive an unscripted 30–45 minute conversation covering intro, technical and behavioural, in English, with a stranger.",
-          "exercise": "Book a Pramp or Exponent session. Immediately after, write down the three moments you struggled most and why.",
-          "resourceUrl": "https://www.pramp.com/",
-          "minutes": 60,
-          "done": false
         }
-      ],
-      "icon": "",
-      "optional": false
-    },
-    {
-      "id": "sk-comm",
-      "skill": "Technical communication",
-      "category": "Career craft",
-      "badge": "TC",
-      "colour": "#8b5cf6",
-      "currentLevel": "Unknown",
-      "target": "Can explain architecture, trade-offs and debugging clearly in writing",
-      "priority": "High",
-      "evidence": "A README a stranger can follow, plus three ADRs",
-      "action": "Write the explanation before you think you're ready to.",
-      "why": "Writing clearly is how a stranger decides you're worth interviewing before they ever meet you. A README, a PR description and a commit message are all auditions.",
-      "miniProject": "A README for this project that a stranger reads in five minutes and comes away understanding the problem, the architecture, the trade-offs and how to run it.",
-      "miniProjectDod": "Someone who has never seen the repo clones it, runs it, and explains back what it does and one decision you made.",
-      "resources": [
-        {
-          "id": "r-tc-1",
-          "title": "Google — Technical Writing One",
-          "url": "https://developers.google.com/tech-writing/one",
-          "kind": "Course",
-          "note": "Free, short, and it measurably improves your writing in an afternoon."
-        },
-        {
-          "id": "r-tc-2",
-          "title": "Make a README",
-          "url": "https://www.makeareadme.com/",
-          "kind": "Reference",
-          "note": "The structure to copy. Fill every section or delete it — no empty headings."
-        },
-        {
-          "id": "r-tc-3",
-          "title": "Architecture Decision Records",
-          "url": "https://adr.github.io/",
-          "kind": "Article",
-          "note": "Write three. Interviewers love being handed your reasoning."
-        },
-        {
-          "id": "r-tc-4",
-          "title": "Mermaid — diagrams as text",
-          "url": "https://mermaid.js.org/intro/",
-          "kind": "Docs",
-          "note": "Renders on GitHub, so your architecture diagram lives in the README and never goes stale."
-        }
-      ],
-      "sessions": [
-        {
-          "id": "s-tc-1",
-          "order": 1,
-          "title": "Writing for a reader in a hurry",
-          "goal": "Lead with the point; cut the words that carry none.",
-          "exercise": "Do Technical Writing One, then rewrite this README's opening paragraph.",
-          "resourceUrl": "https://developers.google.com/tech-writing/one",
-          "minutes": 90,
-          "done": false
-        },
-        {
-          "id": "s-tc-2",
-          "order": 2,
-          "title": "The README that gets you interviewed",
-          "goal": "Cover problem, demo, stack, setup, architecture and trade-offs, in that order.",
-          "exercise": "Write it, then delete every sentence that wouldn't change a reader's mind.",
-          "resourceUrl": "https://www.makeareadme.com/",
-          "minutes": 90,
-          "done": false
-        },
-        {
-          "id": "s-tc-3",
-          "order": 3,
-          "title": "Diagrams that explain",
-          "goal": "Draw the request path and the data model so someone gets it without narration.",
-          "exercise": "Add a Mermaid architecture diagram and an ERD to the README.",
-          "resourceUrl": "https://mermaid.js.org/intro/",
-          "minutes": 75,
-          "done": false
-        },
-        {
-          "id": "s-tc-4",
-          "order": 4,
-          "title": "Recording the decisions",
-          "goal": "Explain why you chose something and what you gave up.",
-          "exercise": "Write three ADRs: why Zustand, why no backend at first, why ten applications a week.",
-          "resourceUrl": "https://adr.github.io/",
-          "minutes": 75,
-          "done": false
-        }
-      ],
-      "icon": "markdown",
-      "optional": false
+      ]
     }
   ],
   "templates": [
@@ -3079,26 +2531,76 @@ export const seedState: AppState = {
   ],
   "reviews": {},
   "dailyLog": {
-    "2026-08-03": {
-      "sb-mon-0900": true,
-      "sb-mon-1315": true,
-      "sb-mon-1545": true,
-      "sb-mon-1700": true
+    "2026-08-14": {
+      "sb-fri-0900": true
+    },
+    "2026-08-13": {
+      "sb-thu-0900": true
+    },
+    "2026-08-11": {
+      "sb-tue-0900": true
+    },
+    "2026-08-10": {
+      "sb-mon-0900": true
+    },
+    "2026-08-06": {
+      "sb-thu-0900": true
+    },
+    "2026-08-05": {
+      "sb-wed-0900": true
     },
     "2026-08-04": {
       "sb-tue-0900": true,
-      "sb-tue-1315": true,
-      "sb-tue-1545": true,
-      "sb-tue-1700": true
+      "sb-tue-1115": true
     },
-    "2026-08-05": {
+    "2026-08-03": {
+      "sb-mon-0900": true,
+      "sb-mon-1115": true
+    },
+    "2026-07-31": {
+      "sb-fri-0900": true,
+      "sb-fri-1115": true
+    },
+    "2026-07-30": {
+      "sb-thu-0900": true,
+      "sb-thu-1115": true
+    },
+    "2026-07-29": {
       "sb-wed-0900": true,
-      "sb-wed-1315": true
+      "sb-wed-1115": true
+    },
+    "2026-07-28": {
+      "sb-tue-0900": true,
+      "sb-tue-1115": true
+    },
+    "2026-07-27": {
+      "sb-mon-0900": true,
+      "sb-mon-1115": true
+    },
+    "2026-07-24": {
+      "sb-fri-0900": true,
+      "sb-fri-1115": true
+    },
+    "2026-07-23": {
+      "sb-thu-0900": true,
+      "sb-thu-1115": true
+    },
+    "2026-07-22": {
+      "sb-wed-0900": true,
+      "sb-wed-1115": true
+    },
+    "2026-07-21": {
+      "sb-tue-0900": true,
+      "sb-tue-1115": true
+    },
+    "2026-07-20": {
+      "sb-mon-0900": true,
+      "sb-mon-1115": true
     }
   },
   "settings": {
-    "programStart": "2026-08-03",
-    "currentWeek": 1,
+    "programStart": "2026-07-13",
+    "currentWeek": 5,
     "todayOverride": null,
     "theme": "system",
     "targets": {
@@ -3115,15 +2617,28 @@ export const seedState: AppState = {
   "exceptions": [
     {
       "id": "ex-001",
-      "date": "2026-08-09",
+      "date": "2026-08-12",
       "kind": "Interview",
-      "note": "Sample event — an interview displacing the afternoon.",
-      "hoursOwed": 2.25,
-      "recoverOn": "2026-08-10",
+      "note": "A first-round call took the afternoon.",
+      "hoursOwed": 1.25,
+      "recoverOn": "2026-08-17",
       "recovered": false
     }
   ],
-  "deferrals": [],
+  "deferrals": [
+    {
+      "id": "df-001",
+      "date": "2026-08-07",
+      "blockId": "sb-mon-0900",
+      "area": "Job Search"
+    },
+    {
+      "id": "df-002",
+      "date": "2026-08-12",
+      "blockId": "sb-wed-1115",
+      "area": "Learning"
+    }
+  ],
   "oss": [
     {
       "id": "os-001",

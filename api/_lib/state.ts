@@ -1,7 +1,20 @@
 import { prisma } from './prisma.js';
 import * as e from './enums.js';
 import { seedState } from '../../src/data/seed.js';
+import { addDays, daysBetween, todayISO } from '../../src/lib/dates.js';
 import type { AppState, Settings } from '../../src/types/index.js';
+
+/**
+ * The demo content is written as if today were this date. Everything is moved
+ * by the difference when an account is created, so a visitor next year sees
+ * the same four weeks of history rather than a plan that finished long ago.
+ */
+const SEED_TODAY = '2026-08-15';
+
+/** Shifts an ISO date by `days`, leaving blanks alone. */
+function shift(value: string, days: number): string {
+  return value ? addDays(value, days) : value;
+}
 
 /**
  * Assembles the whole state for one user, and seeds a new account.
@@ -134,6 +147,15 @@ export async function seedAccount(
   userId: string,
   { withPlan, withSampleRecords }: { withPlan: boolean; withSampleRecords: boolean },
 ): Promise<void> {
+  const today = todayISO();
+
+  // A demo keeps its four weeks of history, so it moves with the calendar. A
+  // real account starts this week, with nothing done yet.
+  const days = withSampleRecords
+    ? daysBetween(SEED_TODAY, today)
+    : daysBetween(seedState.settings.programStart, today) -
+      ((new Date(`${today}T00:00:00`).getDay() + 6) % 7);
+
   const writes = [];
 
   if (withPlan) {
@@ -142,12 +164,12 @@ export async function seedAccount(
         data: seedState.roadmap.map((r) => ({
           userId,
           week: r.week,
-          start: r.start,
-          end: r.end,
+          start: shift(r.start, days),
+          end: shift(r.end, days),
           theme: r.theme,
           projectDirection: r.projectDirection,
           definitionOfDone: r.definitionOfDone,
-          status: e.status.toDb(r.status) as never,
+          status: e.status.toDb(withSampleRecords ? r.status : 'Not started') as never,
           notes: r.notes,
         })),
       }),
@@ -159,10 +181,11 @@ export async function seedAccount(
           title: g.title,
           detail: g.detail,
           definitionOfDone: g.definitionOfDone,
-          status: e.status.toDb(g.status) as never,
+          // Progress belongs to the demo. A real account starts clean.
+          status: e.status.toDb(withSampleRecords ? g.status : 'Not started') as never,
           priority: e.priority.toDb(g.priority) as never,
           plannedHours: g.plannedHours,
-          evidenceUrl: g.evidenceUrl,
+          evidenceUrl: withSampleRecords ? g.evidenceUrl : '',
           notes: g.notes,
         })),
       }),
@@ -232,7 +255,7 @@ export async function seedAccount(
           linkedinUrl: c.linkedinUrl,
           nextAction: c.nextAction,
           status: e.companyStatus.toDb(c.status) as never,
-          lastReviewed: c.lastReviewed,
+          lastReviewed: shift(c.lastReviewed, days),
           notes: c.notes,
         })),
       }),
@@ -249,10 +272,10 @@ export async function seedAccount(
           link: c.link,
           angle: c.angle,
           week: c.week,
-          lastContact: c.lastContact,
-          dateSent: c.dateSent,
-          followup: c.followup,
-          meeting: c.meeting,
+          lastContact: shift(c.lastContact, days),
+          dateSent: shift(c.dateSent, days),
+          followup: shift(c.followup, days),
+          meeting: shift(c.meeting, days),
           nextAction: c.nextAction,
           notes: c.notes,
         })),
@@ -268,10 +291,10 @@ export async function seedAccount(
           location: a.location,
           salary: a.salary,
           week: a.week,
-          dateFound: a.dateFound,
-          deadline: a.deadline,
-          dateApplied: a.dateApplied,
-          followup: a.followup,
+          dateFound: shift(a.dateFound, days),
+          deadline: shift(a.deadline, days),
+          dateApplied: shift(a.dateApplied, days),
+          followup: shift(a.followup, days),
           interviewStage: a.interviewStage,
           resumeVersion: a.resumeVersion,
           contact: a.contact,
@@ -292,14 +315,85 @@ export async function seedAccount(
           prUrl: o.prUrl,
           why: o.why,
           reviewLesson: o.reviewLesson,
-          dateStarted: o.dateStarted,
-          dateMerged: o.dateMerged,
+          dateStarted: shift(o.dateStarted, days),
+          dateMerged: shift(o.dateMerged, days),
           notes: o.notes,
         })),
+      }),
+      prisma.dayException.createMany({
+        data: seedState.exceptions.map((x) => ({
+          userId,
+          date: shift(x.date, days),
+          kind: e.exceptionKind.toDb(x.kind) as never,
+          note: x.note,
+          hoursOwed: x.hoursOwed,
+          recoverOn: shift(x.recoverOn, days),
+          recovered: x.recovered,
+        })),
+      }),
+      prisma.dailyLogEntry.createMany({
+        data: Object.entries(seedState.dailyLog).flatMap(([date, blocks]) =>
+          Object.entries(blocks).map(([blockId, done]) => ({
+            userId,
+            date: shift(date, days),
+            // Block ids are generated per account, so the seed's ids mean
+            // nothing here. They are rewritten once the blocks exist.
+            blockId,
+            done,
+          })),
+        ),
       }),
     );
   }
 
-  // One transaction: an account is fully set up or not created at all.
   if (writes.length > 0) await prisma.$transaction(writes);
+
+  await prisma.user.update({
+    where: { id: userId },
+    data: { settings: { programStart: shift(seedState.settings.programStart, days) } },
+  });
+
+  if (withSampleRecords) await linkDemoProgress(userId, days);
+}
+
+/**
+ * The seed refers to schedule blocks and deferrals by ids that only exist in
+ * the seed. Once the account's own blocks are in the database, the log and the
+ * deferrals are pointed at the real ones.
+ */
+async function linkDemoProgress(userId: string, days: number): Promise<void> {
+  const blocks = await prisma.scheduleBlock.findMany({
+    where: { userId },
+    select: { id: true, day: true, start: true, area: true },
+  });
+
+  /** Matches a seed block to the account's copy by where it sits in the week. */
+  function realId(seedBlockId: string): string | null {
+    const seedBlock = seedState.schedule.find((b) => b.id === seedBlockId);
+    if (!seedBlock) return null;
+    const hit = blocks.find(
+      (b) => e.dayKey.fromDb(b.day) === seedBlock.day && b.start === seedBlock.start,
+    );
+    return hit?.id ?? null;
+  }
+
+  const log = Object.entries(seedState.dailyLog).flatMap(([date, entries]) =>
+    Object.entries(entries).flatMap(([seedBlockId, done]) => {
+      const id = realId(seedBlockId);
+      return id ? [{ userId, date: shift(date, days), blockId: id, done }] : [];
+    }),
+  );
+
+  const deferrals = seedState.deferrals.flatMap((d) => {
+    const id = realId(d.blockId);
+    return id
+      ? [{ userId, date: shift(d.date, days), blockId: id, area: e.area.toDb(d.area) as never }]
+      : [];
+  });
+
+  await prisma.$transaction([
+    prisma.dailyLogEntry.deleteMany({ where: { userId } }),
+    prisma.dailyLogEntry.createMany({ data: log }),
+    prisma.deferral.createMany({ data: deferrals }),
+  ]);
 }
