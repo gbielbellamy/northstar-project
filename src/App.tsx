@@ -156,8 +156,16 @@ function App() {
     }
   }
 
+  const isGuest = user?.email.endsWith('@guest.northstar') ?? false;
+
+  /**
+   * A demo account exists only for the visit. Leaving it deletes it, so the
+   * database does not fill with abandoned demos and nothing of theirs is left
+   * lying around.
+   */
   async function signOut() {
-    await auth.logout().catch(() => undefined);
+    if (isGuest) await auth.deleteAccount().catch(() => undefined);
+    else await auth.logout().catch(() => undefined);
     setUser(null);
   }
 
@@ -177,7 +185,7 @@ function App() {
       setPage={setPage}
       followupsDue={followupsDue}
       email={user.email}
-      isGuest={user.email.endsWith('@guest.northstar')}
+      isGuest={isGuest}
       onExport={exportBackup}
       onImport={importBackup}
       onSignOut={signOut}

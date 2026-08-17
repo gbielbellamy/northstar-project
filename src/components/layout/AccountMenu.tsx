@@ -47,33 +47,41 @@ function AccountMenu({ email, isGuest, onExport, onImport, onSignOut, onDeleteAc
     <div className="account" ref={wrap}>
       {open && (
         <div className="account__menu" role="menu">
-          <button role="menuitem" onClick={() => choose(onExport)}>
-            <Download size={14} /> Export backup
-          </button>
-          <button role="menuitem" onClick={() => choose(() => fileRef.current?.click())}>
-            <Upload size={14} /> Restore backup
-          </button>
-          <div className="account__sep" />
+          {/* Backups belong to an account you keep. A demo is deleted when you
+              leave it, so saving one and restoring into it are both pointless. */}
+          {!isGuest && (
+            <>
+              <button role="menuitem" onClick={() => choose(onExport)}>
+                <Download size={14} /> Export backup
+              </button>
+              <button role="menuitem" onClick={() => choose(() => fileRef.current?.click())}>
+                <Upload size={14} /> Restore backup
+              </button>
+              <div className="account__sep" />
+            </>
+          )}
           <button role="menuitem" onClick={() => choose(onSignOut)}>
-            <LogOut size={14} /> Sign out
+            <LogOut size={14} /> {isGuest ? 'Leave the demo' : 'Sign out'}
           </button>
-          <button
-            role="menuitem"
-            className="account__danger"
-            onClick={() =>
-              choose(() => {
-                if (
-                  confirm(
-                    'Delete your account? Every application, company and contact in it goes too. This cannot be undone.',
-                  )
-                ) {
-                  onDeleteAccount();
-                }
-              })
-            }
-          >
-            <Trash2 size={14} /> Delete account
-          </button>
+          {!isGuest && (
+            <button
+              role="menuitem"
+              className="account__danger"
+              onClick={() =>
+                choose(() => {
+                  if (
+                    confirm(
+                      'Delete your account? Every application, company and contact in it goes too. This cannot be undone.',
+                    )
+                  ) {
+                    onDeleteAccount();
+                  }
+                })
+              }
+            >
+              <Trash2 size={14} /> Delete account
+            </button>
+          )}
         </div>
       )}
 
@@ -91,7 +99,9 @@ function AccountMenu({ email, isGuest, onExport, onImport, onSignOut, onDeleteAc
           <span className="account__name" title={email}>
             {isGuest ? 'Demo account' : email}
           </span>
-          <span className="account__sub">{isGuest ? 'Not saved anywhere' : 'Signed in'}</span>
+          <span className="account__sub">
+            {isGuest ? 'Deleted when you leave' : 'Signed in'}
+          </span>
         </span>
         <ChevronUp size={14} className={open ? 'account__chev account__chev--open' : 'account__chev'} />
       </button>
