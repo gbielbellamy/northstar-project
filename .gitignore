@@ -33,3 +33,6 @@ dist-ssr
 
 # Prisma client, generated at build time
 /generated
+
+# Personal notes and backups — never part of the repository
+/northstarProcess
