@@ -34,5 +34,9 @@ dist-ssr
 # Prisma client, generated at build time
 /generated
 
-# Personal notes and backups — never part of the repository
+# Personal notes and backups — never part of the repository.
+# Matched by prefix so renaming the folder cannot quietly re-expose it.
+/northstar[Ff]iles
 /northstarProcess
+/northstar-personal
+*backup*.json

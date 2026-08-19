@@ -1,4 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { randomUUID } from 'node:crypto';
 import { prisma, withUser } from './_lib/auth.js';
 import { collection, type CollectionName } from './_lib/collections.js';
 import { loadState, seedAccount } from './_lib/state.js';
@@ -64,14 +65,34 @@ async function restore(req: VercelRequest, res: VercelResponse, userId: string) 
   try {
     const writes = [];
 
+    // Schedule blocks get new ids, and the daily log and the deferrals point
+    // at the old ones. Generating the ids here means both can be translated;
+    // without this a restored backup loses every session already ticked off.
+    const newBlockId = new Map<string, string>();
+
     for (const name of COLLECTIONS) {
       const c = collection(name);
       writes.push(c.table.deleteMany({ where: { userId } }));
 
       const rows = payload[name];
       if (!Array.isArray(rows) || rows.length === 0) continue;
+
       writes.push(
-        c.table.createMany({ data: rows.map((row) => ({ ...c.input(row), userId })) }),
+        c.table.createMany({
+          data: rows.map((row) => {
+            const data = { ...c.input(row), userId };
+            if (name === 'schedule') {
+              const id = randomUUID();
+              newBlockId.set(String((row as { id?: unknown }).id ?? ''), id);
+              return { ...data, id };
+            }
+            if (name === 'deferrals') {
+              const was = String((row as { blockId?: unknown }).blockId ?? '');
+              return { ...data, blockId: newBlockId.get(was) ?? was };
+            }
+            return data;
+          }),
+        }),
       );
     }
 
@@ -91,7 +112,12 @@ async function restore(req: VercelRequest, res: VercelResponse, userId: string) 
     writes.push(prisma.dailyLogEntry.deleteMany({ where: { userId } }));
     const log = (payload.dailyLog ?? {}) as Record<string, Record<string, boolean>>;
     const logRows = Object.entries(log).flatMap(([date, blocks]) =>
-      Object.entries(blocks).map(([blockId, done]) => ({ userId, date, blockId, done })),
+      Object.entries(blocks).flatMap(([blockId, done]) => {
+        const id = newBlockId.get(blockId);
+        // A tick against a block the backup no longer contains has nothing to
+        // point at, so it is dropped rather than left dangling.
+        return id ? [{ userId, date, blockId: id, done }] : [];
+      }),
     );
     if (logRows.length > 0) writes.push(prisma.dailyLogEntry.createMany({ data: logRows }));
 
