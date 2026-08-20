@@ -4,8 +4,6 @@ import {
   ArrowRight,
   Building2,
   CalendarCheck,
-  Circle,
-  CircleCheck,
   MessageSquare,
   Send,
   Target,
@@ -16,8 +14,10 @@ import { completionPct, funnel, goalsForWeek, outreachStats } from '../lib/selec
 import { dayKeyOf, fmtLong, fmtRange, hoursBetween, todayISO } from '../lib/dates';
 import { currentRoadmapWeek, roadmapWeekRange } from '../lib/pacing';
 import { areaClass } from '../lib/ui';
-import { blockAppliesTo, type Area } from '../types';
+import { blockAppliesTo, type Area, type ScheduleBlock } from '../types';
 import type { PageKey } from '../App';
+import BlockActions from '../components/ui/BlockActions';
+import BlockEditor from '../components/ui/BlockEditor';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import Modal from '../components/ui/Modal';
@@ -64,10 +64,10 @@ function DashboardPage({ setPage }: Props) {
   const state = useStore();
   const { roadmap, goals, schedule, deferrals, applications, contacts, companies, dailyLog, settings } =
     state;
-  const toggleLog = useStore((s) => s.toggleLog);
   const setSettings = useStore((s) => s.setSettings);
 
   const [targetsOpen, setTargetsOpen] = useState(false);
+  const [editingBlock, setEditingBlock] = useState<ScheduleBlock | null>(null);
 
   const today = todayISO(settings.todayOverride);
   const week = currentRoadmapWeek(schedule, deferrals, settings.programStart, today);
@@ -339,18 +339,7 @@ function DashboardPage({ setPage }: Props) {
                     <div className="block__title">{goal?.title ?? b.label}</div>
                     <p className="block__detail">{goal?.detail ?? ''}</p>
                   </div>
-                  <div className="block__side">
-                    <button
-                      type="button"
-                      className={`day-toggle ${done ? 'day-toggle--on' : ''}`.trim()}
-                      onClick={() => toggleLog(today, b.id, !done)}
-                      aria-pressed={done}
-                      aria-label={`Mark ${b.label} done today`}
-                    >
-                      {done ? <CircleCheck size={14} /> : <Circle size={14} />}
-                      {done ? 'Done' : 'Mark done'}
-                    </button>
-                  </div>
+                  <BlockActions block={b} date={today} onEdit={setEditingBlock} />
                 </div>
               </AnimatedSection>
             );
@@ -442,6 +431,11 @@ function DashboardPage({ setPage }: Props) {
         </div>
       </Modal>
 
+      <BlockEditor
+        editing={editingBlock}
+        open={editingBlock !== null}
+        onClose={() => setEditingBlock(null)}
+      />
     </div>
   );
 }

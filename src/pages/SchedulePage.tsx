@@ -3,12 +3,8 @@ import {
   CalendarDays,
   CalendarX,
   Check,
-  Circle,
-  CircleCheck,
   Coffee,
-  Pencil,
   Plus,
-  SkipForward,
   Trash2,
   Undo2,
 } from 'lucide-react';
@@ -23,13 +19,12 @@ import {
   hoursBetween,
   todayISO,
 } from '../lib/dates';
-import { contentWeek, currentRoadmapWeek, lagFor, roadmapWeekRange } from '../lib/pacing';
+import { contentWeek, currentRoadmapWeek, roadmapWeekRange } from '../lib/pacing';
 import { areaClass } from '../lib/ui';
 import {
   AREAS,
   EXCEPTION_KINDS,
   blockAppliesTo,
-  type Area,
   type DayException,
   type DayKey,
   type ExceptionKind,
@@ -42,6 +37,8 @@ import Modal from '../components/ui/Modal';
 import Field from '../components/ui/Field';
 import Checkbox from '../components/ui/Checkbox';
 import AnimatedSection from '../components/ui/AnimatedSection';
+import BlockActions from '../components/ui/BlockActions';
+import BlockEditor from '../components/ui/BlockEditor';
 import NoPlan from '../components/ui/NoPlan';
 
 const EMPTY: Omit<ScheduleBlock, 'id'> = {
@@ -58,7 +55,6 @@ function SchedulePage() {
   const add = useStore((s) => s.add);
   const update = useStore((s) => s.update);
   const remove = useStore((s) => s.remove);
-  const toggleLog = useStore((s) => s.toggleLog);
 
   const today = todayISO(settings.todayOverride);
   const [week, setWeek] = useState(() =>
@@ -139,12 +135,6 @@ function SchedulePage() {
     setDraft(rest);
     setOpen(true);
   }
-  function save() {
-    if (editing) update('schedule', editing.id, draft);
-    else add('schedule', draft);
-    setOpen(false);
-  }
-
   /** Planned work on a given weekday — the default number of hours owed. */
   function dayWorkHours(day: DayKey): number {
     return (byDay.get(day) ?? [])
@@ -375,10 +365,7 @@ function SchedulePage() {
                     date,
                   );
                   const goal = goals.find((g) => g.area === b.area && g.week === activeWeek);
-                  const lag = lagFor(deferrals, b.area);
-                  const catchingUp = activeWeek < week;
                   const done = Boolean(dailyLog[date]?.[b.id]);
-                  const deferral = deferrals.find((d) => d.date === date && d.blockId === b.id);
                   return (
                     <div
                       key={b.id}
@@ -407,71 +394,9 @@ function SchedulePage() {
                             ))}
                           </ol>
                         )}
-                        {catchingUp && (
-                          <p className="block__dod" style={{ color: 'var(--warn)' }}>
-                            Catching up: Week {activeWeek}’s goal — {lag} session{lag === 1 ? '' : 's'}{' '}
-                            behind on {b.area}.
-                          </p>
-                        )}
                       </div>
 
-                      <div className="block__side">
-                        {deferral ? (
-                          <div className="skip-note">
-                            <span className="status-chip status-chip--warning">
-                              <SkipForward size={13} /> Skipped
-                            </span>
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              onClick={() => remove('deferrals', deferral.id)}
-                            >
-                              <Undo2 size={13} /> Undo
-                            </Button>
-                          </div>
-                        ) : (
-                          <>
-                            <button
-                              type="button"
-                              className={`day-toggle ${done ? 'day-toggle--on' : ''}`.trim()}
-                              onClick={() => toggleLog(date, b.id, !done)}
-                              aria-pressed={done}
-                              aria-label={`Mark ${b.label} done on ${fmtShort(date)}`}
-                            >
-                              {done ? <CircleCheck size={14} /> : <Circle size={14} />}
-                              {done ? 'Done' : 'Mark done'}
-                            </button>
-                            {!done && (
-                              <button
-                                type="button"
-                                className="day-toggle"
-                                onClick={() =>
-                                  add('deferrals', { date, blockId: b.id, area: b.area! })
-                                }
-                                title={`Push this to the next ${b.area} session`}
-                                aria-label={`Skip ${b.label} on ${fmtShort(date)} — push to the next ${b.area} session`}
-                              >
-                                <SkipForward size={14} /> Skip
-                              </button>
-                            )}
-                          </>
-                        )}
-                        <div className="row" style={{ gap: 2 }}>
-                          <Button size="icon" variant="ghost" onClick={() => openEdit(b)} aria-label="Edit block">
-                            <Pencil size={13} />
-                          </Button>
-                          <Button
-                            size="icon"
-                            variant="ghost"
-                            onClick={() => {
-                              if (confirm('Delete this block from every week?')) remove('schedule', b.id);
-                            }}
-                            aria-label="Delete block"
-                          >
-                            <Trash2 size={13} />
-                          </Button>
-                        </div>
-                      </div>
+                      <BlockActions block={b} date={date} onEdit={openEdit} />
                     </div>
                   );
                 })}
@@ -481,106 +406,7 @@ function SchedulePage() {
         })}
       </div>
 
-      <Modal
-        open={open}
-        title={editing ? 'Edit block' : 'Add block'}
-        subtitle="Blocks are the weekly template — a change here applies to this weekday in every week."
-        onClose={() => setOpen(false)}
-        actions={
-          <>
-            {editing && (
-              <span className="spacer">
-                <Button
-                  variant="danger"
-                  onClick={() => {
-                    remove('schedule', editing.id);
-                    setOpen(false);
-                  }}
-                >
-                  <Trash2 size={14} /> Delete
-                </Button>
-              </span>
-            )}
-            <Button onClick={() => setOpen(false)}>Cancel</Button>
-            <Button variant="primary" onClick={save}>
-              <Check size={14} /> Save
-            </Button>
-          </>
-        }
-      >
-        <div className="form-grid">
-          <Field label="Day">
-            <select
-              className="select"
-              value={draft.day}
-              onChange={(e) => setDraft({ ...draft, day: e.target.value as DayKey })}
-            >
-              {DAY_KEYS.map((d) => (
-                <option key={d} value={d}>
-                  {DAY_NAMES[d]}
-                </option>
-              ))}
-            </select>
-          </Field>
-          <Field label="Area" hint="Leave as Break for lunch or anything not tracked.">
-            <select
-              className="select"
-              value={draft.area ?? ''}
-              onChange={(e) => setDraft({ ...draft, area: (e.target.value || null) as Area | null })}
-            >
-              <option value="">Break / not tracked</option>
-              {AREAS.map((a) => (
-                <option key={a} value={a}>
-                  {a}
-                </option>
-              ))}
-            </select>
-          </Field>
-          <Field label="Start">
-            <input
-              className="input"
-              type="time"
-              value={draft.start}
-              onChange={(e) => setDraft({ ...draft, start: e.target.value })}
-            />
-          </Field>
-          <Field label="End">
-            <input
-              className="input"
-              type="time"
-              value={draft.end}
-              onChange={(e) => setDraft({ ...draft, end: e.target.value })}
-            />
-          </Field>
-          <Field label="Label" full hint="What you'd call this block on a calendar.">
-            <input
-              className="input"
-              value={draft.label}
-              onChange={(e) => setDraft({ ...draft, label: e.target.value })}
-              placeholder="Deep work — Northstar"
-            />
-          </Field>
-          <Field
-            label="Done when"
-            full
-            hint="What finishing this one sitting looks like. The week's target lives in Roadmap."
-          >
-            <textarea
-              className="textarea"
-              value={draft.sessionDone ?? ''}
-              onChange={(e) => setDraft({ ...draft, sessionDone: e.target.value })}
-              placeholder="Three applications out, chosen from both tracks."
-            />
-          </Field>
-          <div className="full">
-            <Checkbox
-              checked={draft.optional}
-              onChange={(v) => setDraft({ ...draft, optional: v })}
-              label="Optional — doesn’t count toward the weekly hour budget"
-            />
-          </div>
-        </div>
-      </Modal>
+      <BlockEditor editing={editing} open={open} onClose={() => setOpen(false)} day={draft.day} />
 
       {/* ---------- Day that didn't go to plan ---------- */}
       <Modal
